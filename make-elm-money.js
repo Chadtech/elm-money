@@ -25,6 +25,15 @@ const codes =
 	].join("");
 
 
+const codeFromString =
+	[ `codeFromString : String -> Maybe Code`
+	, `codeFromString str =`
+	, `    case String.toLower str of`
+	, money.map(m =>
+			`        "${m.code}" ->\n`
+		).join("")
+	]
+
 const fromCode =
 	[ `fromCode : Code -> Currency`
 	, `fromCode code =`
