@@ -5,7 +5,8 @@ const money = Object.values(JSON.parse(file));
 
 
 fs.writeFileSync("money.elm", money.map(function(m){
-	return `
+	const record =
+	`
 	${m.symbol.toLowerCase()} : Currency
 	${m.symbol.toLowerCase()} =
 		{ symbol = "${m.symbol}"
@@ -16,7 +17,9 @@ fs.writeFileSync("money.elm", money.map(function(m){
 	, rounding = ${m.rounding}
 	, code = "${m.code}"
 	}
-`;
+	`;
+
+	return record
 }).join());
 
 
