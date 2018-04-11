@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "All the worlds currencies as records and union types, with helper functions too.",
+    "summary": "All the worlds currencies as records and union types",
     "repository": "https://github.com/Chadtech/elm-money.git",
     "license": "BSD3",
     "source-directories": [

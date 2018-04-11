@@ -49,8 +49,9 @@ type alias Currency =
     { symbol : String
     , name : String
     , namePlural : String
+    , symbolNative : String
     , decimalDigits : Int
-    , rounding : Int
+    , rounding : Float
     , code : String
     }
 `
@@ -135,6 +136,7 @@ ${m.code.toLowerCase()} =
 
 const output = [
 	topPart,
+    currencyType,
 	codes,
     allCurrencies,
     allCodes,

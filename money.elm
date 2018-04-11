@@ -154,6 +154,18 @@ module Money
 -}
 
 
+{-| -}
+type alias Currency =
+    { symbol : String
+    , name : String
+    , namePlural : String
+    , symbolNative : String
+    , decimalDigits : Int
+    , rounding : Float
+    , code : String
+    }
+
+
 {-| This type represents all the possible currency codes
 -}
 type Code
