@@ -1,3 +1,5 @@
 # Elm Money
 
-Helper functions and values to make it easier to work with the world's currencies, in Elm.
+All the worlds currencies as records and union types, with helper functions too, in the Elm programming language.
+
+PRs welcome.

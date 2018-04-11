@@ -1,42 +1,116 @@
 const fs = require("fs");
+const cp = require("child_process")
 
 const file = fs.readFileSync("./money.json", "utf-8");
 const money = Object.values(JSON.parse(file));
 
-
-
 const currencies = money.map(m => `        , ${m.code.toLowerCase()}\n`).join("");
 
-const topPart = `
-module Money
+const topPart = 
+`module Money
     exposing
-        ( fromCode
+        ( currencyFromCode
         , Code(..)
+        , Currency
         , codeFromString
+        , allCodes
+        , currencyFromString
         , allCurrencies
 ${currencies}
         )
+
+
+{-| All the worlds currencies as records and union types, with helper functions too.
+
+
+# Types
+
+@docs Currency, Code
+
+# Values
+
+@docs allCurrencies, allCodes
+
+# Helpers
+
+@docs currencyFromString, currencyFromCode, codeFromString
+
+# Currencies
+
+@docs ${money.map(m => m.code.toLowerCase()).join(", ")}
+
+-}
 `;
 
+const currencyType =
+
+`{-|-}
+type alias Currency =
+    { symbol : String
+    , name : String
+    , namePlural : String
+    , decimalDigits : Int
+    , rounding : Int
+    , code : String
+    }
+`
 
 const codes =
-	[ `type Code\n  = ${money[0].code}\n`
+	[ `{-| This type represents all the possible currency codes -}`
+    , `type Code\n  = ${money[0].code}\n`
 	, money.slice(1).map(m => `  | ${m.code}\n`).join("")
-	].join("");
+	].join("\n");
+
+const allCodes =
+    [ `{-| A list of all the currency codes -}`
+    , `allCodes : List Code\n`
+    , `allCodes =\n`
+    , `    [ ${money[0].code.toUpperCase()}\n`
+    , money.slice(1).map(m => 
+            `    , ${m.code.toUpperCase()}`
+        ).join("\n")
+    , `    ]`
+    ].join("\n")
+
+const allCurrencies =
+    [ `{-| A list of all the currencies -}`
+    , `allCurrencies : List Currency\n`
+    , `allCurrencies =\n`
+    , `    [ ${money[0].code.toLowerCase()}\n`
+    , money.slice(1).map(m => 
+            `    , ${m.code.toLowerCase()}`
+        ).join("\n")
+    , `    ]`
+    ].join("\n")
 
 
 const codeFromString =
-	[ `codeFromString : String -> Maybe Code`
+	[ `{-| Get the currency code from a string -}`
+    , `codeFromString : String -> Maybe Code`
 	, `codeFromString str =`
 	, `    case String.toLower str of`
 	, money.map(m =>
-			`        "${m.code}" ->\n`
+			`        "${m.code.toLowerCase()}" ->\n            Just ${m.code.toUpperCase()}\n`
 		).join("")
-	]
+    , `        _ ->\n            Nothing`
+	].join("\n")
 
-const fromCode =
-	[ `fromCode : Code -> Currency`
-	, `fromCode code =`
+
+const currencyFromString =
+    [ `{-| Get the currency from a string -}`
+    , `currencyFromString : String -> Maybe Currency`
+    , `currencyFromString str =`
+    , `    case String.toLower str of`
+    , money.map(m =>
+            `        "${m.code.toLowerCase()}" ->\n            Just ${m.code.toLowerCase()}\n`
+        ).join("")
+    , `        _ ->\n            Nothing`
+    ].join("\n")
+
+const currencyFromCode =
+	[ `{-| Get the currency from a code, with no Maybes involved -}`
+    , `currencyFromCode : Code -> Currency`
+	, `currencyFromCode code =`
 	, `    case code of`
 	, money.map(m =>
 			`        ${m.code} ->\n            ${m.code.toLowerCase()}\n`
@@ -45,6 +119,7 @@ const fromCode =
 
 
 const records = money.map(m => `
+{-| ${m.name} -}\n
 ${m.code.toLowerCase()} : Currency
 ${m.code.toLowerCase()} =
     { symbol = "${m.symbol}"
@@ -61,10 +136,15 @@ ${m.code.toLowerCase()} =
 const output = [
 	topPart,
 	codes,
-	fromCode,
+    allCurrencies,
+    allCodes,
+	currencyFromCode,
+    codeFromString,
+    currencyFromString,
 	records
-].join("");
+].join("\n\n");
 
-fs.writeFileSync("money.elm", output);
+fs.writeFileSync("Money.elm", output);
 
+cp.execSync("elm-format Money.elm --yes");
 
