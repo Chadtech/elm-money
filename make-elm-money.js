@@ -144,7 +144,9 @@ const output = [
     records
 ].join("\n\n");
 
-fs.writeFileSync("Money.elm", output);
+var outputFile = "./src/Money.elm";
 
-cp.execSync("elm-format Money.elm --yes");
+fs.writeFileSync(outputFile, output);
+
+cp.execSync(`elm-format ${outputFile} --yes`);
 

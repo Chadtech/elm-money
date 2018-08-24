@@ -1707,7 +1707,7 @@ aed =
     { symbol = "AED"
     , name = "United Arab Emirates Dirham"
     , namePlural = "UAE dirhams"
-    , symbolNative = "د.إ.‏"
+    , symbolNative = "د.إ.\x200F"
     , decimalDigits = 2
     , code = "AED"
     }
@@ -1955,9 +1955,7 @@ chf =
     , name = "Swiss Franc"
     , namePlural = "Swiss francs"
     , symbolNative = "CHF"
-    , decimalDigits =
-        2
-            . 5
+    , decimalDigits = 2
     , code = "CHF"
     }
 
