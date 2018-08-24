@@ -1707,7 +1707,7 @@ aed =
     { symbol = "AED"
     , name = "United Arab Emirates Dirham"
     , namePlural = "UAE dirhams"
-    , symbolNative = "د.إ.\x200F"
+    , symbolNative = "د.إ.‏"
     , decimalDigits = 2
     , code = "AED"
     }
