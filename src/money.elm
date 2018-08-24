@@ -161,7 +161,6 @@ type alias Currency =
     , namePlural : String
     , symbolNative : String
     , decimalDigits : Int
-    , rounding : Float
     , code : String
     }
 
@@ -1658,7 +1657,6 @@ usd =
     , namePlural = "US dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "USD"
     }
 
@@ -1672,7 +1670,6 @@ cad =
     , namePlural = "Canadian dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CAD"
     }
 
@@ -1686,7 +1683,6 @@ eur =
     , namePlural = "euros"
     , symbolNative = "€"
     , decimalDigits = 2
-    , rounding = 0
     , code = "EUR"
     }
 
@@ -1700,7 +1696,6 @@ btc =
     , namePlural = "Bitcoins"
     , symbolNative = "฿"
     , decimalDigits = 8
-    , rounding = 0
     , code = "BTC"
     }
 
@@ -1714,7 +1709,6 @@ aed =
     , namePlural = "UAE dirhams"
     , symbolNative = "د.إ.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "AED"
     }
 
@@ -1728,7 +1722,6 @@ afn =
     , namePlural = "Afghan Afghanis"
     , symbolNative = "؋"
     , decimalDigits = 2
-    , rounding = 0
     , code = "AFN"
     }
 
@@ -1742,7 +1735,6 @@ all =
     , namePlural = "Albanian lekë"
     , symbolNative = "Lek"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ALL"
     }
 
@@ -1756,7 +1748,6 @@ amd =
     , namePlural = "Armenian drams"
     , symbolNative = "դր."
     , decimalDigits = 2
-    , rounding = 0
     , code = "AMD"
     }
 
@@ -1770,7 +1761,6 @@ ars =
     , namePlural = "Argentine pesos"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ARS"
     }
 
@@ -1784,7 +1774,6 @@ aud =
     , namePlural = "Australian dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "AUD"
     }
 
@@ -1798,7 +1787,6 @@ azn =
     , namePlural = "Azerbaijani manats"
     , symbolNative = "ман."
     , decimalDigits = 2
-    , rounding = 0
     , code = "AZN"
     }
 
@@ -1812,7 +1800,6 @@ bam =
     , namePlural = "Bosnia-Herzegovina convertible marks"
     , symbolNative = "KM"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BAM"
     }
 
@@ -1826,7 +1813,6 @@ bdt =
     , namePlural = "Bangladeshi takas"
     , symbolNative = "৳"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BDT"
     }
 
@@ -1840,7 +1826,6 @@ bgn =
     , namePlural = "Bulgarian leva"
     , symbolNative = "лв."
     , decimalDigits = 2
-    , rounding = 0
     , code = "BGN"
     }
 
@@ -1854,7 +1839,6 @@ bhd =
     , namePlural = "Bahraini dinars"
     , symbolNative = "د.ب.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "BHD"
     }
 
@@ -1868,7 +1852,6 @@ bif =
     , namePlural = "Burundian francs"
     , symbolNative = "FBu"
     , decimalDigits = 0
-    , rounding = 0
     , code = "BIF"
     }
 
@@ -1882,7 +1865,6 @@ bnd =
     , namePlural = "Brunei dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BND"
     }
 
@@ -1896,7 +1878,6 @@ bob =
     , namePlural = "Bolivian bolivianos"
     , symbolNative = "Bs"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BOB"
     }
 
@@ -1910,7 +1891,6 @@ brl =
     , namePlural = "Brazilian reals"
     , symbolNative = "R$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BRL"
     }
 
@@ -1924,7 +1904,6 @@ bwp =
     , namePlural = "Botswanan pulas"
     , symbolNative = "P"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BWP"
     }
 
@@ -1938,7 +1917,6 @@ byr =
     , namePlural = "Belarusian rubles"
     , symbolNative = "BYR"
     , decimalDigits = 0
-    , rounding = 0
     , code = "BYR"
     }
 
@@ -1952,7 +1930,6 @@ bzd =
     , namePlural = "Belize dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "BZD"
     }
 
@@ -1966,7 +1943,6 @@ cdf =
     , namePlural = "Congolese francs"
     , symbolNative = "FrCD"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CDF"
     }
 
@@ -1979,8 +1955,9 @@ chf =
     , name = "Swiss Franc"
     , namePlural = "Swiss francs"
     , symbolNative = "CHF"
-    , decimalDigits = 2
-    , rounding = 0.05
+    , decimalDigits =
+        2
+            . 5
     , code = "CHF"
     }
 
@@ -1994,7 +1971,6 @@ clp =
     , namePlural = "Chilean pesos"
     , symbolNative = "$"
     , decimalDigits = 0
-    , rounding = 0
     , code = "CLP"
     }
 
@@ -2008,7 +1984,6 @@ cny =
     , namePlural = "Chinese yuan"
     , symbolNative = "CN¥"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CNY"
     }
 
@@ -2022,7 +1997,6 @@ cop =
     , namePlural = "Colombian pesos"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "COP"
     }
 
@@ -2036,7 +2010,6 @@ crc =
     , namePlural = "Costa Rican colóns"
     , symbolNative = "₡"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CRC"
     }
 
@@ -2050,7 +2023,6 @@ cve =
     , namePlural = "Cape Verdean escudos"
     , symbolNative = "CV$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CVE"
     }
 
@@ -2064,7 +2036,6 @@ czk =
     , namePlural = "Czech Republic korunas"
     , symbolNative = "Kč"
     , decimalDigits = 2
-    , rounding = 0
     , code = "CZK"
     }
 
@@ -2078,7 +2049,6 @@ djf =
     , namePlural = "Djiboutian francs"
     , symbolNative = "Fdj"
     , decimalDigits = 0
-    , rounding = 0
     , code = "DJF"
     }
 
@@ -2092,7 +2062,6 @@ dkk =
     , namePlural = "Danish kroner"
     , symbolNative = "kr"
     , decimalDigits = 2
-    , rounding = 0
     , code = "DKK"
     }
 
@@ -2106,7 +2075,6 @@ dop =
     , namePlural = "Dominican pesos"
     , symbolNative = "RD$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "DOP"
     }
 
@@ -2120,7 +2088,6 @@ dzd =
     , namePlural = "Algerian dinars"
     , symbolNative = "د.ج.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "DZD"
     }
 
@@ -2134,7 +2101,6 @@ eek =
     , namePlural = "Estonian kroons"
     , symbolNative = "kr"
     , decimalDigits = 2
-    , rounding = 0
     , code = "EEK"
     }
 
@@ -2148,7 +2114,6 @@ egp =
     , namePlural = "Egyptian pounds"
     , symbolNative = "ج.م.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "EGP"
     }
 
@@ -2162,7 +2127,6 @@ ern =
     , namePlural = "Eritrean nakfas"
     , symbolNative = "Nfk"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ERN"
     }
 
@@ -2176,7 +2140,6 @@ etb =
     , namePlural = "Ethiopian birrs"
     , symbolNative = "Br"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ETB"
     }
 
@@ -2190,7 +2153,6 @@ gbp =
     , namePlural = "British pounds sterling"
     , symbolNative = "£"
     , decimalDigits = 2
-    , rounding = 0
     , code = "GBP"
     }
 
@@ -2204,7 +2166,6 @@ gel =
     , namePlural = "Georgian laris"
     , symbolNative = "GEL"
     , decimalDigits = 2
-    , rounding = 0
     , code = "GEL"
     }
 
@@ -2218,7 +2179,6 @@ ghs =
     , namePlural = "Ghanaian cedis"
     , symbolNative = "GH₵"
     , decimalDigits = 2
-    , rounding = 0
     , code = "GHS"
     }
 
@@ -2232,7 +2192,6 @@ gnf =
     , namePlural = "Guinean francs"
     , symbolNative = "FG"
     , decimalDigits = 0
-    , rounding = 0
     , code = "GNF"
     }
 
@@ -2246,7 +2205,6 @@ gtq =
     , namePlural = "Guatemalan quetzals"
     , symbolNative = "Q"
     , decimalDigits = 2
-    , rounding = 0
     , code = "GTQ"
     }
 
@@ -2260,7 +2218,6 @@ hkd =
     , namePlural = "Hong Kong dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "HKD"
     }
 
@@ -2274,7 +2231,6 @@ hnl =
     , namePlural = "Honduran lempiras"
     , symbolNative = "L"
     , decimalDigits = 2
-    , rounding = 0
     , code = "HNL"
     }
 
@@ -2288,7 +2244,6 @@ hrk =
     , namePlural = "Croatian kunas"
     , symbolNative = "kn"
     , decimalDigits = 2
-    , rounding = 0
     , code = "HRK"
     }
 
@@ -2302,7 +2257,6 @@ huf =
     , namePlural = "Hungarian forints"
     , symbolNative = "Ft"
     , decimalDigits = 2
-    , rounding = 0
     , code = "HUF"
     }
 
@@ -2316,7 +2270,6 @@ idr =
     , namePlural = "Indonesian rupiahs"
     , symbolNative = "Rp"
     , decimalDigits = 2
-    , rounding = 0
     , code = "IDR"
     }
 
@@ -2330,7 +2283,6 @@ ils =
     , namePlural = "Israeli new sheqels"
     , symbolNative = "₪"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ILS"
     }
 
@@ -2344,7 +2296,6 @@ inr =
     , namePlural = "Indian rupees"
     , symbolNative = "টকা"
     , decimalDigits = 2
-    , rounding = 0
     , code = "INR"
     }
 
@@ -2358,7 +2309,6 @@ iqd =
     , namePlural = "Iraqi dinars"
     , symbolNative = "د.ع.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "IQD"
     }
 
@@ -2372,7 +2322,6 @@ irr =
     , namePlural = "Iranian rials"
     , symbolNative = "﷼"
     , decimalDigits = 2
-    , rounding = 0
     , code = "IRR"
     }
 
@@ -2386,7 +2335,6 @@ isk =
     , namePlural = "Icelandic krónur"
     , symbolNative = "kr"
     , decimalDigits = 0
-    , rounding = 0
     , code = "ISK"
     }
 
@@ -2400,7 +2348,6 @@ jmd =
     , namePlural = "Jamaican dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "JMD"
     }
 
@@ -2414,7 +2361,6 @@ jod =
     , namePlural = "Jordanian dinars"
     , symbolNative = "د.أ.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "JOD"
     }
 
@@ -2428,7 +2374,6 @@ jpy =
     , namePlural = "Japanese yen"
     , symbolNative = "￥"
     , decimalDigits = 0
-    , rounding = 0
     , code = "JPY"
     }
 
@@ -2442,7 +2387,6 @@ kes =
     , namePlural = "Kenyan shillings"
     , symbolNative = "Ksh"
     , decimalDigits = 2
-    , rounding = 0
     , code = "KES"
     }
 
@@ -2456,7 +2400,6 @@ khr =
     , namePlural = "Cambodian riels"
     , symbolNative = "៛"
     , decimalDigits = 2
-    , rounding = 0
     , code = "KHR"
     }
 
@@ -2470,7 +2413,6 @@ kmf =
     , namePlural = "Comorian francs"
     , symbolNative = "FC"
     , decimalDigits = 0
-    , rounding = 0
     , code = "KMF"
     }
 
@@ -2484,7 +2426,6 @@ krw =
     , namePlural = "South Korean won"
     , symbolNative = "₩"
     , decimalDigits = 0
-    , rounding = 0
     , code = "KRW"
     }
 
@@ -2498,7 +2439,6 @@ kwd =
     , namePlural = "Kuwaiti dinars"
     , symbolNative = "د.ك.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "KWD"
     }
 
@@ -2512,7 +2452,6 @@ kzt =
     , namePlural = "Kazakhstani tenges"
     , symbolNative = "тңг."
     , decimalDigits = 2
-    , rounding = 0
     , code = "KZT"
     }
 
@@ -2526,7 +2465,6 @@ lak =
     , namePlural = "Lao kips"
     , symbolNative = "ກີບ"
     , decimalDigits = 2
-    , rounding = 0
     , code = "LAK"
     }
 
@@ -2540,7 +2478,6 @@ lbp =
     , namePlural = "Lebanese pounds"
     , symbolNative = "ل.ل.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "LBP"
     }
 
@@ -2554,7 +2491,6 @@ lkr =
     , namePlural = "Sri Lankan rupees"
     , symbolNative = "SL Re"
     , decimalDigits = 2
-    , rounding = 0
     , code = "LKR"
     }
 
@@ -2568,7 +2504,6 @@ ltl =
     , namePlural = "Lithuanian litai"
     , symbolNative = "Lt"
     , decimalDigits = 2
-    , rounding = 0
     , code = "LTL"
     }
 
@@ -2582,7 +2517,6 @@ lvl =
     , namePlural = "Latvian lati"
     , symbolNative = "Ls"
     , decimalDigits = 2
-    , rounding = 0
     , code = "LVL"
     }
 
@@ -2596,7 +2530,6 @@ lyd =
     , namePlural = "Libyan dinars"
     , symbolNative = "د.ل.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "LYD"
     }
 
@@ -2610,7 +2543,6 @@ mad =
     , namePlural = "Moroccan dirhams"
     , symbolNative = "د.م.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MAD"
     }
 
@@ -2624,7 +2556,6 @@ mdl =
     , namePlural = "Moldovan lei"
     , symbolNative = "MDL"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MDL"
     }
 
@@ -2638,7 +2569,6 @@ mga =
     , namePlural = "Malagasy Ariaries"
     , symbolNative = "MGA"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MGA"
     }
 
@@ -2652,7 +2582,6 @@ mkd =
     , namePlural = "Macedonian denari"
     , symbolNative = "MKD"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MKD"
     }
 
@@ -2666,7 +2595,6 @@ mmk =
     , namePlural = "Myanma kyats"
     , symbolNative = "K"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MMK"
     }
 
@@ -2680,7 +2608,6 @@ mop =
     , namePlural = "Macanese patacas"
     , symbolNative = "MOP$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MOP"
     }
 
@@ -2694,7 +2621,6 @@ mur =
     , namePlural = "Mauritian rupees"
     , symbolNative = "MURs"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MUR"
     }
 
@@ -2708,7 +2634,6 @@ mxn =
     , namePlural = "Mexican pesos"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MXN"
     }
 
@@ -2722,7 +2647,6 @@ myr =
     , namePlural = "Malaysian ringgits"
     , symbolNative = "RM"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MYR"
     }
 
@@ -2736,7 +2660,6 @@ mzn =
     , namePlural = "Mozambican meticals"
     , symbolNative = "MTn"
     , decimalDigits = 2
-    , rounding = 0
     , code = "MZN"
     }
 
@@ -2750,7 +2673,6 @@ nad =
     , namePlural = "Namibian dollars"
     , symbolNative = "N$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NAD"
     }
 
@@ -2764,7 +2686,6 @@ ngn =
     , namePlural = "Nigerian nairas"
     , symbolNative = "₦"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NGN"
     }
 
@@ -2778,7 +2699,6 @@ nio =
     , namePlural = "Nicaraguan córdobas"
     , symbolNative = "C$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NIO"
     }
 
@@ -2792,7 +2712,6 @@ nok =
     , namePlural = "Norwegian kroner"
     , symbolNative = "kr"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NOK"
     }
 
@@ -2806,7 +2725,6 @@ npr =
     , namePlural = "Nepalese rupees"
     , symbolNative = "नेरू"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NPR"
     }
 
@@ -2820,7 +2738,6 @@ nzd =
     , namePlural = "New Zealand dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "NZD"
     }
 
@@ -2834,7 +2751,6 @@ omr =
     , namePlural = "Omani rials"
     , symbolNative = "ر.ع.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "OMR"
     }
 
@@ -2848,7 +2764,6 @@ pab =
     , namePlural = "Panamanian balboas"
     , symbolNative = "B/."
     , decimalDigits = 2
-    , rounding = 0
     , code = "PAB"
     }
 
@@ -2862,7 +2777,6 @@ pen =
     , namePlural = "Peruvian nuevos soles"
     , symbolNative = "S/."
     , decimalDigits = 2
-    , rounding = 0
     , code = "PEN"
     }
 
@@ -2876,7 +2790,6 @@ php =
     , namePlural = "Philippine pesos"
     , symbolNative = "₱"
     , decimalDigits = 2
-    , rounding = 0
     , code = "PHP"
     }
 
@@ -2890,7 +2803,6 @@ pkr =
     , namePlural = "Pakistani rupees"
     , symbolNative = "₨"
     , decimalDigits = 2
-    , rounding = 0
     , code = "PKR"
     }
 
@@ -2904,7 +2816,6 @@ pln =
     , namePlural = "Polish zlotys"
     , symbolNative = "zł"
     , decimalDigits = 2
-    , rounding = 0
     , code = "PLN"
     }
 
@@ -2918,7 +2829,6 @@ pyg =
     , namePlural = "Paraguayan guaranis"
     , symbolNative = "₲"
     , decimalDigits = 0
-    , rounding = 0
     , code = "PYG"
     }
 
@@ -2932,7 +2842,6 @@ qar =
     , namePlural = "Qatari rials"
     , symbolNative = "ر.ق.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "QAR"
     }
 
@@ -2946,7 +2855,6 @@ ron =
     , namePlural = "Romanian lei"
     , symbolNative = "RON"
     , decimalDigits = 2
-    , rounding = 0
     , code = "RON"
     }
 
@@ -2960,7 +2868,6 @@ rsd =
     , namePlural = "Serbian dinars"
     , symbolNative = "дин."
     , decimalDigits = 2
-    , rounding = 0
     , code = "RSD"
     }
 
@@ -2974,7 +2881,6 @@ rub =
     , namePlural = "Russian rubles"
     , symbolNative = "₽"
     , decimalDigits = 2
-    , rounding = 0
     , code = "RUB"
     }
 
@@ -2988,7 +2894,6 @@ rwf =
     , namePlural = "Rwandan francs"
     , symbolNative = "FR"
     , decimalDigits = 0
-    , rounding = 0
     , code = "RWF"
     }
 
@@ -3002,7 +2907,6 @@ sar =
     , namePlural = "Saudi riyals"
     , symbolNative = "ر.س.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SAR"
     }
 
@@ -3016,7 +2920,6 @@ sdg =
     , namePlural = "Sudanese pounds"
     , symbolNative = "SDG"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SDG"
     }
 
@@ -3030,7 +2933,6 @@ sek =
     , namePlural = "Swedish kronor"
     , symbolNative = "kr"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SEK"
     }
 
@@ -3044,7 +2946,6 @@ sgd =
     , namePlural = "Singapore dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SGD"
     }
 
@@ -3058,7 +2959,6 @@ sos =
     , namePlural = "Somali shillings"
     , symbolNative = "Ssh"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SOS"
     }
 
@@ -3072,7 +2972,6 @@ syp =
     , namePlural = "Syrian pounds"
     , symbolNative = "ل.س.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "SYP"
     }
 
@@ -3086,7 +2985,6 @@ thb =
     , namePlural = "Thai baht"
     , symbolNative = "฿"
     , decimalDigits = 2
-    , rounding = 0
     , code = "THB"
     }
 
@@ -3100,7 +2998,6 @@ tnd =
     , namePlural = "Tunisian dinars"
     , symbolNative = "د.ت.\x200F"
     , decimalDigits = 3
-    , rounding = 0
     , code = "TND"
     }
 
@@ -3114,7 +3011,6 @@ top =
     , namePlural = "Tongan paʻanga"
     , symbolNative = "T$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "TOP"
     }
 
@@ -3128,7 +3024,6 @@ try =
     , namePlural = "Turkish Lira"
     , symbolNative = "TL"
     , decimalDigits = 2
-    , rounding = 0
     , code = "TRY"
     }
 
@@ -3142,7 +3037,6 @@ ttd =
     , namePlural = "Trinidad and Tobago dollars"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "TTD"
     }
 
@@ -3156,7 +3050,6 @@ twd =
     , namePlural = "New Taiwan dollars"
     , symbolNative = "NT$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "TWD"
     }
 
@@ -3170,7 +3063,6 @@ tzs =
     , namePlural = "Tanzanian shillings"
     , symbolNative = "TSh"
     , decimalDigits = 2
-    , rounding = 0
     , code = "TZS"
     }
 
@@ -3184,7 +3076,6 @@ uah =
     , namePlural = "Ukrainian hryvnias"
     , symbolNative = "₴"
     , decimalDigits = 2
-    , rounding = 0
     , code = "UAH"
     }
 
@@ -3198,7 +3089,6 @@ ugx =
     , namePlural = "Ugandan shillings"
     , symbolNative = "USh"
     , decimalDigits = 0
-    , rounding = 0
     , code = "UGX"
     }
 
@@ -3212,7 +3102,6 @@ uyu =
     , namePlural = "Uruguayan pesos"
     , symbolNative = "$"
     , decimalDigits = 2
-    , rounding = 0
     , code = "UYU"
     }
 
@@ -3226,7 +3115,6 @@ uzs =
     , namePlural = "Uzbekistan som"
     , symbolNative = "UZS"
     , decimalDigits = 2
-    , rounding = 0
     , code = "UZS"
     }
 
@@ -3240,7 +3128,6 @@ vef =
     , namePlural = "Venezuelan bolívars"
     , symbolNative = "Bs.F."
     , decimalDigits = 2
-    , rounding = 0
     , code = "VEF"
     }
 
@@ -3254,7 +3141,6 @@ vnd =
     , namePlural = "Vietnamese dong"
     , symbolNative = "₫"
     , decimalDigits = 0
-    , rounding = 0
     , code = "VND"
     }
 
@@ -3268,7 +3154,6 @@ xaf =
     , namePlural = "CFA francs BEAC"
     , symbolNative = "FCFA"
     , decimalDigits = 0
-    , rounding = 0
     , code = "XAF"
     }
 
@@ -3282,7 +3167,6 @@ xof =
     , namePlural = "CFA francs BCEAO"
     , symbolNative = "CFA"
     , decimalDigits = 0
-    , rounding = 0
     , code = "XOF"
     }
 
@@ -3296,7 +3180,6 @@ yer =
     , namePlural = "Yemeni rials"
     , symbolNative = "ر.ي.\x200F"
     , decimalDigits = 2
-    , rounding = 0
     , code = "YER"
     }
 
@@ -3310,7 +3193,6 @@ zar =
     , namePlural = "South African rand"
     , symbolNative = "R"
     , decimalDigits = 2
-    , rounding = 0
     , code = "ZAR"
     }
 
@@ -3324,6 +3206,5 @@ zmk =
     , namePlural = "Zambian kwachas"
     , symbolNative = "ZK"
     , decimalDigits = 0
-    , rounding = 0
     , code = "ZMK"
     }
