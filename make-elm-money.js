@@ -148,5 +148,5 @@ var outputFile = "./src/Money.elm";
 
 fs.writeFileSync(outputFile, output);
 
-cp.execSync(`elm-format ${outputFile} --yes`);
+cp.execSync(`elm-format ${outputFile} --yes --elm-version 0.19`);
 

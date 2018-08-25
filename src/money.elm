@@ -1,133 +1,9 @@
-module Money
-    exposing
-        ( Code(..)
-        , Currency
-        , aed
-        , afn
-        , all
-        , allCodes
-        , allCurrencies
-        , amd
-        , ars
-        , aud
-        , azn
-        , bam
-        , bdt
-        , bgn
-        , bhd
-        , bif
-        , bnd
-        , bob
-        , brl
-        , btc
-        , bwp
-        , byr
-        , bzd
-        , cad
-        , cdf
-        , chf
-        , clp
-        , cny
-        , codeFromString
-        , cop
-        , crc
-        , currencyFromCode
-        , currencyFromString
-        , cve
-        , czk
-        , djf
-        , dkk
-        , dop
-        , dzd
-        , eek
-        , egp
-        , ern
-        , etb
-        , eur
-        , gbp
-        , gel
-        , ghs
-        , gnf
-        , gtq
-        , hkd
-        , hnl
-        , hrk
-        , huf
-        , idr
-        , ils
-        , inr
-        , iqd
-        , irr
-        , isk
-        , jmd
-        , jod
-        , jpy
-        , kes
-        , khr
-        , kmf
-        , krw
-        , kwd
-        , kzt
-        , lak
-        , lbp
-        , lkr
-        , ltl
-        , lvl
-        , lyd
-        , mad
-        , mdl
-        , mga
-        , mkd
-        , mmk
-        , mop
-        , mur
-        , mxn
-        , myr
-        , mzn
-        , nad
-        , ngn
-        , nio
-        , nok
-        , npr
-        , nzd
-        , omr
-        , pab
-        , pen
-        , php
-        , pkr
-        , pln
-        , pyg
-        , qar
-        , ron
-        , rsd
-        , rub
-        , rwf
-        , sar
-        , sdg
-        , sek
-        , sgd
-        , sos
-        , syp
-        , thb
-        , tnd
-        , top
-        , try
-        , ttd
-        , twd
-        , tzs
-        , uah
-        , ugx
-        , usd
-        , uyu
-        , uzs
-        , vef
-        , vnd
-        , xaf
-        , xof
-        , yer
-        , zar
-        , zmk
-        )
+module Money exposing
+    ( Currency, Code(..)
+    , allCurrencies, allCodes
+    , currencyFromString, currencyFromCode, codeFromString
+    , usd, cad, eur, btc, aed, afn, all, amd, ars, aud, azn, bam, bdt, bgn, bhd, bif, bnd, bob, brl, bwp, byr, bzd, cdf, chf, clp, cny, cop, crc, cve, czk, djf, dkk, dop, dzd, eek, egp, ern, etb, gbp, gel, ghs, gnf, gtq, hkd, hnl, hrk, huf, idr, ils, inr, iqd, irr, isk, jmd, jod, jpy, kes, khr, kmf, krw, kwd, kzt, lak, lbp, lkr, ltl, lvl, lyd, mad, mdl, mga, mkd, mmk, mop, mur, mxn, myr, mzn, nad, ngn, nio, nok, npr, nzd, omr, pab, pen, php, pkr, pln, pyg, qar, ron, rsd, rub, rwf, sar, sdg, sek, sgd, sos, syp, thb, tnd, top, try, ttd, twd, tzs, uah, ugx, uyu, uzs, vef, vnd, xaf, xof, yer, zar, zmk
+    )
 
 {-| All the worlds currencies as records and union types, with helper functions too.
 
@@ -1707,7 +1583,7 @@ aed =
     { symbol = "AED"
     , name = "United Arab Emirates Dirham"
     , namePlural = "UAE dirhams"
-    , symbolNative = "د.إ.\x200F"
+    , symbolNative = "د.إ.\u{200F}"
     , decimalDigits = 2
     , code = "AED"
     }
@@ -1837,7 +1713,7 @@ bhd =
     { symbol = "BD"
     , name = "Bahraini Dinar"
     , namePlural = "Bahraini dinars"
-    , symbolNative = "د.ب.\x200F"
+    , symbolNative = "د.ب.\u{200F}"
     , decimalDigits = 3
     , code = "BHD"
     }
@@ -2084,7 +1960,7 @@ dzd =
     { symbol = "DA"
     , name = "Algerian Dinar"
     , namePlural = "Algerian dinars"
-    , symbolNative = "د.ج.\x200F"
+    , symbolNative = "د.ج.\u{200F}"
     , decimalDigits = 2
     , code = "DZD"
     }
@@ -2110,7 +1986,7 @@ egp =
     { symbol = "EGP"
     , name = "Egyptian Pound"
     , namePlural = "Egyptian pounds"
-    , symbolNative = "ج.م.\x200F"
+    , symbolNative = "ج.م.\u{200F}"
     , decimalDigits = 2
     , code = "EGP"
     }
@@ -2305,7 +2181,7 @@ iqd =
     { symbol = "IQD"
     , name = "Iraqi Dinar"
     , namePlural = "Iraqi dinars"
-    , symbolNative = "د.ع.\x200F"
+    , symbolNative = "د.ع.\u{200F}"
     , decimalDigits = 3
     , code = "IQD"
     }
@@ -2357,7 +2233,7 @@ jod =
     { symbol = "JD"
     , name = "Jordanian Dinar"
     , namePlural = "Jordanian dinars"
-    , symbolNative = "د.أ.\x200F"
+    , symbolNative = "د.أ.\u{200F}"
     , decimalDigits = 3
     , code = "JOD"
     }
@@ -2435,7 +2311,7 @@ kwd =
     { symbol = "KD"
     , name = "Kuwaiti Dinar"
     , namePlural = "Kuwaiti dinars"
-    , symbolNative = "د.ك.\x200F"
+    , symbolNative = "د.ك.\u{200F}"
     , decimalDigits = 3
     , code = "KWD"
     }
@@ -2474,7 +2350,7 @@ lbp =
     { symbol = "LB£"
     , name = "Lebanese Pound"
     , namePlural = "Lebanese pounds"
-    , symbolNative = "ل.ل.\x200F"
+    , symbolNative = "ل.ل.\u{200F}"
     , decimalDigits = 2
     , code = "LBP"
     }
@@ -2526,7 +2402,7 @@ lyd =
     { symbol = "LD"
     , name = "Libyan Dinar"
     , namePlural = "Libyan dinars"
-    , symbolNative = "د.ل.\x200F"
+    , symbolNative = "د.ل.\u{200F}"
     , decimalDigits = 3
     , code = "LYD"
     }
@@ -2539,7 +2415,7 @@ mad =
     { symbol = "MAD"
     , name = "Moroccan Dirham"
     , namePlural = "Moroccan dirhams"
-    , symbolNative = "د.م.\x200F"
+    , symbolNative = "د.م.\u{200F}"
     , decimalDigits = 2
     , code = "MAD"
     }
@@ -2747,7 +2623,7 @@ omr =
     { symbol = "OMR"
     , name = "Omani Rial"
     , namePlural = "Omani rials"
-    , symbolNative = "ر.ع.\x200F"
+    , symbolNative = "ر.ع.\u{200F}"
     , decimalDigits = 3
     , code = "OMR"
     }
@@ -2838,7 +2714,7 @@ qar =
     { symbol = "QR"
     , name = "Qatari Rial"
     , namePlural = "Qatari rials"
-    , symbolNative = "ر.ق.\x200F"
+    , symbolNative = "ر.ق.\u{200F}"
     , decimalDigits = 2
     , code = "QAR"
     }
@@ -2903,7 +2779,7 @@ sar =
     { symbol = "SR"
     , name = "Saudi Riyal"
     , namePlural = "Saudi riyals"
-    , symbolNative = "ر.س.\x200F"
+    , symbolNative = "ر.س.\u{200F}"
     , decimalDigits = 2
     , code = "SAR"
     }
@@ -2968,7 +2844,7 @@ syp =
     { symbol = "SY£"
     , name = "Syrian Pound"
     , namePlural = "Syrian pounds"
-    , symbolNative = "ل.س.\x200F"
+    , symbolNative = "ل.س.\u{200F}"
     , decimalDigits = 2
     , code = "SYP"
     }
@@ -2994,7 +2870,7 @@ tnd =
     { symbol = "DT"
     , name = "Tunisian Dinar"
     , namePlural = "Tunisian dinars"
-    , symbolNative = "د.ت.\x200F"
+    , symbolNative = "د.ت.\u{200F}"
     , decimalDigits = 3
     , code = "TND"
     }
@@ -3176,7 +3052,7 @@ yer =
     { symbol = "YR"
     , name = "Yemeni Rial"
     , namePlural = "Yemeni rials"
-    , symbolNative = "ر.ي.\x200F"
+    , symbolNative = "ر.ي.\u{200F}"
     , decimalDigits = 2
     , code = "YER"
     }
