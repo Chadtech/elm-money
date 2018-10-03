@@ -1,9 +1,135 @@
-module Money exposing
-    ( Currency, Code(..)
-    , allCurrencies, allCodes
-    , currencyFromString, currencyFromCode, codeFromString
-    , usd, cad, eur, btc, aed, afn, all, amd, ars, aud, azn, bam, bdt, bgn, bhd, bif, bnd, bob, brl, bwp, byr, bzd, cdf, chf, clp, cny, cop, crc, cve, czk, djf, dkk, dop, dzd, eek, egp, ern, etb, gbp, gel, ghs, gnf, gtq, hkd, hnl, hrk, huf, idr, ils, inr, iqd, irr, isk, jmd, jod, jpy, kes, khr, kmf, krw, kwd, kzt, lak, lbp, lkr, ltl, lvl, lyd, mad, mdl, mga, mkd, mmk, mop, mur, mxn, myr, mzn, nad, ngn, nio, nok, npr, nzd, omr, pab, pen, php, pkr, pln, pyg, qar, ron, rsd, rub, rwf, sar, sdg, sek, sgd, sos, syp, thb, tnd, top, try, ttd, twd, tzs, uah, ugx, uyu, uzs, vef, vnd, xaf, xof, yer, zar, zmk
-    )
+module Money
+    exposing
+        ( currencyFromCode
+        , Code(..)
+        , Currency
+        , codeFromString
+        , allCodes
+        , currencyFromString
+        , allCurrencies
+        , usd
+        , cad
+        , eur
+        , btc
+        , aed
+        , afn
+        , all
+        , amd
+        , ars
+        , aud
+        , azn
+        , bam
+        , bdt
+        , bgn
+        , bhd
+        , bif
+        , bnd
+        , bob
+        , brl
+        , bwp
+        , byr
+        , bzd
+        , cdf
+        , chf
+        , clp
+        , cny
+        , cop
+        , crc
+        , cve
+        , czk
+        , djf
+        , dkk
+        , dop
+        , dzd
+        , eek
+        , egp
+        , ern
+        , etb
+        , gbp
+        , gel
+        , ghs
+        , gnf
+        , gtq
+        , hkd
+        , hnl
+        , hrk
+        , huf
+        , idr
+        , ils
+        , inr
+        , iqd
+        , irr
+        , isk
+        , jmd
+        , jod
+        , jpy
+        , kes
+        , khr
+        , kmf
+        , krw
+        , kwd
+        , kzt
+        , lak
+        , lbp
+        , lkr
+        , ltl
+        , lvl
+        , lyd
+        , mad
+        , mdl
+        , mga
+        , mkd
+        , mmk
+        , mop
+        , mur
+        , mxn
+        , myr
+        , mzn
+        , nad
+        , ngn
+        , nio
+        , nok
+        , npr
+        , nzd
+        , omr
+        , pab
+        , pen
+        , php
+        , pkr
+        , pln
+        , pyg
+        , qar
+        , ron
+        , rsd
+        , rub
+        , rwf
+        , sar
+        , sdg
+        , sek
+        , sgd
+        , sos
+        , syp
+        , thb
+        , tnd
+        , top
+        , try
+        , ttd
+        , twd
+        , tzs
+        , uah
+        , ugx
+        , uyu
+        , uzs
+        , vef
+        , vnd
+        , xaf
+        , xof
+        , yer
+        , zar
+        , zmk
+
+        )
+
 
 {-| All the worlds currencies as records and union types, with helper functions too.
 
@@ -12,16 +138,13 @@ module Money exposing
 
 @docs Currency, Code
 
-
 # Values
 
 @docs allCurrencies, allCodes
 
-
 # Helpers
 
 @docs currencyFromString, currencyFromCode, codeFromString
-
 
 # Currencies
 
@@ -30,7 +153,7 @@ module Money exposing
 -}
 
 
-{-| -}
+{-|-}
 type alias Currency =
     { symbol : String
     , name : String
@@ -41,136 +164,138 @@ type alias Currency =
     }
 
 
-{-| This type represents all the possible currency codes
--}
+{-| This type represents all the possible currency codes -}
 type Code
-    = USD
-    | CAD
-    | EUR
-    | BTC
-    | AED
-    | AFN
-    | ALL
-    | AMD
-    | ARS
-    | AUD
-    | AZN
-    | BAM
-    | BDT
-    | BGN
-    | BHD
-    | BIF
-    | BND
-    | BOB
-    | BRL
-    | BWP
-    | BYR
-    | BZD
-    | CDF
-    | CHF
-    | CLP
-    | CNY
-    | COP
-    | CRC
-    | CVE
-    | CZK
-    | DJF
-    | DKK
-    | DOP
-    | DZD
-    | EEK
-    | EGP
-    | ERN
-    | ETB
-    | GBP
-    | GEL
-    | GHS
-    | GNF
-    | GTQ
-    | HKD
-    | HNL
-    | HRK
-    | HUF
-    | IDR
-    | ILS
-    | INR
-    | IQD
-    | IRR
-    | ISK
-    | JMD
-    | JOD
-    | JPY
-    | KES
-    | KHR
-    | KMF
-    | KRW
-    | KWD
-    | KZT
-    | LAK
-    | LBP
-    | LKR
-    | LTL
-    | LVL
-    | LYD
-    | MAD
-    | MDL
-    | MGA
-    | MKD
-    | MMK
-    | MOP
-    | MUR
-    | MXN
-    | MYR
-    | MZN
-    | NAD
-    | NGN
-    | NIO
-    | NOK
-    | NPR
-    | NZD
-    | OMR
-    | PAB
-    | PEN
-    | PHP
-    | PKR
-    | PLN
-    | PYG
-    | QAR
-    | RON
-    | RSD
-    | RUB
-    | RWF
-    | SAR
-    | SDG
-    | SEK
-    | SGD
-    | SOS
-    | SYP
-    | THB
-    | TND
-    | TOP
-    | TRY
-    | TTD
-    | TWD
-    | TZS
-    | UAH
-    | UGX
-    | UYU
-    | UZS
-    | VEF
-    | VND
-    | XAF
-    | XOF
-    | YER
-    | ZAR
-    | ZMK
+  = USD
+
+  | CAD
+  | EUR
+  | BTC
+  | AED
+  | AFN
+  | ALL
+  | AMD
+  | ARS
+  | AUD
+  | AZN
+  | BAM
+  | BDT
+  | BGN
+  | BHD
+  | BIF
+  | BND
+  | BOB
+  | BRL
+  | BWP
+  | BYR
+  | BZD
+  | CDF
+  | CHF
+  | CLP
+  | CNY
+  | COP
+  | CRC
+  | CVE
+  | CZK
+  | DJF
+  | DKK
+  | DOP
+  | DZD
+  | EEK
+  | EGP
+  | ERN
+  | ETB
+  | GBP
+  | GEL
+  | GHS
+  | GNF
+  | GTQ
+  | HKD
+  | HNL
+  | HRK
+  | HUF
+  | IDR
+  | ILS
+  | INR
+  | IQD
+  | IRR
+  | ISK
+  | JMD
+  | JOD
+  | JPY
+  | KES
+  | KHR
+  | KMF
+  | KRW
+  | KWD
+  | KZT
+  | LAK
+  | LBP
+  | LKR
+  | LTL
+  | LVL
+  | LYD
+  | MAD
+  | MDL
+  | MGA
+  | MKD
+  | MMK
+  | MOP
+  | MUR
+  | MXN
+  | MYR
+  | MZN
+  | NAD
+  | NGN
+  | NIO
+  | NOK
+  | NPR
+  | NZD
+  | OMR
+  | PAB
+  | PEN
+  | PHP
+  | PKR
+  | PLN
+  | PYG
+  | QAR
+  | RON
+  | RSD
+  | RUB
+  | RWF
+  | SAR
+  | SDG
+  | SEK
+  | SGD
+  | SOS
+  | SYP
+  | THB
+  | TND
+  | TOP
+  | TRY
+  | TTD
+  | TWD
+  | TZS
+  | UAH
+  | UGX
+  | UYU
+  | UZS
+  | VEF
+  | VND
+  | XAF
+  | XOF
+  | YER
+  | ZAR
+  | ZMK
 
 
-{-| A list of all the currencies
--}
+{-| A list of all the currencies -}
 allCurrencies : List Currency
+
 allCurrencies =
+
     [ usd
+
     , cad
     , eur
     , btc
@@ -292,12 +417,13 @@ allCurrencies =
     , zmk
     ]
 
-
-{-| A list of all the currency codes
--}
+{-| A list of all the currency codes -}
 allCodes : List Code
+
 allCodes =
+
     [ USD
+
     , CAD
     , EUR
     , BTC
@@ -419,1104 +545,742 @@ allCodes =
     , ZMK
     ]
 
-
-{-| Get the currency from a code, with no Maybes involved
--}
+{-| Get the currency from a code, with no Maybes involved -}
 currencyFromCode : Code -> Currency
 currencyFromCode code =
     case code of
         USD ->
             usd
-
         CAD ->
             cad
-
         EUR ->
             eur
-
         BTC ->
             btc
-
         AED ->
             aed
-
         AFN ->
             afn
-
         ALL ->
             all
-
         AMD ->
             amd
-
         ARS ->
             ars
-
         AUD ->
             aud
-
         AZN ->
             azn
-
         BAM ->
             bam
-
         BDT ->
             bdt
-
         BGN ->
             bgn
-
         BHD ->
             bhd
-
         BIF ->
             bif
-
         BND ->
             bnd
-
         BOB ->
             bob
-
         BRL ->
             brl
-
         BWP ->
             bwp
-
         BYR ->
             byr
-
         BZD ->
             bzd
-
         CDF ->
             cdf
-
         CHF ->
             chf
-
         CLP ->
             clp
-
         CNY ->
             cny
-
         COP ->
             cop
-
         CRC ->
             crc
-
         CVE ->
             cve
-
         CZK ->
             czk
-
         DJF ->
             djf
-
         DKK ->
             dkk
-
         DOP ->
             dop
-
         DZD ->
             dzd
-
         EEK ->
             eek
-
         EGP ->
             egp
-
         ERN ->
             ern
-
         ETB ->
             etb
-
         GBP ->
             gbp
-
         GEL ->
             gel
-
         GHS ->
             ghs
-
         GNF ->
             gnf
-
         GTQ ->
             gtq
-
         HKD ->
             hkd
-
         HNL ->
             hnl
-
         HRK ->
             hrk
-
         HUF ->
             huf
-
         IDR ->
             idr
-
         ILS ->
             ils
-
         INR ->
             inr
-
         IQD ->
             iqd
-
         IRR ->
             irr
-
         ISK ->
             isk
-
         JMD ->
             jmd
-
         JOD ->
             jod
-
         JPY ->
             jpy
-
         KES ->
             kes
-
         KHR ->
             khr
-
         KMF ->
             kmf
-
         KRW ->
             krw
-
         KWD ->
             kwd
-
         KZT ->
             kzt
-
         LAK ->
             lak
-
         LBP ->
             lbp
-
         LKR ->
             lkr
-
         LTL ->
             ltl
-
         LVL ->
             lvl
-
         LYD ->
             lyd
-
         MAD ->
             mad
-
         MDL ->
             mdl
-
         MGA ->
             mga
-
         MKD ->
             mkd
-
         MMK ->
             mmk
-
         MOP ->
             mop
-
         MUR ->
             mur
-
         MXN ->
             mxn
-
         MYR ->
             myr
-
         MZN ->
             mzn
-
         NAD ->
             nad
-
         NGN ->
             ngn
-
         NIO ->
             nio
-
         NOK ->
             nok
-
         NPR ->
             npr
-
         NZD ->
             nzd
-
         OMR ->
             omr
-
         PAB ->
             pab
-
         PEN ->
             pen
-
         PHP ->
             php
-
         PKR ->
             pkr
-
         PLN ->
             pln
-
         PYG ->
             pyg
-
         QAR ->
             qar
-
         RON ->
             ron
-
         RSD ->
             rsd
-
         RUB ->
             rub
-
         RWF ->
             rwf
-
         SAR ->
             sar
-
         SDG ->
             sdg
-
         SEK ->
             sek
-
         SGD ->
             sgd
-
         SOS ->
             sos
-
         SYP ->
             syp
-
         THB ->
             thb
-
         TND ->
             tnd
-
         TOP ->
             top
-
         TRY ->
             try
-
         TTD ->
             ttd
-
         TWD ->
             twd
-
         TZS ->
             tzs
-
         UAH ->
             uah
-
         UGX ->
             ugx
-
         UYU ->
             uyu
-
         UZS ->
             uzs
-
         VEF ->
             vef
-
         VND ->
             vnd
-
         XAF ->
             xaf
-
         XOF ->
             xof
-
         YER ->
             yer
-
         ZAR ->
             zar
-
         ZMK ->
             zmk
 
 
-{-| Get the currency code from a string
--}
+{-| Get the currency code from a string -}
 codeFromString : String -> Maybe Code
 codeFromString str =
     case String.toLower str of
         "usd" ->
             Just USD
-
         "cad" ->
             Just CAD
-
         "eur" ->
             Just EUR
-
         "btc" ->
             Just BTC
-
         "aed" ->
             Just AED
-
         "afn" ->
             Just AFN
-
         "all" ->
             Just ALL
-
         "amd" ->
             Just AMD
-
         "ars" ->
             Just ARS
-
         "aud" ->
             Just AUD
-
         "azn" ->
             Just AZN
-
         "bam" ->
             Just BAM
-
         "bdt" ->
             Just BDT
-
         "bgn" ->
             Just BGN
-
         "bhd" ->
             Just BHD
-
         "bif" ->
             Just BIF
-
         "bnd" ->
             Just BND
-
         "bob" ->
             Just BOB
-
         "brl" ->
             Just BRL
-
         "bwp" ->
             Just BWP
-
         "byr" ->
             Just BYR
-
         "bzd" ->
             Just BZD
-
         "cdf" ->
             Just CDF
-
         "chf" ->
             Just CHF
-
         "clp" ->
             Just CLP
-
         "cny" ->
             Just CNY
-
         "cop" ->
             Just COP
-
         "crc" ->
             Just CRC
-
         "cve" ->
             Just CVE
-
         "czk" ->
             Just CZK
-
         "djf" ->
             Just DJF
-
         "dkk" ->
             Just DKK
-
         "dop" ->
             Just DOP
-
         "dzd" ->
             Just DZD
-
         "eek" ->
             Just EEK
-
         "egp" ->
             Just EGP
-
         "ern" ->
             Just ERN
-
         "etb" ->
             Just ETB
-
         "gbp" ->
             Just GBP
-
         "gel" ->
             Just GEL
-
         "ghs" ->
             Just GHS
-
         "gnf" ->
             Just GNF
-
         "gtq" ->
             Just GTQ
-
         "hkd" ->
             Just HKD
-
         "hnl" ->
             Just HNL
-
         "hrk" ->
             Just HRK
-
         "huf" ->
             Just HUF
-
         "idr" ->
             Just IDR
-
         "ils" ->
             Just ILS
-
         "inr" ->
             Just INR
-
         "iqd" ->
             Just IQD
-
         "irr" ->
             Just IRR
-
         "isk" ->
             Just ISK
-
         "jmd" ->
             Just JMD
-
         "jod" ->
             Just JOD
-
         "jpy" ->
             Just JPY
-
         "kes" ->
             Just KES
-
         "khr" ->
             Just KHR
-
         "kmf" ->
             Just KMF
-
         "krw" ->
             Just KRW
-
         "kwd" ->
             Just KWD
-
         "kzt" ->
             Just KZT
-
         "lak" ->
             Just LAK
-
         "lbp" ->
             Just LBP
-
         "lkr" ->
             Just LKR
-
         "ltl" ->
             Just LTL
-
         "lvl" ->
             Just LVL
-
         "lyd" ->
             Just LYD
-
         "mad" ->
             Just MAD
-
         "mdl" ->
             Just MDL
-
         "mga" ->
             Just MGA
-
         "mkd" ->
             Just MKD
-
         "mmk" ->
             Just MMK
-
         "mop" ->
             Just MOP
-
         "mur" ->
             Just MUR
-
         "mxn" ->
             Just MXN
-
         "myr" ->
             Just MYR
-
         "mzn" ->
             Just MZN
-
         "nad" ->
             Just NAD
-
         "ngn" ->
             Just NGN
-
         "nio" ->
             Just NIO
-
         "nok" ->
             Just NOK
-
         "npr" ->
             Just NPR
-
         "nzd" ->
             Just NZD
-
         "omr" ->
             Just OMR
-
         "pab" ->
             Just PAB
-
         "pen" ->
             Just PEN
-
         "php" ->
             Just PHP
-
         "pkr" ->
             Just PKR
-
         "pln" ->
             Just PLN
-
         "pyg" ->
             Just PYG
-
         "qar" ->
             Just QAR
-
         "ron" ->
             Just RON
-
         "rsd" ->
             Just RSD
-
         "rub" ->
             Just RUB
-
         "rwf" ->
             Just RWF
-
         "sar" ->
             Just SAR
-
         "sdg" ->
             Just SDG
-
         "sek" ->
             Just SEK
-
         "sgd" ->
             Just SGD
-
         "sos" ->
             Just SOS
-
         "syp" ->
             Just SYP
-
         "thb" ->
             Just THB
-
         "tnd" ->
             Just TND
-
         "top" ->
             Just TOP
-
         "try" ->
             Just TRY
-
         "ttd" ->
             Just TTD
-
         "twd" ->
             Just TWD
-
         "tzs" ->
             Just TZS
-
         "uah" ->
             Just UAH
-
         "ugx" ->
             Just UGX
-
         "uyu" ->
             Just UYU
-
         "uzs" ->
             Just UZS
-
         "vef" ->
             Just VEF
-
         "vnd" ->
             Just VND
-
         "xaf" ->
             Just XAF
-
         "xof" ->
             Just XOF
-
         "yer" ->
             Just YER
-
         "zar" ->
             Just ZAR
-
         "zmk" ->
             Just ZMK
 
         _ ->
             Nothing
 
-
-{-| Get the currency from a string
--}
+{-| Get the currency from a string -}
 currencyFromString : String -> Maybe Currency
 currencyFromString str =
     case String.toLower str of
         "usd" ->
             Just usd
-
         "cad" ->
             Just cad
-
         "eur" ->
             Just eur
-
         "btc" ->
             Just btc
-
         "aed" ->
             Just aed
-
         "afn" ->
             Just afn
-
         "all" ->
             Just all
-
         "amd" ->
             Just amd
-
         "ars" ->
             Just ars
-
         "aud" ->
             Just aud
-
         "azn" ->
             Just azn
-
         "bam" ->
             Just bam
-
         "bdt" ->
             Just bdt
-
         "bgn" ->
             Just bgn
-
         "bhd" ->
             Just bhd
-
         "bif" ->
             Just bif
-
         "bnd" ->
             Just bnd
-
         "bob" ->
             Just bob
-
         "brl" ->
             Just brl
-
         "bwp" ->
             Just bwp
-
         "byr" ->
             Just byr
-
         "bzd" ->
             Just bzd
-
         "cdf" ->
             Just cdf
-
         "chf" ->
             Just chf
-
         "clp" ->
             Just clp
-
         "cny" ->
             Just cny
-
         "cop" ->
             Just cop
-
         "crc" ->
             Just crc
-
         "cve" ->
             Just cve
-
         "czk" ->
             Just czk
-
         "djf" ->
             Just djf
-
         "dkk" ->
             Just dkk
-
         "dop" ->
             Just dop
-
         "dzd" ->
             Just dzd
-
         "eek" ->
             Just eek
-
         "egp" ->
             Just egp
-
         "ern" ->
             Just ern
-
         "etb" ->
             Just etb
-
         "gbp" ->
             Just gbp
-
         "gel" ->
             Just gel
-
         "ghs" ->
             Just ghs
-
         "gnf" ->
             Just gnf
-
         "gtq" ->
             Just gtq
-
         "hkd" ->
             Just hkd
-
         "hnl" ->
             Just hnl
-
         "hrk" ->
             Just hrk
-
         "huf" ->
             Just huf
-
         "idr" ->
             Just idr
-
         "ils" ->
             Just ils
-
         "inr" ->
             Just inr
-
         "iqd" ->
             Just iqd
-
         "irr" ->
             Just irr
-
         "isk" ->
             Just isk
-
         "jmd" ->
             Just jmd
-
         "jod" ->
             Just jod
-
         "jpy" ->
             Just jpy
-
         "kes" ->
             Just kes
-
         "khr" ->
             Just khr
-
         "kmf" ->
             Just kmf
-
         "krw" ->
             Just krw
-
         "kwd" ->
             Just kwd
-
         "kzt" ->
             Just kzt
-
         "lak" ->
             Just lak
-
         "lbp" ->
             Just lbp
-
         "lkr" ->
             Just lkr
-
         "ltl" ->
             Just ltl
-
         "lvl" ->
             Just lvl
-
         "lyd" ->
             Just lyd
-
         "mad" ->
             Just mad
-
         "mdl" ->
             Just mdl
-
         "mga" ->
             Just mga
-
         "mkd" ->
             Just mkd
-
         "mmk" ->
             Just mmk
-
         "mop" ->
             Just mop
-
         "mur" ->
             Just mur
-
         "mxn" ->
             Just mxn
-
         "myr" ->
             Just myr
-
         "mzn" ->
             Just mzn
-
         "nad" ->
             Just nad
-
         "ngn" ->
             Just ngn
-
         "nio" ->
             Just nio
-
         "nok" ->
             Just nok
-
         "npr" ->
             Just npr
-
         "nzd" ->
             Just nzd
-
         "omr" ->
             Just omr
-
         "pab" ->
             Just pab
-
         "pen" ->
             Just pen
-
         "php" ->
             Just php
-
         "pkr" ->
             Just pkr
-
         "pln" ->
             Just pln
-
         "pyg" ->
             Just pyg
-
         "qar" ->
             Just qar
-
         "ron" ->
             Just ron
-
         "rsd" ->
             Just rsd
-
         "rub" ->
             Just rub
-
         "rwf" ->
             Just rwf
-
         "sar" ->
             Just sar
-
         "sdg" ->
             Just sdg
-
         "sek" ->
             Just sek
-
         "sgd" ->
             Just sgd
-
         "sos" ->
             Just sos
-
         "syp" ->
             Just syp
-
         "thb" ->
             Just thb
-
         "tnd" ->
             Just tnd
-
         "top" ->
             Just top
-
         "try" ->
             Just try
-
         "ttd" ->
             Just ttd
-
         "twd" ->
             Just twd
-
         "tzs" ->
             Just tzs
-
         "uah" ->
             Just uah
-
         "ugx" ->
             Just ugx
-
         "uyu" ->
             Just uyu
-
         "uzs" ->
             Just uzs
-
         "vef" ->
             Just vef
-
         "vnd" ->
             Just vnd
-
         "xaf" ->
             Just xaf
-
         "xof" ->
             Just xof
-
         "yer" ->
             Just yer
-
         "zar" ->
             Just zar
-
         "zmk" ->
             Just zmk
 
@@ -1524,8 +1288,8 @@ currencyFromString str =
             Nothing
 
 
-{-| US Dollar
--}
+{-| US Dollar -}
+
 usd : Currency
 usd =
     { symbol = "$"
@@ -1536,9 +1300,8 @@ usd =
     , code = "USD"
     }
 
+{-| Canadian Dollar -}
 
-{-| Canadian Dollar
--}
 cad : Currency
 cad =
     { symbol = "CA$"
@@ -1549,9 +1312,8 @@ cad =
     , code = "CAD"
     }
 
+{-| Euro -}
 
-{-| Euro
--}
 eur : Currency
 eur =
     { symbol = "€"
@@ -1562,9 +1324,8 @@ eur =
     , code = "EUR"
     }
 
+{-| Bitcoin -}
 
-{-| Bitcoin
--}
 btc : Currency
 btc =
     { symbol = "BTC"
@@ -1575,22 +1336,20 @@ btc =
     , code = "BTC"
     }
 
+{-| United Arab Emirates Dirham -}
 
-{-| United Arab Emirates Dirham
--}
 aed : Currency
 aed =
     { symbol = "AED"
     , name = "United Arab Emirates Dirham"
     , namePlural = "UAE dirhams"
-    , symbolNative = "د.إ.\x200F"
+    , symbolNative = "د.إ.‏"
     , decimalDigits = 2
     , code = "AED"
     }
 
+{-| Afghan Afghani -}
 
-{-| Afghan Afghani
--}
 afn : Currency
 afn =
     { symbol = "Af"
@@ -1601,9 +1360,8 @@ afn =
     , code = "AFN"
     }
 
+{-| Albanian Lek -}
 
-{-| Albanian Lek
--}
 all : Currency
 all =
     { symbol = "ALL"
@@ -1614,9 +1372,8 @@ all =
     , code = "ALL"
     }
 
+{-| Armenian Dram -}
 
-{-| Armenian Dram
--}
 amd : Currency
 amd =
     { symbol = "AMD"
@@ -1627,9 +1384,8 @@ amd =
     , code = "AMD"
     }
 
+{-| Argentine Peso -}
 
-{-| Argentine Peso
--}
 ars : Currency
 ars =
     { symbol = "AR$"
@@ -1640,9 +1396,8 @@ ars =
     , code = "ARS"
     }
 
+{-| Australian Dollar -}
 
-{-| Australian Dollar
--}
 aud : Currency
 aud =
     { symbol = "AU$"
@@ -1653,9 +1408,8 @@ aud =
     , code = "AUD"
     }
 
+{-| Azerbaijani Manat -}
 
-{-| Azerbaijani Manat
--}
 azn : Currency
 azn =
     { symbol = "man."
@@ -1666,9 +1420,8 @@ azn =
     , code = "AZN"
     }
 
+{-| Bosnia-Herzegovina Convertible Mark -}
 
-{-| Bosnia-Herzegovina Convertible Mark
--}
 bam : Currency
 bam =
     { symbol = "KM"
@@ -1679,9 +1432,8 @@ bam =
     , code = "BAM"
     }
 
+{-| Bangladeshi Taka -}
 
-{-| Bangladeshi Taka
--}
 bdt : Currency
 bdt =
     { symbol = "Tk"
@@ -1692,9 +1444,8 @@ bdt =
     , code = "BDT"
     }
 
+{-| Bulgarian Lev -}
 
-{-| Bulgarian Lev
--}
 bgn : Currency
 bgn =
     { symbol = "BGN"
@@ -1705,22 +1456,20 @@ bgn =
     , code = "BGN"
     }
 
+{-| Bahraini Dinar -}
 
-{-| Bahraini Dinar
--}
 bhd : Currency
 bhd =
     { symbol = "BD"
     , name = "Bahraini Dinar"
     , namePlural = "Bahraini dinars"
-    , symbolNative = "د.ب.\x200F"
+    , symbolNative = "د.ب.‏"
     , decimalDigits = 3
     , code = "BHD"
     }
 
+{-| Burundian Franc -}
 
-{-| Burundian Franc
--}
 bif : Currency
 bif =
     { symbol = "FBu"
@@ -1731,9 +1480,8 @@ bif =
     , code = "BIF"
     }
 
+{-| Brunei Dollar -}
 
-{-| Brunei Dollar
--}
 bnd : Currency
 bnd =
     { symbol = "BN$"
@@ -1744,9 +1492,8 @@ bnd =
     , code = "BND"
     }
 
+{-| Bolivian Boliviano -}
 
-{-| Bolivian Boliviano
--}
 bob : Currency
 bob =
     { symbol = "Bs"
@@ -1757,9 +1504,8 @@ bob =
     , code = "BOB"
     }
 
+{-| Brazilian Real -}
 
-{-| Brazilian Real
--}
 brl : Currency
 brl =
     { symbol = "R$"
@@ -1770,9 +1516,8 @@ brl =
     , code = "BRL"
     }
 
+{-| Botswanan Pula -}
 
-{-| Botswanan Pula
--}
 bwp : Currency
 bwp =
     { symbol = "BWP"
@@ -1783,9 +1528,8 @@ bwp =
     , code = "BWP"
     }
 
+{-| Belarusian Ruble -}
 
-{-| Belarusian Ruble
--}
 byr : Currency
 byr =
     { symbol = "BYR"
@@ -1796,9 +1540,8 @@ byr =
     , code = "BYR"
     }
 
+{-| Belize Dollar -}
 
-{-| Belize Dollar
--}
 bzd : Currency
 bzd =
     { symbol = "BZ$"
@@ -1809,9 +1552,8 @@ bzd =
     , code = "BZD"
     }
 
+{-| Congolese Franc -}
 
-{-| Congolese Franc
--}
 cdf : Currency
 cdf =
     { symbol = "CDF"
@@ -1822,9 +1564,8 @@ cdf =
     , code = "CDF"
     }
 
+{-| Swiss Franc -}
 
-{-| Swiss Franc
--}
 chf : Currency
 chf =
     { symbol = "CHF"
@@ -1835,9 +1576,8 @@ chf =
     , code = "CHF"
     }
 
+{-| Chilean Peso -}
 
-{-| Chilean Peso
--}
 clp : Currency
 clp =
     { symbol = "CL$"
@@ -1848,9 +1588,8 @@ clp =
     , code = "CLP"
     }
 
+{-| Chinese Yuan -}
 
-{-| Chinese Yuan
--}
 cny : Currency
 cny =
     { symbol = "CN¥"
@@ -1861,9 +1600,8 @@ cny =
     , code = "CNY"
     }
 
+{-| Colombian Peso -}
 
-{-| Colombian Peso
--}
 cop : Currency
 cop =
     { symbol = "CO$"
@@ -1874,9 +1612,8 @@ cop =
     , code = "COP"
     }
 
+{-| Costa Rican Colón -}
 
-{-| Costa Rican Colón
--}
 crc : Currency
 crc =
     { symbol = "₡"
@@ -1887,9 +1624,8 @@ crc =
     , code = "CRC"
     }
 
+{-| Cape Verdean Escudo -}
 
-{-| Cape Verdean Escudo
--}
 cve : Currency
 cve =
     { symbol = "CV$"
@@ -1900,9 +1636,8 @@ cve =
     , code = "CVE"
     }
 
+{-| Czech Republic Koruna -}
 
-{-| Czech Republic Koruna
--}
 czk : Currency
 czk =
     { symbol = "Kč"
@@ -1913,9 +1648,8 @@ czk =
     , code = "CZK"
     }
 
+{-| Djiboutian Franc -}
 
-{-| Djiboutian Franc
--}
 djf : Currency
 djf =
     { symbol = "Fdj"
@@ -1926,9 +1660,8 @@ djf =
     , code = "DJF"
     }
 
+{-| Danish Krone -}
 
-{-| Danish Krone
--}
 dkk : Currency
 dkk =
     { symbol = "Dkr"
@@ -1939,9 +1672,8 @@ dkk =
     , code = "DKK"
     }
 
+{-| Dominican Peso -}
 
-{-| Dominican Peso
--}
 dop : Currency
 dop =
     { symbol = "RD$"
@@ -1952,22 +1684,20 @@ dop =
     , code = "DOP"
     }
 
+{-| Algerian Dinar -}
 
-{-| Algerian Dinar
--}
 dzd : Currency
 dzd =
     { symbol = "DA"
     , name = "Algerian Dinar"
     , namePlural = "Algerian dinars"
-    , symbolNative = "د.ج.\x200F"
+    , symbolNative = "د.ج.‏"
     , decimalDigits = 2
     , code = "DZD"
     }
 
+{-| Estonian Kroon -}
 
-{-| Estonian Kroon
--}
 eek : Currency
 eek =
     { symbol = "Ekr"
@@ -1978,22 +1708,20 @@ eek =
     , code = "EEK"
     }
 
+{-| Egyptian Pound -}
 
-{-| Egyptian Pound
--}
 egp : Currency
 egp =
     { symbol = "EGP"
     , name = "Egyptian Pound"
     , namePlural = "Egyptian pounds"
-    , symbolNative = "ج.م.\x200F"
+    , symbolNative = "ج.م.‏"
     , decimalDigits = 2
     , code = "EGP"
     }
 
+{-| Eritrean Nakfa -}
 
-{-| Eritrean Nakfa
--}
 ern : Currency
 ern =
     { symbol = "Nfk"
@@ -2004,9 +1732,8 @@ ern =
     , code = "ERN"
     }
 
+{-| Ethiopian Birr -}
 
-{-| Ethiopian Birr
--}
 etb : Currency
 etb =
     { symbol = "Br"
@@ -2017,9 +1744,8 @@ etb =
     , code = "ETB"
     }
 
+{-| British Pound Sterling -}
 
-{-| British Pound Sterling
--}
 gbp : Currency
 gbp =
     { symbol = "£"
@@ -2030,9 +1756,8 @@ gbp =
     , code = "GBP"
     }
 
+{-| Georgian Lari -}
 
-{-| Georgian Lari
--}
 gel : Currency
 gel =
     { symbol = "GEL"
@@ -2043,9 +1768,8 @@ gel =
     , code = "GEL"
     }
 
+{-| Ghanaian Cedi -}
 
-{-| Ghanaian Cedi
--}
 ghs : Currency
 ghs =
     { symbol = "GH₵"
@@ -2056,9 +1780,8 @@ ghs =
     , code = "GHS"
     }
 
+{-| Guinean Franc -}
 
-{-| Guinean Franc
--}
 gnf : Currency
 gnf =
     { symbol = "FG"
@@ -2069,9 +1792,8 @@ gnf =
     , code = "GNF"
     }
 
+{-| Guatemalan Quetzal -}
 
-{-| Guatemalan Quetzal
--}
 gtq : Currency
 gtq =
     { symbol = "GTQ"
@@ -2082,9 +1804,8 @@ gtq =
     , code = "GTQ"
     }
 
+{-| Hong Kong Dollar -}
 
-{-| Hong Kong Dollar
--}
 hkd : Currency
 hkd =
     { symbol = "HK$"
@@ -2095,9 +1816,8 @@ hkd =
     , code = "HKD"
     }
 
+{-| Honduran Lempira -}
 
-{-| Honduran Lempira
--}
 hnl : Currency
 hnl =
     { symbol = "HNL"
@@ -2108,9 +1828,8 @@ hnl =
     , code = "HNL"
     }
 
+{-| Croatian Kuna -}
 
-{-| Croatian Kuna
--}
 hrk : Currency
 hrk =
     { symbol = "kn"
@@ -2121,9 +1840,8 @@ hrk =
     , code = "HRK"
     }
 
+{-| Hungarian Forint -}
 
-{-| Hungarian Forint
--}
 huf : Currency
 huf =
     { symbol = "Ft"
@@ -2134,9 +1852,8 @@ huf =
     , code = "HUF"
     }
 
+{-| Indonesian Rupiah -}
 
-{-| Indonesian Rupiah
--}
 idr : Currency
 idr =
     { symbol = "Rp"
@@ -2147,9 +1864,8 @@ idr =
     , code = "IDR"
     }
 
+{-| Israeli New Sheqel -}
 
-{-| Israeli New Sheqel
--}
 ils : Currency
 ils =
     { symbol = "₪"
@@ -2160,9 +1876,8 @@ ils =
     , code = "ILS"
     }
 
+{-| Indian Rupee -}
 
-{-| Indian Rupee
--}
 inr : Currency
 inr =
     { symbol = "Rs"
@@ -2173,22 +1888,20 @@ inr =
     , code = "INR"
     }
 
+{-| Iraqi Dinar -}
 
-{-| Iraqi Dinar
--}
 iqd : Currency
 iqd =
     { symbol = "IQD"
     , name = "Iraqi Dinar"
     , namePlural = "Iraqi dinars"
-    , symbolNative = "د.ع.\x200F"
+    , symbolNative = "د.ع.‏"
     , decimalDigits = 3
     , code = "IQD"
     }
 
+{-| Iranian Rial -}
 
-{-| Iranian Rial
--}
 irr : Currency
 irr =
     { symbol = "IRR"
@@ -2199,9 +1912,8 @@ irr =
     , code = "IRR"
     }
 
+{-| Icelandic Króna -}
 
-{-| Icelandic Króna
--}
 isk : Currency
 isk =
     { symbol = "Ikr"
@@ -2212,9 +1924,8 @@ isk =
     , code = "ISK"
     }
 
+{-| Jamaican Dollar -}
 
-{-| Jamaican Dollar
--}
 jmd : Currency
 jmd =
     { symbol = "J$"
@@ -2225,22 +1936,20 @@ jmd =
     , code = "JMD"
     }
 
+{-| Jordanian Dinar -}
 
-{-| Jordanian Dinar
--}
 jod : Currency
 jod =
     { symbol = "JD"
     , name = "Jordanian Dinar"
     , namePlural = "Jordanian dinars"
-    , symbolNative = "د.أ.\x200F"
+    , symbolNative = "د.أ.‏"
     , decimalDigits = 3
     , code = "JOD"
     }
 
+{-| Japanese Yen -}
 
-{-| Japanese Yen
--}
 jpy : Currency
 jpy =
     { symbol = "¥"
@@ -2251,9 +1960,8 @@ jpy =
     , code = "JPY"
     }
 
+{-| Kenyan Shilling -}
 
-{-| Kenyan Shilling
--}
 kes : Currency
 kes =
     { symbol = "Ksh"
@@ -2264,9 +1972,8 @@ kes =
     , code = "KES"
     }
 
+{-| Cambodian Riel -}
 
-{-| Cambodian Riel
--}
 khr : Currency
 khr =
     { symbol = "KHR"
@@ -2277,9 +1984,8 @@ khr =
     , code = "KHR"
     }
 
+{-| Comorian Franc -}
 
-{-| Comorian Franc
--}
 kmf : Currency
 kmf =
     { symbol = "CF"
@@ -2290,9 +1996,8 @@ kmf =
     , code = "KMF"
     }
 
+{-| South Korean Won -}
 
-{-| South Korean Won
--}
 krw : Currency
 krw =
     { symbol = "₩"
@@ -2303,22 +2008,20 @@ krw =
     , code = "KRW"
     }
 
+{-| Kuwaiti Dinar -}
 
-{-| Kuwaiti Dinar
--}
 kwd : Currency
 kwd =
     { symbol = "KD"
     , name = "Kuwaiti Dinar"
     , namePlural = "Kuwaiti dinars"
-    , symbolNative = "د.ك.\x200F"
+    , symbolNative = "د.ك.‏"
     , decimalDigits = 3
     , code = "KWD"
     }
 
+{-| Kazakhstani Tenge -}
 
-{-| Kazakhstani Tenge
--}
 kzt : Currency
 kzt =
     { symbol = "KZT"
@@ -2329,9 +2032,8 @@ kzt =
     , code = "KZT"
     }
 
+{-| Lao kip -}
 
-{-| Lao kip
--}
 lak : Currency
 lak =
     { symbol = "₭"
@@ -2342,22 +2044,20 @@ lak =
     , code = "LAK"
     }
 
+{-| Lebanese Pound -}
 
-{-| Lebanese Pound
--}
 lbp : Currency
 lbp =
     { symbol = "LB£"
     , name = "Lebanese Pound"
     , namePlural = "Lebanese pounds"
-    , symbolNative = "ل.ل.\x200F"
+    , symbolNative = "ل.ل.‏"
     , decimalDigits = 2
     , code = "LBP"
     }
 
+{-| Sri Lankan Rupee -}
 
-{-| Sri Lankan Rupee
--}
 lkr : Currency
 lkr =
     { symbol = "SLRs"
@@ -2368,9 +2068,8 @@ lkr =
     , code = "LKR"
     }
 
+{-| Lithuanian Litas -}
 
-{-| Lithuanian Litas
--}
 ltl : Currency
 ltl =
     { symbol = "Lt"
@@ -2381,9 +2080,8 @@ ltl =
     , code = "LTL"
     }
 
+{-| Latvian Lats -}
 
-{-| Latvian Lats
--}
 lvl : Currency
 lvl =
     { symbol = "Ls"
@@ -2394,35 +2092,32 @@ lvl =
     , code = "LVL"
     }
 
+{-| Libyan Dinar -}
 
-{-| Libyan Dinar
--}
 lyd : Currency
 lyd =
     { symbol = "LD"
     , name = "Libyan Dinar"
     , namePlural = "Libyan dinars"
-    , symbolNative = "د.ل.\x200F"
+    , symbolNative = "د.ل.‏"
     , decimalDigits = 3
     , code = "LYD"
     }
 
+{-| Moroccan Dirham -}
 
-{-| Moroccan Dirham
--}
 mad : Currency
 mad =
     { symbol = "MAD"
     , name = "Moroccan Dirham"
     , namePlural = "Moroccan dirhams"
-    , symbolNative = "د.م.\x200F"
+    , symbolNative = "د.م.‏"
     , decimalDigits = 2
     , code = "MAD"
     }
 
+{-| Moldovan Leu -}
 
-{-| Moldovan Leu
--}
 mdl : Currency
 mdl =
     { symbol = "MDL"
@@ -2433,9 +2128,8 @@ mdl =
     , code = "MDL"
     }
 
+{-| Malagasy Ariary -}
 
-{-| Malagasy Ariary
--}
 mga : Currency
 mga =
     { symbol = "MGA"
@@ -2446,9 +2140,8 @@ mga =
     , code = "MGA"
     }
 
+{-| Macedonian Denar -}
 
-{-| Macedonian Denar
--}
 mkd : Currency
 mkd =
     { symbol = "MKD"
@@ -2459,9 +2152,8 @@ mkd =
     , code = "MKD"
     }
 
+{-| Myanma Kyat -}
 
-{-| Myanma Kyat
--}
 mmk : Currency
 mmk =
     { symbol = "MMK"
@@ -2472,9 +2164,8 @@ mmk =
     , code = "MMK"
     }
 
+{-| Macanese Pataca -}
 
-{-| Macanese Pataca
--}
 mop : Currency
 mop =
     { symbol = "MOP$"
@@ -2485,9 +2176,8 @@ mop =
     , code = "MOP"
     }
 
+{-| Mauritian Rupee -}
 
-{-| Mauritian Rupee
--}
 mur : Currency
 mur =
     { symbol = "MURs"
@@ -2498,9 +2188,8 @@ mur =
     , code = "MUR"
     }
 
+{-| Mexican Peso -}
 
-{-| Mexican Peso
--}
 mxn : Currency
 mxn =
     { symbol = "MX$"
@@ -2511,9 +2200,8 @@ mxn =
     , code = "MXN"
     }
 
+{-| Malaysian Ringgit -}
 
-{-| Malaysian Ringgit
--}
 myr : Currency
 myr =
     { symbol = "RM"
@@ -2524,9 +2212,8 @@ myr =
     , code = "MYR"
     }
 
+{-| Mozambican Metical -}
 
-{-| Mozambican Metical
--}
 mzn : Currency
 mzn =
     { symbol = "MTn"
@@ -2537,9 +2224,8 @@ mzn =
     , code = "MZN"
     }
 
+{-| Namibian Dollar -}
 
-{-| Namibian Dollar
--}
 nad : Currency
 nad =
     { symbol = "N$"
@@ -2550,9 +2236,8 @@ nad =
     , code = "NAD"
     }
 
+{-| Nigerian Naira -}
 
-{-| Nigerian Naira
--}
 ngn : Currency
 ngn =
     { symbol = "₦"
@@ -2563,9 +2248,8 @@ ngn =
     , code = "NGN"
     }
 
+{-| Nicaraguan Córdoba -}
 
-{-| Nicaraguan Córdoba
--}
 nio : Currency
 nio =
     { symbol = "C$"
@@ -2576,9 +2260,8 @@ nio =
     , code = "NIO"
     }
 
+{-| Norwegian Krone -}
 
-{-| Norwegian Krone
--}
 nok : Currency
 nok =
     { symbol = "Nkr"
@@ -2589,9 +2272,8 @@ nok =
     , code = "NOK"
     }
 
+{-| Nepalese Rupee -}
 
-{-| Nepalese Rupee
--}
 npr : Currency
 npr =
     { symbol = "NPRs"
@@ -2602,9 +2284,8 @@ npr =
     , code = "NPR"
     }
 
+{-| New Zealand Dollar -}
 
-{-| New Zealand Dollar
--}
 nzd : Currency
 nzd =
     { symbol = "NZ$"
@@ -2615,22 +2296,20 @@ nzd =
     , code = "NZD"
     }
 
+{-| Omani Rial -}
 
-{-| Omani Rial
--}
 omr : Currency
 omr =
     { symbol = "OMR"
     , name = "Omani Rial"
     , namePlural = "Omani rials"
-    , symbolNative = "ر.ع.\x200F"
+    , symbolNative = "ر.ع.‏"
     , decimalDigits = 3
     , code = "OMR"
     }
 
+{-| Panamanian Balboa -}
 
-{-| Panamanian Balboa
--}
 pab : Currency
 pab =
     { symbol = "B/."
@@ -2641,9 +2320,8 @@ pab =
     , code = "PAB"
     }
 
+{-| Peruvian Nuevo Sol -}
 
-{-| Peruvian Nuevo Sol
--}
 pen : Currency
 pen =
     { symbol = "S/."
@@ -2654,9 +2332,8 @@ pen =
     , code = "PEN"
     }
 
+{-| Philippine Peso -}
 
-{-| Philippine Peso
--}
 php : Currency
 php =
     { symbol = "₱"
@@ -2667,9 +2344,8 @@ php =
     , code = "PHP"
     }
 
+{-| Pakistani Rupee -}
 
-{-| Pakistani Rupee
--}
 pkr : Currency
 pkr =
     { symbol = "PKRs"
@@ -2680,9 +2356,8 @@ pkr =
     , code = "PKR"
     }
 
+{-| Polish Zloty -}
 
-{-| Polish Zloty
--}
 pln : Currency
 pln =
     { symbol = "zł"
@@ -2693,9 +2368,8 @@ pln =
     , code = "PLN"
     }
 
+{-| Paraguayan Guarani -}
 
-{-| Paraguayan Guarani
--}
 pyg : Currency
 pyg =
     { symbol = "₲"
@@ -2706,22 +2380,20 @@ pyg =
     , code = "PYG"
     }
 
+{-| Qatari Rial -}
 
-{-| Qatari Rial
--}
 qar : Currency
 qar =
     { symbol = "QR"
     , name = "Qatari Rial"
     , namePlural = "Qatari rials"
-    , symbolNative = "ر.ق.\x200F"
+    , symbolNative = "ر.ق.‏"
     , decimalDigits = 2
     , code = "QAR"
     }
 
+{-| Romanian Leu -}
 
-{-| Romanian Leu
--}
 ron : Currency
 ron =
     { symbol = "RON"
@@ -2732,9 +2404,8 @@ ron =
     , code = "RON"
     }
 
+{-| Serbian Dinar -}
 
-{-| Serbian Dinar
--}
 rsd : Currency
 rsd =
     { symbol = "din."
@@ -2745,9 +2416,8 @@ rsd =
     , code = "RSD"
     }
 
+{-| Russian Ruble -}
 
-{-| Russian Ruble
--}
 rub : Currency
 rub =
     { symbol = "RUB"
@@ -2758,9 +2428,8 @@ rub =
     , code = "RUB"
     }
 
+{-| Rwandan Franc -}
 
-{-| Rwandan Franc
--}
 rwf : Currency
 rwf =
     { symbol = "RWF"
@@ -2771,22 +2440,20 @@ rwf =
     , code = "RWF"
     }
 
+{-| Saudi Riyal -}
 
-{-| Saudi Riyal
--}
 sar : Currency
 sar =
     { symbol = "SR"
     , name = "Saudi Riyal"
     , namePlural = "Saudi riyals"
-    , symbolNative = "ر.س.\x200F"
+    , symbolNative = "ر.س.‏"
     , decimalDigits = 2
     , code = "SAR"
     }
 
+{-| Sudanese Pound -}
 
-{-| Sudanese Pound
--}
 sdg : Currency
 sdg =
     { symbol = "SDG"
@@ -2797,9 +2464,8 @@ sdg =
     , code = "SDG"
     }
 
+{-| Swedish Krona -}
 
-{-| Swedish Krona
--}
 sek : Currency
 sek =
     { symbol = "Skr"
@@ -2810,9 +2476,8 @@ sek =
     , code = "SEK"
     }
 
+{-| Singapore Dollar -}
 
-{-| Singapore Dollar
--}
 sgd : Currency
 sgd =
     { symbol = "S$"
@@ -2823,9 +2488,8 @@ sgd =
     , code = "SGD"
     }
 
+{-| Somali Shilling -}
 
-{-| Somali Shilling
--}
 sos : Currency
 sos =
     { symbol = "Ssh"
@@ -2836,22 +2500,20 @@ sos =
     , code = "SOS"
     }
 
+{-| Syrian Pound -}
 
-{-| Syrian Pound
--}
 syp : Currency
 syp =
     { symbol = "SY£"
     , name = "Syrian Pound"
     , namePlural = "Syrian pounds"
-    , symbolNative = "ل.س.\x200F"
+    , symbolNative = "ل.س.‏"
     , decimalDigits = 2
     , code = "SYP"
     }
 
+{-| Thai Baht -}
 
-{-| Thai Baht
--}
 thb : Currency
 thb =
     { symbol = "฿"
@@ -2862,22 +2524,20 @@ thb =
     , code = "THB"
     }
 
+{-| Tunisian Dinar -}
 
-{-| Tunisian Dinar
--}
 tnd : Currency
 tnd =
     { symbol = "DT"
     , name = "Tunisian Dinar"
     , namePlural = "Tunisian dinars"
-    , symbolNative = "د.ت.\x200F"
+    , symbolNative = "د.ت.‏"
     , decimalDigits = 3
     , code = "TND"
     }
 
+{-| Tongan Paʻanga -}
 
-{-| Tongan Paʻanga
--}
 top : Currency
 top =
     { symbol = "T$"
@@ -2888,9 +2548,8 @@ top =
     , code = "TOP"
     }
 
+{-| Turkish Lira -}
 
-{-| Turkish Lira
--}
 try : Currency
 try =
     { symbol = "TL"
@@ -2901,9 +2560,8 @@ try =
     , code = "TRY"
     }
 
+{-| Trinidad and Tobago Dollar -}
 
-{-| Trinidad and Tobago Dollar
--}
 ttd : Currency
 ttd =
     { symbol = "TT$"
@@ -2914,9 +2572,8 @@ ttd =
     , code = "TTD"
     }
 
+{-| New Taiwan Dollar -}
 
-{-| New Taiwan Dollar
--}
 twd : Currency
 twd =
     { symbol = "NT$"
@@ -2927,9 +2584,8 @@ twd =
     , code = "TWD"
     }
 
+{-| Tanzanian Shilling -}
 
-{-| Tanzanian Shilling
--}
 tzs : Currency
 tzs =
     { symbol = "TSh"
@@ -2940,9 +2596,8 @@ tzs =
     , code = "TZS"
     }
 
+{-| Ukrainian Hryvnia -}
 
-{-| Ukrainian Hryvnia
--}
 uah : Currency
 uah =
     { symbol = "₴"
@@ -2953,9 +2608,8 @@ uah =
     , code = "UAH"
     }
 
+{-| Ugandan Shilling -}
 
-{-| Ugandan Shilling
--}
 ugx : Currency
 ugx =
     { symbol = "USh"
@@ -2966,9 +2620,8 @@ ugx =
     , code = "UGX"
     }
 
+{-| Uruguayan Peso -}
 
-{-| Uruguayan Peso
--}
 uyu : Currency
 uyu =
     { symbol = "$U"
@@ -2979,9 +2632,8 @@ uyu =
     , code = "UYU"
     }
 
+{-| Uzbekistan Som -}
 
-{-| Uzbekistan Som
--}
 uzs : Currency
 uzs =
     { symbol = "UZS"
@@ -2992,9 +2644,8 @@ uzs =
     , code = "UZS"
     }
 
+{-| Venezuelan Bolívar -}
 
-{-| Venezuelan Bolívar
--}
 vef : Currency
 vef =
     { symbol = "Bs.F."
@@ -3005,9 +2656,8 @@ vef =
     , code = "VEF"
     }
 
+{-| Vietnamese Dong -}
 
-{-| Vietnamese Dong
--}
 vnd : Currency
 vnd =
     { symbol = "₫"
@@ -3018,9 +2668,8 @@ vnd =
     , code = "VND"
     }
 
+{-| CFA Franc BEAC -}
 
-{-| CFA Franc BEAC
--}
 xaf : Currency
 xaf =
     { symbol = "FCFA"
@@ -3031,9 +2680,8 @@ xaf =
     , code = "XAF"
     }
 
+{-| CFA Franc BCEAO -}
 
-{-| CFA Franc BCEAO
--}
 xof : Currency
 xof =
     { symbol = "CFA"
@@ -3044,22 +2692,20 @@ xof =
     , code = "XOF"
     }
 
+{-| Yemeni Rial -}
 
-{-| Yemeni Rial
--}
 yer : Currency
 yer =
     { symbol = "YR"
     , name = "Yemeni Rial"
     , namePlural = "Yemeni rials"
-    , symbolNative = "ر.ي.\x200F"
+    , symbolNative = "ر.ي.‏"
     , decimalDigits = 2
     , code = "YER"
     }
 
+{-| South African Rand -}
 
-{-| South African Rand
--}
 zar : Currency
 zar =
     { symbol = "R"
@@ -3070,9 +2716,8 @@ zar =
     , code = "ZAR"
     }
 
+{-| Zambian Kwacha -}
 
-{-| Zambian Kwacha
--}
 zmk : Currency
 zmk =
     { symbol = "ZK"
