@@ -1883,7 +1883,7 @@ inr =
     { symbol = "₹"
     , name = "Indian Rupee"
     , namePlural = "Indian rupees"
-    , symbolNative = "টকা"
+    , symbolNative = "₹"
     , decimalDigits = 2
     , code = "INR"
     }
