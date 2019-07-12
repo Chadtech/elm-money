@@ -441,9 +441,9 @@
         "name_plural": "Israeli new sheqels"
     },
     "INR": {
-        "symbol": "Rs",
+        "symbol": "₹",
         "name": "Indian Rupee",
-        "symbol_native": "টকা",
+        "symbol_native": "₹",
         "decimal_digits": 2,
         "rounding": 0,
         "code": "INR",
