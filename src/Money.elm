@@ -24,13 +24,7 @@ module Money exposing
 -}
 
 
-{-| This type represents all the possible currencies as currency codes. There are over 100 of them.
-
-    type Currency
-        = USD
-        | EUR
-        | CAD -- ..
-
+{-| This type represents all the possible currencies as currency codes.
 -}
 type Currency
     = USD
@@ -158,7 +152,7 @@ type Currency
 {-| Get the symbol of a currency from its code
 
         toSymbol USD == "$"
-        toSymbol CAD == "CA$
+        toSymbol CAD == "CA$"
         toSymbol BTC == "BTC"
 
 Look at the documentation for `toNativeSymbol` for more details.
