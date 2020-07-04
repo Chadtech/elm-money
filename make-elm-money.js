@@ -86,23 +86,27 @@ Look at the documentation for \`toNativeSymbol\` for more details.
     toValue: currency => `"${currency.symbol}"`
 });
     
-const name = caseExpr({
-    docs: `Get the name of a currency from its code
+const name = 
+    [`{-| Get the name of a currency from its code
     
-        toName EUR { plural = True } == "euros"
-        toName ALL { plural = False } == "Albanian Lek"
-        toName ALL { plural = True } == "Albanian lekë"
-`,
-    name: "toName",
-    returnType: "{ plural : Bool } -> String",
-    bonusArgs: [ "{ plural }" ],
-    toValue: (currency) => { 
-        return `if plural then 
-                    "${currency.name_plural}"
-                else 
-                    "${currency.name}"`
-    }
-});
+        toName { plural = True } EUR == "euros"
+        toName { plural = False } ALL == "Albanian Lek"
+        toName { plural = True } ALL == "Albanian lekë"
+-}`
+    , `toName : { plural : Bool } -> Currency -> String`
+    , `toName { plural } currency =`
+    , `    case currency of`
+    , money.map(m => 
+        [ `        ${m.code} ->`
+        , `            if plural then 
+        "${m.name_plural}"
+    else 
+        "${m.name}"\n\n`
+        ].join("\n")
+    ).join('')
+    ].join("\n")
+
+
 
 const decimalDigits = caseExpr({
     docs: `Get the number of decimal digits in a currency. of a currency from its code

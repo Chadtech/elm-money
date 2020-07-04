@@ -906,13 +906,13 @@ toNativeSymbol currency =
 
 {-| Get the name of a currency from its code
 
-        toName EUR { plural = True } == "euros"
-        toName ALL { plural = False } == "Albanian Lek"
-        toName ALL { plural = True } == "Albanian lekë"
+        toName { plural = True } EUR == "euros"
+        toName { plural = False } ALL == "Albanian Lek"
+        toName { plural = True } ALL == "Albanian lekë"
 
 -}
-toName : Currency -> { plural : Bool } -> String
-toName currency { plural } =
+toName : { plural : Bool } -> Currency -> String
+toName { plural } currency =
     case currency of
         USD ->
             if plural then

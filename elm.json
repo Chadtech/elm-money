@@ -1,7 +1,7 @@
 {
     "type": "package",
     "name": "Chadtech/elm-money",
-    "summary": "All the worlds currencies as records and union types",
+    "summary": "All the worlds currencies",
     "license": "BSD-3-Clause",
     "version": "3.0.1",
     "exposed-modules": [
