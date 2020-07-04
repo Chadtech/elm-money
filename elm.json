@@ -3,7 +3,7 @@
     "name": "Chadtech/elm-money",
     "summary": "All the worlds currencies",
     "license": "BSD-3-Clause",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "exposed-modules": [
         "Money"
     ],
