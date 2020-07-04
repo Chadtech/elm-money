@@ -13,7 +13,6 @@ const topPart = `module Money exposing
     , toName
     , toDecimalDigits
     , toString
-${money.map(m => `        , ${m.code.toUpperCase()}\n`).join("")}
     )
 
 
@@ -180,16 +179,6 @@ const fromString =
     , `            Nothing`
     ].join("\n")
 
-const currenciesAsTypes = money.map(m => 
-    [ `{-| A type representing the ${m.name}
-
-Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
--}`
-    , `type ${m.code.toUpperCase()}`
-    , `    = ${m.code.toUpperCase()}__UNIT` 
-    ].join("\n") 
-).join("\n\n")
-
 const output = [
     topPart,
     codes,
@@ -200,7 +189,6 @@ const output = [
     toString,
     fromString,
     allCodes,
-    currenciesAsTypes
 ].join("\n\n");
 
 var outputFile = "./src/Money.elm";
