@@ -14,14 +14,9 @@ For our purposes, as programmers who want to render currency, that usually we ar
 
 This is a big and messy topic this package does not fully conquer. You might know that `USD` uses the `$` symbol, and that it comes in cents which are two decimals (`.00`), this is actually not enough information to know how the currency should be rendered. Different regions of the world might put the symbol on the left or right side of the currency  (`$1.00` or `1.00$`). They also might use `.` or `,` for decimals. This package provides _some_ but not _all_ of the necessary information to fully localize currency rendering. Perhaps it is enough for your project.
 
-# Phantom Types
+# Converting and controlling Currency
 
-Working with money is a really good use case for phantom types, and to that end this package also provides every currency as a top level type:
-```
-type USD = USD__UNIT
-```
-If you dont know what this means you can learn more (here)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types], but the short answer is that it is nice to have type safety against errors like accidentally adding `USD` and `EUR`, which should not be possible.
-
+Imagine you wanted to add to `Int` currency amounts, but one was `USD` and the other was `EUR`. You would get a really ugly error from nonsense currency combinations. There is a way to eliminate those errors entirely using something called "phantom types", which you can learn more about here: (here)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types]. This package doesnt provide support for that kind of functionality, but it seems likely that it would interest you if you are working with currency.
 
 # Contributing
 

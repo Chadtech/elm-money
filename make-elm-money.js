@@ -31,10 +31,6 @@ const topPart = `module Money exposing
 
 @docs toSymbol, toName, toNativeSymbol, toDecimalDigits
 
-# Currencies as Types
-
-@docs ${money.map(m => m.code.toUpperCase()).join(", ")}
-
 -}
 `;
 
