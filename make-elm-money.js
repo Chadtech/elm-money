@@ -16,7 +16,7 @@ const topPart = `module Money exposing
     )
 
 
-{-| All the worlds currencies as records and union types, with helper functions too.
+{-| All the worlds currencies.
 
 
 # Types

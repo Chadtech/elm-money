@@ -4,7 +4,7 @@ module Money exposing
     , toSymbol, toName, toNativeSymbol, toDecimalDigits
     )
 
-{-| All the worlds currencies as records and union types, with helper functions too.
+{-| All the worlds currencies.
 
 
 # Types
