@@ -1,23 +1,20 @@
 const fs = require("fs");
-const cp = require("child_process")
 
+const cp = require("child_process");
 const file = fs.readFileSync("./money.json", "utf-8");
 const money = Object.values(JSON.parse(file));
 
-const currencies = money.map(m => `        , ${m.code.toLowerCase()}\n`).join("");
-
-const topPart =
-    `module Money
-    exposing
-        ( currencyFromCode
-        , Code(..)
-        , Currency
-        , codeFromString
-        , allCodes
-        , currencyFromString
-        , allCurrencies
-${currencies}
-        )
+const topPart = `module Money exposing
+    ( Currency(..)
+    , all
+    , toSymbol 
+    , fromString
+    , toNativeSymbol
+    , toName
+    , toDecimalDigits
+    , toString
+${money.map(m => `        , ${m.code.toUpperCase()}\n`).join("")}
+    )
 
 
 {-| All the worlds currencies as records and union types, with helper functions too.
@@ -25,128 +22,190 @@ ${currencies}
 
 # Types
 
-@docs Currency, Code
+@docs Currency
 
-# Values
+# Basics
 
-@docs allCurrencies, allCodes
+@docs all, toString, fromString
 
-# Helpers
+# Propertues
 
-@docs currencyFromString, currencyFromCode, codeFromString
+@docs toSymbol, toName, toNativeSymbol, toDecimalDigits
 
-# Currencies
+# Currencies as Types
 
-@docs ${money.map(m => m.code.toLowerCase()).join(", ")}
+@docs ${money.map(m => m.code.toUpperCase()).join(", ")}
 
 -}
 `;
 
-const currencyType =
-
-    `{-|-}
-type alias Currency =
-    { symbol : String
-    , name : String
-    , namePlural : String
-    , symbolNative : String
-    , decimalDigits : Int
-    , code : String
-    }
-`
-
 const codes =
-    [`{-| This type represents all the possible currency codes -}`
-        , `type Code\n  = ${money[0].code}\n`
-        , money.slice(1).map(m => `  | ${m.code}\n`).join("")
+    [ `{-| This type represents all the possible currencies as currency codes. There are over 100 of them. 
+
+    type Currency = USD | EUR | CAD -- ..
+-}`
+    , `type Currency\n  = ${money[0].code}`
+    , money.slice(1).map(m => `  | ${m.code}\n`).join("")
     ].join("\n");
 
 const allCodes =
-    [`{-| A list of all the currency codes -}`
-        , `allCodes : List Code\n`
-        , `allCodes =\n`
-        , `    [ ${money[0].code.toUpperCase()}\n`
-        , money.slice(1).map(m =>
-            `    , ${m.code.toUpperCase()}`
-        ).join("\n")
-        , `    ]`
+    [ `{-| All the currency codes in a list 
+
+    all = 
+        [ USD
+        , EUR
+        , CAD 
+        --..
+        ]
+-}`
+    , `all : List Currency`
+    , `all =`
+    , `    [ ${money[0].code.toUpperCase()}`
+    , money.slice(1).map(m =>
+        `    , ${m.code.toUpperCase()}`
+    ).join("\n")
+    , `    ]`
     ].join("\n")
 
-const allCurrencies =
-    [`{-| A list of all the currencies -}`
-        , `allCurrencies : List Currency\n`
-        , `allCurrencies =\n`
-        , `    [ ${money[0].code.toLowerCase()}\n`
-        , money.slice(1).map(m =>
-            `    , ${m.code.toLowerCase()}`
-        ).join("\n")
-        , `    ]`
+const caseExpr = (params) => 
+    [`{-| ${params.docs}-}`
+    , `${params.name} : Currency -> ${params.returnType}`
+    , `${params.name} currency ${params.bonusArgs.join(" ")} =`
+    , `    case currency of`
+    , money.map(m => 
+        [ `        ${m.code} ->`
+        , `            ${params.toValue(m)}\n\n`
+        ].join("\n")
+    ).join('')
     ].join("\n")
 
+const symbol = caseExpr({
+    docs: `Get the symbol of a currency from its code
 
-const codeFromString =
-    [`{-| Get the currency code from a string -}`
-        , `codeFromString : String -> Maybe Code`
-        , `codeFromString str =`
-        , `    case String.toLower str of`
-        , money.map(m =>
-            `        "${m.code.toLowerCase()}" ->\n            Just ${m.code.toUpperCase()}\n`
-        ).join("")
-        , `        _ ->\n            Nothing`
-    ].join("\n")
+        toSymbol USD == "$"
+        toSymbol CAD == "CA$
+        toSymbol BTC == "BTC"
 
-
-const currencyFromString =
-    [`{-| Get the currency from a string -}`
-        , `currencyFromString : String -> Maybe Currency`
-        , `currencyFromString str =`
-        , `    case String.toLower str of`
-        , money.map(m =>
-            `        "${m.code.toLowerCase()}" ->\n            Just ${m.code.toLowerCase()}\n`
-        ).join("")
-        , `        _ ->\n            Nothing`
-    ].join("\n")
-
-const currencyFromCode =
-    [`{-| Get the currency from a code, with no Maybes involved -}`
-        , `currencyFromCode : Code -> Currency`
-        , `currencyFromCode code =`
-        , `    case code of`
-        , money.map(m =>
-            `        ${m.code} ->\n            ${m.code.toLowerCase()}\n`
-        ).join("")
-    ].join("\n")
-
-
-const records = money.map(m => `
-{-| ${m.name} -}\n
-${m.code.toLowerCase()} : Currency
-${m.code.toLowerCase()} =
-    { symbol = "${m.symbol}"
-    , name = "${m.name}"
-    , namePlural = "${m.name_plural}"
-    , symbolNative = "${m.symbol_native}"
-    , decimalDigits = ${m.decimal_digits}
-    , code = "${m.code}"
+Look at the documentation for \`toNativeSymbol\` for more details.
+`,
+    name: "toSymbol",
+    returnType: "String",
+    bonusArgs: [],
+    toValue: currency => `"${currency.symbol}"`
+});
+    
+const name = caseExpr({
+    docs: `Get the name of a currency from its code
+    
+        toName EUR { plural = True } == "euros"
+        toName ALL { plural = False } == "Albanian Lek"
+        toName ALL { plural = True } == "Albanian lekë"
+`,
+    name: "toName",
+    returnType: "{ plural : Bool } -> String",
+    bonusArgs: [ "{ plural }" ],
+    toValue: (currency) => { 
+        return `if plural then 
+                    "${currency.name_plural}"
+                else 
+                    "${currency.name}"`
     }
-`).join("");
+});
 
+const decimalDigits = caseExpr({
+    docs: `Get the number of decimal digits in a currency. of a currency from its code
+
+The decimal digits is basically the size of the smaller unit the currency comes in. 
+American dollars and Euros, for example, both have cents, and 100 cents make a dollar or Euro. So the decimal
+digits for these currencies is \`2\`. Extreme cases include the Japanese Yen, which has \`0\`, and
+Bitcoin, which has \`8\`.
+`,
+    name: "toDecimalDigits",
+    returnType: "Int",
+    bonusArgs: [],
+    toValue: (currency) => currency.decimal_digits
+});
+
+const nativeSymbol = caseExpr({
+    docs: `Get the native symbol of a currency from its code. 
+    
+        toNativeSymbol LAK == "ກີບ"
+        toSymbol LAK == "₭"
+
+        toNativeSymbol CAD == "$"
+        toSymbol CAD == "CA$"
+
+        toNativeSymbol USD == "$"
+        toSymbol USD == "$"
+
+
+The \`native symbol\` is different from the \`symbol\`. The \`symbol\` is what is used
+in international currency exchange contexts. Imagine a currency exchange shop
+at an airport that lists several currencies right next to each other. The native symbol, 
+however, is used in more local and natural settings of the currency; such as if someone 
+were looking at a restaurant menu with currency amounts next to menu items.`,
+    name: "toNativeSymbol",
+    returnType: "String",
+    bonusArgs: [],
+    toValue: currency => `"${currency.symbol_native}"`
+});
+
+
+const toString = caseExpr({
+    docs: `Get the currency's code as a \`String\`
+
+        toString CNY == "CNY"
+`,
+    name: "toString",
+    returnType: "String",
+    bonusArgs: [],
+    toValue: (currency) => `"${currency.code}"`
+});
+
+const fromString = 
+    [`{-| Attempt to derive a \`Currency\` from a \`String\`. This function presumes the \`String\` is a currency code like \`"USD"\`. 
+
+        fromString "DKK" == Just DKK
+        fromString "Danish Krone" == Nothing
+-}`
+    , `fromString : String -> Maybe Currency`
+    , `fromString str =`
+    , `    case String.toUpper str of`
+    , money.map(m => 
+        [ `        "${m.code}" ->`
+        , `            Just ${m.code}\n\n`
+        ].join("\n")
+    ).join('')
+    , `        _ ->`
+    , `            Nothing`
+    ].join("\n")
+
+const currenciesAsTypes = money.map(m => 
+    [ `{-| A type representing the ${m.name}
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+-}`
+    , `type ${m.code.toUpperCase()}`
+    , `    = ${m.code.toUpperCase()}__UNIT` 
+    ].join("\n") 
+).join("\n\n")
 
 const output = [
     topPart,
-    currencyType,
     codes,
-    allCurrencies,
+    symbol,
+    nativeSymbol,
+    name,
+    decimalDigits,
+    toString,
+    fromString,
     allCodes,
-    currencyFromCode,
-    codeFromString,
-    currencyFromString,
-    records
+    currenciesAsTypes
 ].join("\n\n");
 
 var outputFile = "./src/Money.elm";
 
 fs.writeFileSync(outputFile, output);
 
-// cp.execSync(`elm-format ${outputFile} --yes`);
+console.log(String(cp.execSync("elm-format ./src/ --yes")));
 

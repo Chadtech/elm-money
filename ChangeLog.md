@@ -1,2 +1,5 @@
+3.0.0
+- Completely refactored it. Now the module doesnt revolve around records of each currency. Rather, it revolves around a custom type of all currencies, and lots of functions of style `toX : Currency -> X`.
+
 2.0.3 
 - Bring Indian Rupee symbol up to date " ₹ "

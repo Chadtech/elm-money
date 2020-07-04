@@ -1,429 +1,2900 @@
-module Money
-    exposing
-        ( currencyFromCode
-        , Code(..)
-        , Currency
-        , codeFromString
-        , allCodes
-        , currencyFromString
-        , allCurrencies
-        , usd
-        , cad
-        , eur
-        , btc
-        , aed
-        , afn
-        , all
-        , amd
-        , ars
-        , aud
-        , azn
-        , bam
-        , bdt
-        , bgn
-        , bhd
-        , bif
-        , bnd
-        , bob
-        , brl
-        , bwp
-        , byr
-        , bzd
-        , cdf
-        , chf
-        , clp
-        , cny
-        , cop
-        , crc
-        , cve
-        , czk
-        , djf
-        , dkk
-        , dop
-        , dzd
-        , eek
-        , egp
-        , ern
-        , etb
-        , gbp
-        , gel
-        , ghs
-        , gnf
-        , gtq
-        , hkd
-        , hnl
-        , hrk
-        , huf
-        , idr
-        , ils
-        , inr
-        , iqd
-        , irr
-        , isk
-        , jmd
-        , jod
-        , jpy
-        , kes
-        , khr
-        , kmf
-        , krw
-        , kwd
-        , kzt
-        , lak
-        , lbp
-        , lkr
-        , ltl
-        , lvl
-        , lyd
-        , mad
-        , mdl
-        , mga
-        , mkd
-        , mmk
-        , mop
-        , mur
-        , mxn
-        , myr
-        , mzn
-        , nad
-        , ngn
-        , nio
-        , nok
-        , npr
-        , nzd
-        , omr
-        , pab
-        , pen
-        , php
-        , pkr
-        , pln
-        , pyg
-        , qar
-        , ron
-        , rsd
-        , rub
-        , rwf
-        , sar
-        , sdg
-        , sek
-        , sgd
-        , sos
-        , syp
-        , thb
-        , tnd
-        , top
-        , try
-        , ttd
-        , twd
-        , tzs
-        , uah
-        , ugx
-        , uyu
-        , uzs
-        , vef
-        , vnd
-        , xaf
-        , xof
-        , yer
-        , zar
-        , zmk
-
-        )
-
+module Money exposing
+    ( Currency(..)
+    , all, toString, fromString
+    , toSymbol, toName, toNativeSymbol, toDecimalDigits
+    , USD, CAD, EUR, BTC, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BGN, BHD, BIF, BND, BOB, BRL, BWP, BYR, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EEK, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HRK, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KMF, KRW, KWD, KZT, LAK, LBP, LKR, LTL, LVL, LYD, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR, ZMK
+    )
 
 {-| All the worlds currencies as records and union types, with helper functions too.
 
 
 # Types
 
-@docs Currency, Code
+@docs Currency
 
-# Values
 
-@docs allCurrencies, allCodes
+# Basics
 
-# Helpers
+@docs all, toString, fromString
 
-@docs currencyFromString, currencyFromCode, codeFromString
 
-# Currencies
+# Propertues
 
-@docs usd, cad, eur, btc, aed, afn, all, amd, ars, aud, azn, bam, bdt, bgn, bhd, bif, bnd, bob, brl, bwp, byr, bzd, cdf, chf, clp, cny, cop, crc, cve, czk, djf, dkk, dop, dzd, eek, egp, ern, etb, gbp, gel, ghs, gnf, gtq, hkd, hnl, hrk, huf, idr, ils, inr, iqd, irr, isk, jmd, jod, jpy, kes, khr, kmf, krw, kwd, kzt, lak, lbp, lkr, ltl, lvl, lyd, mad, mdl, mga, mkd, mmk, mop, mur, mxn, myr, mzn, nad, ngn, nio, nok, npr, nzd, omr, pab, pen, php, pkr, pln, pyg, qar, ron, rsd, rub, rwf, sar, sdg, sek, sgd, sos, syp, thb, tnd, top, try, ttd, twd, tzs, uah, ugx, uyu, uzs, vef, vnd, xaf, xof, yer, zar, zmk
+@docs toSymbol, toName, toNativeSymbol, toDecimalDigits
+
+
+# Currencies as Types
+
+@docs USD, CAD, EUR, BTC, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BGN, BHD, BIF, BND, BOB, BRL, BWP, BYR, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EEK, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HRK, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KMF, KRW, KWD, KZT, LAK, LBP, LKR, LTL, LVL, LYD, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR, ZMK
 
 -}
 
 
-{-|-}
-type alias Currency =
-    { symbol : String
-    , name : String
-    , namePlural : String
-    , symbolNative : String
-    , decimalDigits : Int
-    , code : String
-    }
+{-| This type represents all the possible currencies as currency codes. There are over 100 of them.
+
+    type Currency
+        = USD
+        | EUR
+        | CAD -- ..
+
+-}
+type Currency
+    = USD
+    | CAD
+    | EUR
+    | BTC
+    | AED
+    | AFN
+    | ALL
+    | AMD
+    | ARS
+    | AUD
+    | AZN
+    | BAM
+    | BDT
+    | BGN
+    | BHD
+    | BIF
+    | BND
+    | BOB
+    | BRL
+    | BWP
+    | BYR
+    | BZD
+    | CDF
+    | CHF
+    | CLP
+    | CNY
+    | COP
+    | CRC
+    | CVE
+    | CZK
+    | DJF
+    | DKK
+    | DOP
+    | DZD
+    | EEK
+    | EGP
+    | ERN
+    | ETB
+    | GBP
+    | GEL
+    | GHS
+    | GNF
+    | GTQ
+    | HKD
+    | HNL
+    | HRK
+    | HUF
+    | IDR
+    | ILS
+    | INR
+    | IQD
+    | IRR
+    | ISK
+    | JMD
+    | JOD
+    | JPY
+    | KES
+    | KHR
+    | KMF
+    | KRW
+    | KWD
+    | KZT
+    | LAK
+    | LBP
+    | LKR
+    | LTL
+    | LVL
+    | LYD
+    | MAD
+    | MDL
+    | MGA
+    | MKD
+    | MMK
+    | MOP
+    | MUR
+    | MXN
+    | MYR
+    | MZN
+    | NAD
+    | NGN
+    | NIO
+    | NOK
+    | NPR
+    | NZD
+    | OMR
+    | PAB
+    | PEN
+    | PHP
+    | PKR
+    | PLN
+    | PYG
+    | QAR
+    | RON
+    | RSD
+    | RUB
+    | RWF
+    | SAR
+    | SDG
+    | SEK
+    | SGD
+    | SOS
+    | SYP
+    | THB
+    | TND
+    | TOP
+    | TRY
+    | TTD
+    | TWD
+    | TZS
+    | UAH
+    | UGX
+    | UYU
+    | UZS
+    | VEF
+    | VND
+    | XAF
+    | XOF
+    | YER
+    | ZAR
+    | ZMK
 
 
-{-| This type represents all the possible currency codes -}
-type Code
-  = USD
+{-| Get the symbol of a currency from its code
 
-  | CAD
-  | EUR
-  | BTC
-  | AED
-  | AFN
-  | ALL
-  | AMD
-  | ARS
-  | AUD
-  | AZN
-  | BAM
-  | BDT
-  | BGN
-  | BHD
-  | BIF
-  | BND
-  | BOB
-  | BRL
-  | BWP
-  | BYR
-  | BZD
-  | CDF
-  | CHF
-  | CLP
-  | CNY
-  | COP
-  | CRC
-  | CVE
-  | CZK
-  | DJF
-  | DKK
-  | DOP
-  | DZD
-  | EEK
-  | EGP
-  | ERN
-  | ETB
-  | GBP
-  | GEL
-  | GHS
-  | GNF
-  | GTQ
-  | HKD
-  | HNL
-  | HRK
-  | HUF
-  | IDR
-  | ILS
-  | INR
-  | IQD
-  | IRR
-  | ISK
-  | JMD
-  | JOD
-  | JPY
-  | KES
-  | KHR
-  | KMF
-  | KRW
-  | KWD
-  | KZT
-  | LAK
-  | LBP
-  | LKR
-  | LTL
-  | LVL
-  | LYD
-  | MAD
-  | MDL
-  | MGA
-  | MKD
-  | MMK
-  | MOP
-  | MUR
-  | MXN
-  | MYR
-  | MZN
-  | NAD
-  | NGN
-  | NIO
-  | NOK
-  | NPR
-  | NZD
-  | OMR
-  | PAB
-  | PEN
-  | PHP
-  | PKR
-  | PLN
-  | PYG
-  | QAR
-  | RON
-  | RSD
-  | RUB
-  | RWF
-  | SAR
-  | SDG
-  | SEK
-  | SGD
-  | SOS
-  | SYP
-  | THB
-  | TND
-  | TOP
-  | TRY
-  | TTD
-  | TWD
-  | TZS
-  | UAH
-  | UGX
-  | UYU
-  | UZS
-  | VEF
-  | VND
-  | XAF
-  | XOF
-  | YER
-  | ZAR
-  | ZMK
+        toSymbol USD == "$"
+        toSymbol CAD == "CA$
+        toSymbol BTC == "BTC"
+
+Look at the documentation for `toNativeSymbol` for more details.
+
+-}
+toSymbol : Currency -> String
+toSymbol currency =
+    case currency of
+        USD ->
+            "$"
+
+        CAD ->
+            "CA$"
+
+        EUR ->
+            "€"
+
+        BTC ->
+            "BTC"
+
+        AED ->
+            "AED"
+
+        AFN ->
+            "Af"
+
+        ALL ->
+            "ALL"
+
+        AMD ->
+            "AMD"
+
+        ARS ->
+            "AR$"
+
+        AUD ->
+            "AU$"
+
+        AZN ->
+            "man."
+
+        BAM ->
+            "KM"
+
+        BDT ->
+            "Tk"
+
+        BGN ->
+            "BGN"
+
+        BHD ->
+            "BD"
+
+        BIF ->
+            "FBu"
+
+        BND ->
+            "BN$"
+
+        BOB ->
+            "Bs"
+
+        BRL ->
+            "R$"
+
+        BWP ->
+            "BWP"
+
+        BYR ->
+            "BYR"
+
+        BZD ->
+            "BZ$"
+
+        CDF ->
+            "CDF"
+
+        CHF ->
+            "CHF"
+
+        CLP ->
+            "CL$"
+
+        CNY ->
+            "CN¥"
+
+        COP ->
+            "CO$"
+
+        CRC ->
+            "₡"
+
+        CVE ->
+            "CV$"
+
+        CZK ->
+            "Kč"
+
+        DJF ->
+            "Fdj"
+
+        DKK ->
+            "Dkr"
+
+        DOP ->
+            "RD$"
+
+        DZD ->
+            "DA"
+
+        EEK ->
+            "Ekr"
+
+        EGP ->
+            "EGP"
+
+        ERN ->
+            "Nfk"
+
+        ETB ->
+            "Br"
+
+        GBP ->
+            "£"
+
+        GEL ->
+            "GEL"
+
+        GHS ->
+            "GH₵"
+
+        GNF ->
+            "FG"
+
+        GTQ ->
+            "GTQ"
+
+        HKD ->
+            "HK$"
+
+        HNL ->
+            "HNL"
+
+        HRK ->
+            "kn"
+
+        HUF ->
+            "Ft"
+
+        IDR ->
+            "Rp"
+
+        ILS ->
+            "₪"
+
+        INR ->
+            "₹"
+
+        IQD ->
+            "IQD"
+
+        IRR ->
+            "IRR"
+
+        ISK ->
+            "Ikr"
+
+        JMD ->
+            "J$"
+
+        JOD ->
+            "JD"
+
+        JPY ->
+            "¥"
+
+        KES ->
+            "Ksh"
+
+        KHR ->
+            "KHR"
+
+        KMF ->
+            "CF"
+
+        KRW ->
+            "₩"
+
+        KWD ->
+            "KD"
+
+        KZT ->
+            "KZT"
+
+        LAK ->
+            "₭"
+
+        LBP ->
+            "LB£"
+
+        LKR ->
+            "SLRs"
+
+        LTL ->
+            "Lt"
+
+        LVL ->
+            "Ls"
+
+        LYD ->
+            "LD"
+
+        MAD ->
+            "MAD"
+
+        MDL ->
+            "MDL"
+
+        MGA ->
+            "MGA"
+
+        MKD ->
+            "MKD"
+
+        MMK ->
+            "MMK"
+
+        MOP ->
+            "MOP$"
+
+        MUR ->
+            "MURs"
+
+        MXN ->
+            "MX$"
+
+        MYR ->
+            "RM"
+
+        MZN ->
+            "MTn"
+
+        NAD ->
+            "N$"
+
+        NGN ->
+            "₦"
+
+        NIO ->
+            "C$"
+
+        NOK ->
+            "Nkr"
+
+        NPR ->
+            "NPRs"
+
+        NZD ->
+            "NZ$"
+
+        OMR ->
+            "OMR"
+
+        PAB ->
+            "B/."
+
+        PEN ->
+            "S/."
+
+        PHP ->
+            "₱"
+
+        PKR ->
+            "PKRs"
+
+        PLN ->
+            "zł"
+
+        PYG ->
+            "₲"
+
+        QAR ->
+            "QR"
+
+        RON ->
+            "RON"
+
+        RSD ->
+            "din."
+
+        RUB ->
+            "RUB"
+
+        RWF ->
+            "RWF"
+
+        SAR ->
+            "SR"
+
+        SDG ->
+            "SDG"
+
+        SEK ->
+            "Skr"
+
+        SGD ->
+            "S$"
+
+        SOS ->
+            "Ssh"
+
+        SYP ->
+            "SY£"
+
+        THB ->
+            "฿"
+
+        TND ->
+            "DT"
+
+        TOP ->
+            "T$"
+
+        TRY ->
+            "TL"
+
+        TTD ->
+            "TT$"
+
+        TWD ->
+            "NT$"
+
+        TZS ->
+            "TSh"
+
+        UAH ->
+            "₴"
+
+        UGX ->
+            "USh"
+
+        UYU ->
+            "$U"
+
+        UZS ->
+            "UZS"
+
+        VEF ->
+            "Bs.F."
+
+        VND ->
+            "₫"
+
+        XAF ->
+            "FCFA"
+
+        XOF ->
+            "CFA"
+
+        YER ->
+            "YR"
+
+        ZAR ->
+            "R"
+
+        ZMK ->
+            "ZK"
 
 
-{-| A list of all the currencies -}
-allCurrencies : List Currency
+{-| Get the native symbol of a currency from its code.
 
-allCurrencies =
+        toNativeSymbol LAK == "ກີບ"
+        toSymbol LAK == "₭"
 
-    [ usd
+        toNativeSymbol CAD == "$"
+        toSymbol CAD == "CA$"
 
-    , cad
-    , eur
-    , btc
-    , aed
-    , afn
-    , all
-    , amd
-    , ars
-    , aud
-    , azn
-    , bam
-    , bdt
-    , bgn
-    , bhd
-    , bif
-    , bnd
-    , bob
-    , brl
-    , bwp
-    , byr
-    , bzd
-    , cdf
-    , chf
-    , clp
-    , cny
-    , cop
-    , crc
-    , cve
-    , czk
-    , djf
-    , dkk
-    , dop
-    , dzd
-    , eek
-    , egp
-    , ern
-    , etb
-    , gbp
-    , gel
-    , ghs
-    , gnf
-    , gtq
-    , hkd
-    , hnl
-    , hrk
-    , huf
-    , idr
-    , ils
-    , inr
-    , iqd
-    , irr
-    , isk
-    , jmd
-    , jod
-    , jpy
-    , kes
-    , khr
-    , kmf
-    , krw
-    , kwd
-    , kzt
-    , lak
-    , lbp
-    , lkr
-    , ltl
-    , lvl
-    , lyd
-    , mad
-    , mdl
-    , mga
-    , mkd
-    , mmk
-    , mop
-    , mur
-    , mxn
-    , myr
-    , mzn
-    , nad
-    , ngn
-    , nio
-    , nok
-    , npr
-    , nzd
-    , omr
-    , pab
-    , pen
-    , php
-    , pkr
-    , pln
-    , pyg
-    , qar
-    , ron
-    , rsd
-    , rub
-    , rwf
-    , sar
-    , sdg
-    , sek
-    , sgd
-    , sos
-    , syp
-    , thb
-    , tnd
-    , top
-    , try
-    , ttd
-    , twd
-    , tzs
-    , uah
-    , ugx
-    , uyu
-    , uzs
-    , vef
-    , vnd
-    , xaf
-    , xof
-    , yer
-    , zar
-    , zmk
-    ]
+        toNativeSymbol USD == "$"
+        toSymbol USD == "$"
 
-{-| A list of all the currency codes -}
-allCodes : List Code
+The `native symbol` is different from the `symbol`. The `symbol` is what is used
+in international currency exchange contexts. Imagine a currency exchange shop
+at an airport that lists several currencies right next to each other. The native symbol,
+however, is used in more local and natural settings of the currency; such as if someone
+were looking at a restaurant menu with currency amounts next to menu items.
 
-allCodes =
+-}
+toNativeSymbol : Currency -> String
+toNativeSymbol currency =
+    case currency of
+        USD ->
+            "$"
 
+        CAD ->
+            "$"
+
+        EUR ->
+            "€"
+
+        BTC ->
+            "฿"
+
+        AED ->
+            "د.إ.\u{200F}"
+
+        AFN ->
+            "؋"
+
+        ALL ->
+            "Lek"
+
+        AMD ->
+            "դր."
+
+        ARS ->
+            "$"
+
+        AUD ->
+            "$"
+
+        AZN ->
+            "ман."
+
+        BAM ->
+            "KM"
+
+        BDT ->
+            "৳"
+
+        BGN ->
+            "лв."
+
+        BHD ->
+            "د.ب.\u{200F}"
+
+        BIF ->
+            "FBu"
+
+        BND ->
+            "$"
+
+        BOB ->
+            "Bs"
+
+        BRL ->
+            "R$"
+
+        BWP ->
+            "P"
+
+        BYR ->
+            "BYR"
+
+        BZD ->
+            "$"
+
+        CDF ->
+            "FrCD"
+
+        CHF ->
+            "CHF"
+
+        CLP ->
+            "$"
+
+        CNY ->
+            "CN¥"
+
+        COP ->
+            "$"
+
+        CRC ->
+            "₡"
+
+        CVE ->
+            "CV$"
+
+        CZK ->
+            "Kč"
+
+        DJF ->
+            "Fdj"
+
+        DKK ->
+            "kr"
+
+        DOP ->
+            "RD$"
+
+        DZD ->
+            "د.ج.\u{200F}"
+
+        EEK ->
+            "kr"
+
+        EGP ->
+            "ج.م.\u{200F}"
+
+        ERN ->
+            "Nfk"
+
+        ETB ->
+            "Br"
+
+        GBP ->
+            "£"
+
+        GEL ->
+            "GEL"
+
+        GHS ->
+            "GH₵"
+
+        GNF ->
+            "FG"
+
+        GTQ ->
+            "Q"
+
+        HKD ->
+            "$"
+
+        HNL ->
+            "L"
+
+        HRK ->
+            "kn"
+
+        HUF ->
+            "Ft"
+
+        IDR ->
+            "Rp"
+
+        ILS ->
+            "₪"
+
+        INR ->
+            "₹"
+
+        IQD ->
+            "د.ع.\u{200F}"
+
+        IRR ->
+            "﷼"
+
+        ISK ->
+            "kr"
+
+        JMD ->
+            "$"
+
+        JOD ->
+            "د.أ.\u{200F}"
+
+        JPY ->
+            "￥"
+
+        KES ->
+            "Ksh"
+
+        KHR ->
+            "៛"
+
+        KMF ->
+            "FC"
+
+        KRW ->
+            "₩"
+
+        KWD ->
+            "د.ك.\u{200F}"
+
+        KZT ->
+            "тңг."
+
+        LAK ->
+            "ກີບ"
+
+        LBP ->
+            "ل.ل.\u{200F}"
+
+        LKR ->
+            "SL Re"
+
+        LTL ->
+            "Lt"
+
+        LVL ->
+            "Ls"
+
+        LYD ->
+            "د.ل.\u{200F}"
+
+        MAD ->
+            "د.م.\u{200F}"
+
+        MDL ->
+            "MDL"
+
+        MGA ->
+            "MGA"
+
+        MKD ->
+            "MKD"
+
+        MMK ->
+            "K"
+
+        MOP ->
+            "MOP$"
+
+        MUR ->
+            "MURs"
+
+        MXN ->
+            "$"
+
+        MYR ->
+            "RM"
+
+        MZN ->
+            "MTn"
+
+        NAD ->
+            "N$"
+
+        NGN ->
+            "₦"
+
+        NIO ->
+            "C$"
+
+        NOK ->
+            "kr"
+
+        NPR ->
+            "नेरू"
+
+        NZD ->
+            "$"
+
+        OMR ->
+            "ر.ع.\u{200F}"
+
+        PAB ->
+            "B/."
+
+        PEN ->
+            "S/."
+
+        PHP ->
+            "₱"
+
+        PKR ->
+            "₨"
+
+        PLN ->
+            "zł"
+
+        PYG ->
+            "₲"
+
+        QAR ->
+            "ر.ق.\u{200F}"
+
+        RON ->
+            "RON"
+
+        RSD ->
+            "дин."
+
+        RUB ->
+            "₽"
+
+        RWF ->
+            "FR"
+
+        SAR ->
+            "ر.س.\u{200F}"
+
+        SDG ->
+            "SDG"
+
+        SEK ->
+            "kr"
+
+        SGD ->
+            "$"
+
+        SOS ->
+            "Ssh"
+
+        SYP ->
+            "ل.س.\u{200F}"
+
+        THB ->
+            "฿"
+
+        TND ->
+            "د.ت.\u{200F}"
+
+        TOP ->
+            "T$"
+
+        TRY ->
+            "TL"
+
+        TTD ->
+            "$"
+
+        TWD ->
+            "NT$"
+
+        TZS ->
+            "TSh"
+
+        UAH ->
+            "₴"
+
+        UGX ->
+            "USh"
+
+        UYU ->
+            "$"
+
+        UZS ->
+            "UZS"
+
+        VEF ->
+            "Bs.F."
+
+        VND ->
+            "₫"
+
+        XAF ->
+            "FCFA"
+
+        XOF ->
+            "CFA"
+
+        YER ->
+            "ر.ي.\u{200F}"
+
+        ZAR ->
+            "R"
+
+        ZMK ->
+            "ZK"
+
+
+{-| Get the name of a currency from its code
+
+        toName EUR { plural = True } == "euros"
+        toName ALL { plural = False } == "Albanian Lek"
+        toName ALL { plural = True } == "Albanian lekë"
+
+-}
+toName : Currency -> { plural : Bool } -> String
+toName currency { plural } =
+    case currency of
+        USD ->
+            if plural then
+                "US dollars"
+
+            else
+                "US Dollar"
+
+        CAD ->
+            if plural then
+                "Canadian dollars"
+
+            else
+                "Canadian Dollar"
+
+        EUR ->
+            if plural then
+                "euros"
+
+            else
+                "Euro"
+
+        BTC ->
+            if plural then
+                "Bitcoins"
+
+            else
+                "Bitcoin"
+
+        AED ->
+            if plural then
+                "UAE dirhams"
+
+            else
+                "United Arab Emirates Dirham"
+
+        AFN ->
+            if plural then
+                "Afghan Afghanis"
+
+            else
+                "Afghan Afghani"
+
+        ALL ->
+            if plural then
+                "Albanian lekë"
+
+            else
+                "Albanian Lek"
+
+        AMD ->
+            if plural then
+                "Armenian drams"
+
+            else
+                "Armenian Dram"
+
+        ARS ->
+            if plural then
+                "Argentine pesos"
+
+            else
+                "Argentine Peso"
+
+        AUD ->
+            if plural then
+                "Australian dollars"
+
+            else
+                "Australian Dollar"
+
+        AZN ->
+            if plural then
+                "Azerbaijani manats"
+
+            else
+                "Azerbaijani Manat"
+
+        BAM ->
+            if plural then
+                "Bosnia-Herzegovina convertible marks"
+
+            else
+                "Bosnia-Herzegovina Convertible Mark"
+
+        BDT ->
+            if plural then
+                "Bangladeshi takas"
+
+            else
+                "Bangladeshi Taka"
+
+        BGN ->
+            if plural then
+                "Bulgarian leva"
+
+            else
+                "Bulgarian Lev"
+
+        BHD ->
+            if plural then
+                "Bahraini dinars"
+
+            else
+                "Bahraini Dinar"
+
+        BIF ->
+            if plural then
+                "Burundian francs"
+
+            else
+                "Burundian Franc"
+
+        BND ->
+            if plural then
+                "Brunei dollars"
+
+            else
+                "Brunei Dollar"
+
+        BOB ->
+            if plural then
+                "Bolivian bolivianos"
+
+            else
+                "Bolivian Boliviano"
+
+        BRL ->
+            if plural then
+                "Brazilian reals"
+
+            else
+                "Brazilian Real"
+
+        BWP ->
+            if plural then
+                "Botswanan pulas"
+
+            else
+                "Botswanan Pula"
+
+        BYR ->
+            if plural then
+                "Belarusian rubles"
+
+            else
+                "Belarusian Ruble"
+
+        BZD ->
+            if plural then
+                "Belize dollars"
+
+            else
+                "Belize Dollar"
+
+        CDF ->
+            if plural then
+                "Congolese francs"
+
+            else
+                "Congolese Franc"
+
+        CHF ->
+            if plural then
+                "Swiss francs"
+
+            else
+                "Swiss Franc"
+
+        CLP ->
+            if plural then
+                "Chilean pesos"
+
+            else
+                "Chilean Peso"
+
+        CNY ->
+            if plural then
+                "Chinese yuan"
+
+            else
+                "Chinese Yuan"
+
+        COP ->
+            if plural then
+                "Colombian pesos"
+
+            else
+                "Colombian Peso"
+
+        CRC ->
+            if plural then
+                "Costa Rican colóns"
+
+            else
+                "Costa Rican Colón"
+
+        CVE ->
+            if plural then
+                "Cape Verdean escudos"
+
+            else
+                "Cape Verdean Escudo"
+
+        CZK ->
+            if plural then
+                "Czech Republic korunas"
+
+            else
+                "Czech Republic Koruna"
+
+        DJF ->
+            if plural then
+                "Djiboutian francs"
+
+            else
+                "Djiboutian Franc"
+
+        DKK ->
+            if plural then
+                "Danish kroner"
+
+            else
+                "Danish Krone"
+
+        DOP ->
+            if plural then
+                "Dominican pesos"
+
+            else
+                "Dominican Peso"
+
+        DZD ->
+            if plural then
+                "Algerian dinars"
+
+            else
+                "Algerian Dinar"
+
+        EEK ->
+            if plural then
+                "Estonian kroons"
+
+            else
+                "Estonian Kroon"
+
+        EGP ->
+            if plural then
+                "Egyptian pounds"
+
+            else
+                "Egyptian Pound"
+
+        ERN ->
+            if plural then
+                "Eritrean nakfas"
+
+            else
+                "Eritrean Nakfa"
+
+        ETB ->
+            if plural then
+                "Ethiopian birrs"
+
+            else
+                "Ethiopian Birr"
+
+        GBP ->
+            if plural then
+                "British pounds sterling"
+
+            else
+                "British Pound Sterling"
+
+        GEL ->
+            if plural then
+                "Georgian laris"
+
+            else
+                "Georgian Lari"
+
+        GHS ->
+            if plural then
+                "Ghanaian cedis"
+
+            else
+                "Ghanaian Cedi"
+
+        GNF ->
+            if plural then
+                "Guinean francs"
+
+            else
+                "Guinean Franc"
+
+        GTQ ->
+            if plural then
+                "Guatemalan quetzals"
+
+            else
+                "Guatemalan Quetzal"
+
+        HKD ->
+            if plural then
+                "Hong Kong dollars"
+
+            else
+                "Hong Kong Dollar"
+
+        HNL ->
+            if plural then
+                "Honduran lempiras"
+
+            else
+                "Honduran Lempira"
+
+        HRK ->
+            if plural then
+                "Croatian kunas"
+
+            else
+                "Croatian Kuna"
+
+        HUF ->
+            if plural then
+                "Hungarian forints"
+
+            else
+                "Hungarian Forint"
+
+        IDR ->
+            if plural then
+                "Indonesian rupiahs"
+
+            else
+                "Indonesian Rupiah"
+
+        ILS ->
+            if plural then
+                "Israeli new sheqels"
+
+            else
+                "Israeli New Sheqel"
+
+        INR ->
+            if plural then
+                "Indian rupees"
+
+            else
+                "Indian Rupee"
+
+        IQD ->
+            if plural then
+                "Iraqi dinars"
+
+            else
+                "Iraqi Dinar"
+
+        IRR ->
+            if plural then
+                "Iranian rials"
+
+            else
+                "Iranian Rial"
+
+        ISK ->
+            if plural then
+                "Icelandic krónur"
+
+            else
+                "Icelandic Króna"
+
+        JMD ->
+            if plural then
+                "Jamaican dollars"
+
+            else
+                "Jamaican Dollar"
+
+        JOD ->
+            if plural then
+                "Jordanian dinars"
+
+            else
+                "Jordanian Dinar"
+
+        JPY ->
+            if plural then
+                "Japanese yen"
+
+            else
+                "Japanese Yen"
+
+        KES ->
+            if plural then
+                "Kenyan shillings"
+
+            else
+                "Kenyan Shilling"
+
+        KHR ->
+            if plural then
+                "Cambodian riels"
+
+            else
+                "Cambodian Riel"
+
+        KMF ->
+            if plural then
+                "Comorian francs"
+
+            else
+                "Comorian Franc"
+
+        KRW ->
+            if plural then
+                "South Korean won"
+
+            else
+                "South Korean Won"
+
+        KWD ->
+            if plural then
+                "Kuwaiti dinars"
+
+            else
+                "Kuwaiti Dinar"
+
+        KZT ->
+            if plural then
+                "Kazakhstani tenges"
+
+            else
+                "Kazakhstani Tenge"
+
+        LAK ->
+            if plural then
+                "Lao kips"
+
+            else
+                "Lao kip"
+
+        LBP ->
+            if plural then
+                "Lebanese pounds"
+
+            else
+                "Lebanese Pound"
+
+        LKR ->
+            if plural then
+                "Sri Lankan rupees"
+
+            else
+                "Sri Lankan Rupee"
+
+        LTL ->
+            if plural then
+                "Lithuanian litai"
+
+            else
+                "Lithuanian Litas"
+
+        LVL ->
+            if plural then
+                "Latvian lati"
+
+            else
+                "Latvian Lats"
+
+        LYD ->
+            if plural then
+                "Libyan dinars"
+
+            else
+                "Libyan Dinar"
+
+        MAD ->
+            if plural then
+                "Moroccan dirhams"
+
+            else
+                "Moroccan Dirham"
+
+        MDL ->
+            if plural then
+                "Moldovan lei"
+
+            else
+                "Moldovan Leu"
+
+        MGA ->
+            if plural then
+                "Malagasy Ariaries"
+
+            else
+                "Malagasy Ariary"
+
+        MKD ->
+            if plural then
+                "Macedonian denari"
+
+            else
+                "Macedonian Denar"
+
+        MMK ->
+            if plural then
+                "Myanma kyats"
+
+            else
+                "Myanma Kyat"
+
+        MOP ->
+            if plural then
+                "Macanese patacas"
+
+            else
+                "Macanese Pataca"
+
+        MUR ->
+            if plural then
+                "Mauritian rupees"
+
+            else
+                "Mauritian Rupee"
+
+        MXN ->
+            if plural then
+                "Mexican pesos"
+
+            else
+                "Mexican Peso"
+
+        MYR ->
+            if plural then
+                "Malaysian ringgits"
+
+            else
+                "Malaysian Ringgit"
+
+        MZN ->
+            if plural then
+                "Mozambican meticals"
+
+            else
+                "Mozambican Metical"
+
+        NAD ->
+            if plural then
+                "Namibian dollars"
+
+            else
+                "Namibian Dollar"
+
+        NGN ->
+            if plural then
+                "Nigerian nairas"
+
+            else
+                "Nigerian Naira"
+
+        NIO ->
+            if plural then
+                "Nicaraguan córdobas"
+
+            else
+                "Nicaraguan Córdoba"
+
+        NOK ->
+            if plural then
+                "Norwegian kroner"
+
+            else
+                "Norwegian Krone"
+
+        NPR ->
+            if plural then
+                "Nepalese rupees"
+
+            else
+                "Nepalese Rupee"
+
+        NZD ->
+            if plural then
+                "New Zealand dollars"
+
+            else
+                "New Zealand Dollar"
+
+        OMR ->
+            if plural then
+                "Omani rials"
+
+            else
+                "Omani Rial"
+
+        PAB ->
+            if plural then
+                "Panamanian balboas"
+
+            else
+                "Panamanian Balboa"
+
+        PEN ->
+            if plural then
+                "Peruvian nuevos soles"
+
+            else
+                "Peruvian Nuevo Sol"
+
+        PHP ->
+            if plural then
+                "Philippine pesos"
+
+            else
+                "Philippine Peso"
+
+        PKR ->
+            if plural then
+                "Pakistani rupees"
+
+            else
+                "Pakistani Rupee"
+
+        PLN ->
+            if plural then
+                "Polish zlotys"
+
+            else
+                "Polish Zloty"
+
+        PYG ->
+            if plural then
+                "Paraguayan guaranis"
+
+            else
+                "Paraguayan Guarani"
+
+        QAR ->
+            if plural then
+                "Qatari rials"
+
+            else
+                "Qatari Rial"
+
+        RON ->
+            if plural then
+                "Romanian lei"
+
+            else
+                "Romanian Leu"
+
+        RSD ->
+            if plural then
+                "Serbian dinars"
+
+            else
+                "Serbian Dinar"
+
+        RUB ->
+            if plural then
+                "Russian rubles"
+
+            else
+                "Russian Ruble"
+
+        RWF ->
+            if plural then
+                "Rwandan francs"
+
+            else
+                "Rwandan Franc"
+
+        SAR ->
+            if plural then
+                "Saudi riyals"
+
+            else
+                "Saudi Riyal"
+
+        SDG ->
+            if plural then
+                "Sudanese pounds"
+
+            else
+                "Sudanese Pound"
+
+        SEK ->
+            if plural then
+                "Swedish kronor"
+
+            else
+                "Swedish Krona"
+
+        SGD ->
+            if plural then
+                "Singapore dollars"
+
+            else
+                "Singapore Dollar"
+
+        SOS ->
+            if plural then
+                "Somali shillings"
+
+            else
+                "Somali Shilling"
+
+        SYP ->
+            if plural then
+                "Syrian pounds"
+
+            else
+                "Syrian Pound"
+
+        THB ->
+            if plural then
+                "Thai baht"
+
+            else
+                "Thai Baht"
+
+        TND ->
+            if plural then
+                "Tunisian dinars"
+
+            else
+                "Tunisian Dinar"
+
+        TOP ->
+            if plural then
+                "Tongan paʻanga"
+
+            else
+                "Tongan Paʻanga"
+
+        TRY ->
+            if plural then
+                "Turkish Lira"
+
+            else
+                "Turkish Lira"
+
+        TTD ->
+            if plural then
+                "Trinidad and Tobago dollars"
+
+            else
+                "Trinidad and Tobago Dollar"
+
+        TWD ->
+            if plural then
+                "New Taiwan dollars"
+
+            else
+                "New Taiwan Dollar"
+
+        TZS ->
+            if plural then
+                "Tanzanian shillings"
+
+            else
+                "Tanzanian Shilling"
+
+        UAH ->
+            if plural then
+                "Ukrainian hryvnias"
+
+            else
+                "Ukrainian Hryvnia"
+
+        UGX ->
+            if plural then
+                "Ugandan shillings"
+
+            else
+                "Ugandan Shilling"
+
+        UYU ->
+            if plural then
+                "Uruguayan pesos"
+
+            else
+                "Uruguayan Peso"
+
+        UZS ->
+            if plural then
+                "Uzbekistan som"
+
+            else
+                "Uzbekistan Som"
+
+        VEF ->
+            if plural then
+                "Venezuelan bolívars"
+
+            else
+                "Venezuelan Bolívar"
+
+        VND ->
+            if plural then
+                "Vietnamese dong"
+
+            else
+                "Vietnamese Dong"
+
+        XAF ->
+            if plural then
+                "CFA francs BEAC"
+
+            else
+                "CFA Franc BEAC"
+
+        XOF ->
+            if plural then
+                "CFA francs BCEAO"
+
+            else
+                "CFA Franc BCEAO"
+
+        YER ->
+            if plural then
+                "Yemeni rials"
+
+            else
+                "Yemeni Rial"
+
+        ZAR ->
+            if plural then
+                "South African rand"
+
+            else
+                "South African Rand"
+
+        ZMK ->
+            if plural then
+                "Zambian kwachas"
+
+            else
+                "Zambian Kwacha"
+
+
+{-| Get the number of decimal digits in a currency. of a currency from its code
+
+The decimal digits is basically the size of the smaller unit the currency comes in.
+American dollars and Euros, for example, both have cents, and 100 cents make a dollar or Euro. So the decimal
+digits for these currencies is `2`. Extreme cases include the Japanese Yen, which has `0`, and
+Bitcoin, which has `8`.
+
+-}
+toDecimalDigits : Currency -> Int
+toDecimalDigits currency =
+    case currency of
+        USD ->
+            2
+
+        CAD ->
+            2
+
+        EUR ->
+            2
+
+        BTC ->
+            8
+
+        AED ->
+            2
+
+        AFN ->
+            2
+
+        ALL ->
+            2
+
+        AMD ->
+            2
+
+        ARS ->
+            2
+
+        AUD ->
+            2
+
+        AZN ->
+            2
+
+        BAM ->
+            2
+
+        BDT ->
+            2
+
+        BGN ->
+            2
+
+        BHD ->
+            3
+
+        BIF ->
+            0
+
+        BND ->
+            2
+
+        BOB ->
+            2
+
+        BRL ->
+            2
+
+        BWP ->
+            2
+
+        BYR ->
+            0
+
+        BZD ->
+            2
+
+        CDF ->
+            2
+
+        CHF ->
+            2
+
+        CLP ->
+            0
+
+        CNY ->
+            2
+
+        COP ->
+            2
+
+        CRC ->
+            2
+
+        CVE ->
+            2
+
+        CZK ->
+            2
+
+        DJF ->
+            0
+
+        DKK ->
+            2
+
+        DOP ->
+            2
+
+        DZD ->
+            2
+
+        EEK ->
+            2
+
+        EGP ->
+            2
+
+        ERN ->
+            2
+
+        ETB ->
+            2
+
+        GBP ->
+            2
+
+        GEL ->
+            2
+
+        GHS ->
+            2
+
+        GNF ->
+            0
+
+        GTQ ->
+            2
+
+        HKD ->
+            2
+
+        HNL ->
+            2
+
+        HRK ->
+            2
+
+        HUF ->
+            2
+
+        IDR ->
+            2
+
+        ILS ->
+            2
+
+        INR ->
+            2
+
+        IQD ->
+            3
+
+        IRR ->
+            2
+
+        ISK ->
+            0
+
+        JMD ->
+            2
+
+        JOD ->
+            3
+
+        JPY ->
+            0
+
+        KES ->
+            2
+
+        KHR ->
+            2
+
+        KMF ->
+            0
+
+        KRW ->
+            0
+
+        KWD ->
+            3
+
+        KZT ->
+            2
+
+        LAK ->
+            2
+
+        LBP ->
+            2
+
+        LKR ->
+            2
+
+        LTL ->
+            2
+
+        LVL ->
+            2
+
+        LYD ->
+            3
+
+        MAD ->
+            2
+
+        MDL ->
+            2
+
+        MGA ->
+            2
+
+        MKD ->
+            2
+
+        MMK ->
+            2
+
+        MOP ->
+            2
+
+        MUR ->
+            2
+
+        MXN ->
+            2
+
+        MYR ->
+            2
+
+        MZN ->
+            2
+
+        NAD ->
+            2
+
+        NGN ->
+            2
+
+        NIO ->
+            2
+
+        NOK ->
+            2
+
+        NPR ->
+            2
+
+        NZD ->
+            2
+
+        OMR ->
+            3
+
+        PAB ->
+            2
+
+        PEN ->
+            2
+
+        PHP ->
+            2
+
+        PKR ->
+            2
+
+        PLN ->
+            2
+
+        PYG ->
+            0
+
+        QAR ->
+            2
+
+        RON ->
+            2
+
+        RSD ->
+            2
+
+        RUB ->
+            2
+
+        RWF ->
+            0
+
+        SAR ->
+            2
+
+        SDG ->
+            2
+
+        SEK ->
+            2
+
+        SGD ->
+            2
+
+        SOS ->
+            2
+
+        SYP ->
+            2
+
+        THB ->
+            2
+
+        TND ->
+            3
+
+        TOP ->
+            2
+
+        TRY ->
+            2
+
+        TTD ->
+            2
+
+        TWD ->
+            2
+
+        TZS ->
+            2
+
+        UAH ->
+            2
+
+        UGX ->
+            0
+
+        UYU ->
+            2
+
+        UZS ->
+            2
+
+        VEF ->
+            2
+
+        VND ->
+            0
+
+        XAF ->
+            0
+
+        XOF ->
+            0
+
+        YER ->
+            2
+
+        ZAR ->
+            2
+
+        ZMK ->
+            0
+
+
+{-| Get the currency's code as a `String`
+
+        toString CNY == "CNY"
+
+-}
+toString : Currency -> String
+toString currency =
+    case currency of
+        USD ->
+            "USD"
+
+        CAD ->
+            "CAD"
+
+        EUR ->
+            "EUR"
+
+        BTC ->
+            "BTC"
+
+        AED ->
+            "AED"
+
+        AFN ->
+            "AFN"
+
+        ALL ->
+            "ALL"
+
+        AMD ->
+            "AMD"
+
+        ARS ->
+            "ARS"
+
+        AUD ->
+            "AUD"
+
+        AZN ->
+            "AZN"
+
+        BAM ->
+            "BAM"
+
+        BDT ->
+            "BDT"
+
+        BGN ->
+            "BGN"
+
+        BHD ->
+            "BHD"
+
+        BIF ->
+            "BIF"
+
+        BND ->
+            "BND"
+
+        BOB ->
+            "BOB"
+
+        BRL ->
+            "BRL"
+
+        BWP ->
+            "BWP"
+
+        BYR ->
+            "BYR"
+
+        BZD ->
+            "BZD"
+
+        CDF ->
+            "CDF"
+
+        CHF ->
+            "CHF"
+
+        CLP ->
+            "CLP"
+
+        CNY ->
+            "CNY"
+
+        COP ->
+            "COP"
+
+        CRC ->
+            "CRC"
+
+        CVE ->
+            "CVE"
+
+        CZK ->
+            "CZK"
+
+        DJF ->
+            "DJF"
+
+        DKK ->
+            "DKK"
+
+        DOP ->
+            "DOP"
+
+        DZD ->
+            "DZD"
+
+        EEK ->
+            "EEK"
+
+        EGP ->
+            "EGP"
+
+        ERN ->
+            "ERN"
+
+        ETB ->
+            "ETB"
+
+        GBP ->
+            "GBP"
+
+        GEL ->
+            "GEL"
+
+        GHS ->
+            "GHS"
+
+        GNF ->
+            "GNF"
+
+        GTQ ->
+            "GTQ"
+
+        HKD ->
+            "HKD"
+
+        HNL ->
+            "HNL"
+
+        HRK ->
+            "HRK"
+
+        HUF ->
+            "HUF"
+
+        IDR ->
+            "IDR"
+
+        ILS ->
+            "ILS"
+
+        INR ->
+            "INR"
+
+        IQD ->
+            "IQD"
+
+        IRR ->
+            "IRR"
+
+        ISK ->
+            "ISK"
+
+        JMD ->
+            "JMD"
+
+        JOD ->
+            "JOD"
+
+        JPY ->
+            "JPY"
+
+        KES ->
+            "KES"
+
+        KHR ->
+            "KHR"
+
+        KMF ->
+            "KMF"
+
+        KRW ->
+            "KRW"
+
+        KWD ->
+            "KWD"
+
+        KZT ->
+            "KZT"
+
+        LAK ->
+            "LAK"
+
+        LBP ->
+            "LBP"
+
+        LKR ->
+            "LKR"
+
+        LTL ->
+            "LTL"
+
+        LVL ->
+            "LVL"
+
+        LYD ->
+            "LYD"
+
+        MAD ->
+            "MAD"
+
+        MDL ->
+            "MDL"
+
+        MGA ->
+            "MGA"
+
+        MKD ->
+            "MKD"
+
+        MMK ->
+            "MMK"
+
+        MOP ->
+            "MOP"
+
+        MUR ->
+            "MUR"
+
+        MXN ->
+            "MXN"
+
+        MYR ->
+            "MYR"
+
+        MZN ->
+            "MZN"
+
+        NAD ->
+            "NAD"
+
+        NGN ->
+            "NGN"
+
+        NIO ->
+            "NIO"
+
+        NOK ->
+            "NOK"
+
+        NPR ->
+            "NPR"
+
+        NZD ->
+            "NZD"
+
+        OMR ->
+            "OMR"
+
+        PAB ->
+            "PAB"
+
+        PEN ->
+            "PEN"
+
+        PHP ->
+            "PHP"
+
+        PKR ->
+            "PKR"
+
+        PLN ->
+            "PLN"
+
+        PYG ->
+            "PYG"
+
+        QAR ->
+            "QAR"
+
+        RON ->
+            "RON"
+
+        RSD ->
+            "RSD"
+
+        RUB ->
+            "RUB"
+
+        RWF ->
+            "RWF"
+
+        SAR ->
+            "SAR"
+
+        SDG ->
+            "SDG"
+
+        SEK ->
+            "SEK"
+
+        SGD ->
+            "SGD"
+
+        SOS ->
+            "SOS"
+
+        SYP ->
+            "SYP"
+
+        THB ->
+            "THB"
+
+        TND ->
+            "TND"
+
+        TOP ->
+            "TOP"
+
+        TRY ->
+            "TRY"
+
+        TTD ->
+            "TTD"
+
+        TWD ->
+            "TWD"
+
+        TZS ->
+            "TZS"
+
+        UAH ->
+            "UAH"
+
+        UGX ->
+            "UGX"
+
+        UYU ->
+            "UYU"
+
+        UZS ->
+            "UZS"
+
+        VEF ->
+            "VEF"
+
+        VND ->
+            "VND"
+
+        XAF ->
+            "XAF"
+
+        XOF ->
+            "XOF"
+
+        YER ->
+            "YER"
+
+        ZAR ->
+            "ZAR"
+
+        ZMK ->
+            "ZMK"
+
+
+{-| Attempt to derive a `Currency` from a `String`. This function presumes the `String` is a currency code like `"USD"`.
+
+        fromString "DKK" == Just DKK
+        fromString "Danish Krone" == Nothing
+
+-}
+fromString : String -> Maybe Currency
+fromString str =
+    case String.toUpper str of
+        "USD" ->
+            Just USD
+
+        "CAD" ->
+            Just CAD
+
+        "EUR" ->
+            Just EUR
+
+        "BTC" ->
+            Just BTC
+
+        "AED" ->
+            Just AED
+
+        "AFN" ->
+            Just AFN
+
+        "ALL" ->
+            Just ALL
+
+        "AMD" ->
+            Just AMD
+
+        "ARS" ->
+            Just ARS
+
+        "AUD" ->
+            Just AUD
+
+        "AZN" ->
+            Just AZN
+
+        "BAM" ->
+            Just BAM
+
+        "BDT" ->
+            Just BDT
+
+        "BGN" ->
+            Just BGN
+
+        "BHD" ->
+            Just BHD
+
+        "BIF" ->
+            Just BIF
+
+        "BND" ->
+            Just BND
+
+        "BOB" ->
+            Just BOB
+
+        "BRL" ->
+            Just BRL
+
+        "BWP" ->
+            Just BWP
+
+        "BYR" ->
+            Just BYR
+
+        "BZD" ->
+            Just BZD
+
+        "CDF" ->
+            Just CDF
+
+        "CHF" ->
+            Just CHF
+
+        "CLP" ->
+            Just CLP
+
+        "CNY" ->
+            Just CNY
+
+        "COP" ->
+            Just COP
+
+        "CRC" ->
+            Just CRC
+
+        "CVE" ->
+            Just CVE
+
+        "CZK" ->
+            Just CZK
+
+        "DJF" ->
+            Just DJF
+
+        "DKK" ->
+            Just DKK
+
+        "DOP" ->
+            Just DOP
+
+        "DZD" ->
+            Just DZD
+
+        "EEK" ->
+            Just EEK
+
+        "EGP" ->
+            Just EGP
+
+        "ERN" ->
+            Just ERN
+
+        "ETB" ->
+            Just ETB
+
+        "GBP" ->
+            Just GBP
+
+        "GEL" ->
+            Just GEL
+
+        "GHS" ->
+            Just GHS
+
+        "GNF" ->
+            Just GNF
+
+        "GTQ" ->
+            Just GTQ
+
+        "HKD" ->
+            Just HKD
+
+        "HNL" ->
+            Just HNL
+
+        "HRK" ->
+            Just HRK
+
+        "HUF" ->
+            Just HUF
+
+        "IDR" ->
+            Just IDR
+
+        "ILS" ->
+            Just ILS
+
+        "INR" ->
+            Just INR
+
+        "IQD" ->
+            Just IQD
+
+        "IRR" ->
+            Just IRR
+
+        "ISK" ->
+            Just ISK
+
+        "JMD" ->
+            Just JMD
+
+        "JOD" ->
+            Just JOD
+
+        "JPY" ->
+            Just JPY
+
+        "KES" ->
+            Just KES
+
+        "KHR" ->
+            Just KHR
+
+        "KMF" ->
+            Just KMF
+
+        "KRW" ->
+            Just KRW
+
+        "KWD" ->
+            Just KWD
+
+        "KZT" ->
+            Just KZT
+
+        "LAK" ->
+            Just LAK
+
+        "LBP" ->
+            Just LBP
+
+        "LKR" ->
+            Just LKR
+
+        "LTL" ->
+            Just LTL
+
+        "LVL" ->
+            Just LVL
+
+        "LYD" ->
+            Just LYD
+
+        "MAD" ->
+            Just MAD
+
+        "MDL" ->
+            Just MDL
+
+        "MGA" ->
+            Just MGA
+
+        "MKD" ->
+            Just MKD
+
+        "MMK" ->
+            Just MMK
+
+        "MOP" ->
+            Just MOP
+
+        "MUR" ->
+            Just MUR
+
+        "MXN" ->
+            Just MXN
+
+        "MYR" ->
+            Just MYR
+
+        "MZN" ->
+            Just MZN
+
+        "NAD" ->
+            Just NAD
+
+        "NGN" ->
+            Just NGN
+
+        "NIO" ->
+            Just NIO
+
+        "NOK" ->
+            Just NOK
+
+        "NPR" ->
+            Just NPR
+
+        "NZD" ->
+            Just NZD
+
+        "OMR" ->
+            Just OMR
+
+        "PAB" ->
+            Just PAB
+
+        "PEN" ->
+            Just PEN
+
+        "PHP" ->
+            Just PHP
+
+        "PKR" ->
+            Just PKR
+
+        "PLN" ->
+            Just PLN
+
+        "PYG" ->
+            Just PYG
+
+        "QAR" ->
+            Just QAR
+
+        "RON" ->
+            Just RON
+
+        "RSD" ->
+            Just RSD
+
+        "RUB" ->
+            Just RUB
+
+        "RWF" ->
+            Just RWF
+
+        "SAR" ->
+            Just SAR
+
+        "SDG" ->
+            Just SDG
+
+        "SEK" ->
+            Just SEK
+
+        "SGD" ->
+            Just SGD
+
+        "SOS" ->
+            Just SOS
+
+        "SYP" ->
+            Just SYP
+
+        "THB" ->
+            Just THB
+
+        "TND" ->
+            Just TND
+
+        "TOP" ->
+            Just TOP
+
+        "TRY" ->
+            Just TRY
+
+        "TTD" ->
+            Just TTD
+
+        "TWD" ->
+            Just TWD
+
+        "TZS" ->
+            Just TZS
+
+        "UAH" ->
+            Just UAH
+
+        "UGX" ->
+            Just UGX
+
+        "UYU" ->
+            Just UYU
+
+        "UZS" ->
+            Just UZS
+
+        "VEF" ->
+            Just VEF
+
+        "VND" ->
+            Just VND
+
+        "XAF" ->
+            Just XAF
+
+        "XOF" ->
+            Just XOF
+
+        "YER" ->
+            Just YER
+
+        "ZAR" ->
+            Just ZAR
+
+        "ZMK" ->
+            Just ZMK
+
+        _ ->
+            Nothing
+
+
+{-| All the currency codes in a list
+
+    all =
+        [ USD
+        , EUR
+        , CAD
+
+        --..
+        ]
+
+-}
+all : List Currency
+all =
     [ USD
-
     , CAD
     , EUR
     , BTC
@@ -545,2185 +3016,1082 @@ allCodes =
     , ZMK
     ]
 
-{-| Get the currency from a code, with no Maybes involved -}
-currencyFromCode : Code -> Currency
-currencyFromCode code =
-    case code of
-        USD ->
-            usd
-        CAD ->
-            cad
-        EUR ->
-            eur
-        BTC ->
-            btc
-        AED ->
-            aed
-        AFN ->
-            afn
-        ALL ->
-            all
-        AMD ->
-            amd
-        ARS ->
-            ars
-        AUD ->
-            aud
-        AZN ->
-            azn
-        BAM ->
-            bam
-        BDT ->
-            bdt
-        BGN ->
-            bgn
-        BHD ->
-            bhd
-        BIF ->
-            bif
-        BND ->
-            bnd
-        BOB ->
-            bob
-        BRL ->
-            brl
-        BWP ->
-            bwp
-        BYR ->
-            byr
-        BZD ->
-            bzd
-        CDF ->
-            cdf
-        CHF ->
-            chf
-        CLP ->
-            clp
-        CNY ->
-            cny
-        COP ->
-            cop
-        CRC ->
-            crc
-        CVE ->
-            cve
-        CZK ->
-            czk
-        DJF ->
-            djf
-        DKK ->
-            dkk
-        DOP ->
-            dop
-        DZD ->
-            dzd
-        EEK ->
-            eek
-        EGP ->
-            egp
-        ERN ->
-            ern
-        ETB ->
-            etb
-        GBP ->
-            gbp
-        GEL ->
-            gel
-        GHS ->
-            ghs
-        GNF ->
-            gnf
-        GTQ ->
-            gtq
-        HKD ->
-            hkd
-        HNL ->
-            hnl
-        HRK ->
-            hrk
-        HUF ->
-            huf
-        IDR ->
-            idr
-        ILS ->
-            ils
-        INR ->
-            inr
-        IQD ->
-            iqd
-        IRR ->
-            irr
-        ISK ->
-            isk
-        JMD ->
-            jmd
-        JOD ->
-            jod
-        JPY ->
-            jpy
-        KES ->
-            kes
-        KHR ->
-            khr
-        KMF ->
-            kmf
-        KRW ->
-            krw
-        KWD ->
-            kwd
-        KZT ->
-            kzt
-        LAK ->
-            lak
-        LBP ->
-            lbp
-        LKR ->
-            lkr
-        LTL ->
-            ltl
-        LVL ->
-            lvl
-        LYD ->
-            lyd
-        MAD ->
-            mad
-        MDL ->
-            mdl
-        MGA ->
-            mga
-        MKD ->
-            mkd
-        MMK ->
-            mmk
-        MOP ->
-            mop
-        MUR ->
-            mur
-        MXN ->
-            mxn
-        MYR ->
-            myr
-        MZN ->
-            mzn
-        NAD ->
-            nad
-        NGN ->
-            ngn
-        NIO ->
-            nio
-        NOK ->
-            nok
-        NPR ->
-            npr
-        NZD ->
-            nzd
-        OMR ->
-            omr
-        PAB ->
-            pab
-        PEN ->
-            pen
-        PHP ->
-            php
-        PKR ->
-            pkr
-        PLN ->
-            pln
-        PYG ->
-            pyg
-        QAR ->
-            qar
-        RON ->
-            ron
-        RSD ->
-            rsd
-        RUB ->
-            rub
-        RWF ->
-            rwf
-        SAR ->
-            sar
-        SDG ->
-            sdg
-        SEK ->
-            sek
-        SGD ->
-            sgd
-        SOS ->
-            sos
-        SYP ->
-            syp
-        THB ->
-            thb
-        TND ->
-            tnd
-        TOP ->
-            top
-        TRY ->
-            try
-        TTD ->
-            ttd
-        TWD ->
-            twd
-        TZS ->
-            tzs
-        UAH ->
-            uah
-        UGX ->
-            ugx
-        UYU ->
-            uyu
-        UZS ->
-            uzs
-        VEF ->
-            vef
-        VND ->
-            vnd
-        XAF ->
-            xaf
-        XOF ->
-            xof
-        YER ->
-            yer
-        ZAR ->
-            zar
-        ZMK ->
-            zmk
-
-
-{-| Get the currency code from a string -}
-codeFromString : String -> Maybe Code
-codeFromString str =
-    case String.toLower str of
-        "usd" ->
-            Just USD
-        "cad" ->
-            Just CAD
-        "eur" ->
-            Just EUR
-        "btc" ->
-            Just BTC
-        "aed" ->
-            Just AED
-        "afn" ->
-            Just AFN
-        "all" ->
-            Just ALL
-        "amd" ->
-            Just AMD
-        "ars" ->
-            Just ARS
-        "aud" ->
-            Just AUD
-        "azn" ->
-            Just AZN
-        "bam" ->
-            Just BAM
-        "bdt" ->
-            Just BDT
-        "bgn" ->
-            Just BGN
-        "bhd" ->
-            Just BHD
-        "bif" ->
-            Just BIF
-        "bnd" ->
-            Just BND
-        "bob" ->
-            Just BOB
-        "brl" ->
-            Just BRL
-        "bwp" ->
-            Just BWP
-        "byr" ->
-            Just BYR
-        "bzd" ->
-            Just BZD
-        "cdf" ->
-            Just CDF
-        "chf" ->
-            Just CHF
-        "clp" ->
-            Just CLP
-        "cny" ->
-            Just CNY
-        "cop" ->
-            Just COP
-        "crc" ->
-            Just CRC
-        "cve" ->
-            Just CVE
-        "czk" ->
-            Just CZK
-        "djf" ->
-            Just DJF
-        "dkk" ->
-            Just DKK
-        "dop" ->
-            Just DOP
-        "dzd" ->
-            Just DZD
-        "eek" ->
-            Just EEK
-        "egp" ->
-            Just EGP
-        "ern" ->
-            Just ERN
-        "etb" ->
-            Just ETB
-        "gbp" ->
-            Just GBP
-        "gel" ->
-            Just GEL
-        "ghs" ->
-            Just GHS
-        "gnf" ->
-            Just GNF
-        "gtq" ->
-            Just GTQ
-        "hkd" ->
-            Just HKD
-        "hnl" ->
-            Just HNL
-        "hrk" ->
-            Just HRK
-        "huf" ->
-            Just HUF
-        "idr" ->
-            Just IDR
-        "ils" ->
-            Just ILS
-        "inr" ->
-            Just INR
-        "iqd" ->
-            Just IQD
-        "irr" ->
-            Just IRR
-        "isk" ->
-            Just ISK
-        "jmd" ->
-            Just JMD
-        "jod" ->
-            Just JOD
-        "jpy" ->
-            Just JPY
-        "kes" ->
-            Just KES
-        "khr" ->
-            Just KHR
-        "kmf" ->
-            Just KMF
-        "krw" ->
-            Just KRW
-        "kwd" ->
-            Just KWD
-        "kzt" ->
-            Just KZT
-        "lak" ->
-            Just LAK
-        "lbp" ->
-            Just LBP
-        "lkr" ->
-            Just LKR
-        "ltl" ->
-            Just LTL
-        "lvl" ->
-            Just LVL
-        "lyd" ->
-            Just LYD
-        "mad" ->
-            Just MAD
-        "mdl" ->
-            Just MDL
-        "mga" ->
-            Just MGA
-        "mkd" ->
-            Just MKD
-        "mmk" ->
-            Just MMK
-        "mop" ->
-            Just MOP
-        "mur" ->
-            Just MUR
-        "mxn" ->
-            Just MXN
-        "myr" ->
-            Just MYR
-        "mzn" ->
-            Just MZN
-        "nad" ->
-            Just NAD
-        "ngn" ->
-            Just NGN
-        "nio" ->
-            Just NIO
-        "nok" ->
-            Just NOK
-        "npr" ->
-            Just NPR
-        "nzd" ->
-            Just NZD
-        "omr" ->
-            Just OMR
-        "pab" ->
-            Just PAB
-        "pen" ->
-            Just PEN
-        "php" ->
-            Just PHP
-        "pkr" ->
-            Just PKR
-        "pln" ->
-            Just PLN
-        "pyg" ->
-            Just PYG
-        "qar" ->
-            Just QAR
-        "ron" ->
-            Just RON
-        "rsd" ->
-            Just RSD
-        "rub" ->
-            Just RUB
-        "rwf" ->
-            Just RWF
-        "sar" ->
-            Just SAR
-        "sdg" ->
-            Just SDG
-        "sek" ->
-            Just SEK
-        "sgd" ->
-            Just SGD
-        "sos" ->
-            Just SOS
-        "syp" ->
-            Just SYP
-        "thb" ->
-            Just THB
-        "tnd" ->
-            Just TND
-        "top" ->
-            Just TOP
-        "try" ->
-            Just TRY
-        "ttd" ->
-            Just TTD
-        "twd" ->
-            Just TWD
-        "tzs" ->
-            Just TZS
-        "uah" ->
-            Just UAH
-        "ugx" ->
-            Just UGX
-        "uyu" ->
-            Just UYU
-        "uzs" ->
-            Just UZS
-        "vef" ->
-            Just VEF
-        "vnd" ->
-            Just VND
-        "xaf" ->
-            Just XAF
-        "xof" ->
-            Just XOF
-        "yer" ->
-            Just YER
-        "zar" ->
-            Just ZAR
-        "zmk" ->
-            Just ZMK
-
-        _ ->
-            Nothing
-
-{-| Get the currency from a string -}
-currencyFromString : String -> Maybe Currency
-currencyFromString str =
-    case String.toLower str of
-        "usd" ->
-            Just usd
-        "cad" ->
-            Just cad
-        "eur" ->
-            Just eur
-        "btc" ->
-            Just btc
-        "aed" ->
-            Just aed
-        "afn" ->
-            Just afn
-        "all" ->
-            Just all
-        "amd" ->
-            Just amd
-        "ars" ->
-            Just ars
-        "aud" ->
-            Just aud
-        "azn" ->
-            Just azn
-        "bam" ->
-            Just bam
-        "bdt" ->
-            Just bdt
-        "bgn" ->
-            Just bgn
-        "bhd" ->
-            Just bhd
-        "bif" ->
-            Just bif
-        "bnd" ->
-            Just bnd
-        "bob" ->
-            Just bob
-        "brl" ->
-            Just brl
-        "bwp" ->
-            Just bwp
-        "byr" ->
-            Just byr
-        "bzd" ->
-            Just bzd
-        "cdf" ->
-            Just cdf
-        "chf" ->
-            Just chf
-        "clp" ->
-            Just clp
-        "cny" ->
-            Just cny
-        "cop" ->
-            Just cop
-        "crc" ->
-            Just crc
-        "cve" ->
-            Just cve
-        "czk" ->
-            Just czk
-        "djf" ->
-            Just djf
-        "dkk" ->
-            Just dkk
-        "dop" ->
-            Just dop
-        "dzd" ->
-            Just dzd
-        "eek" ->
-            Just eek
-        "egp" ->
-            Just egp
-        "ern" ->
-            Just ern
-        "etb" ->
-            Just etb
-        "gbp" ->
-            Just gbp
-        "gel" ->
-            Just gel
-        "ghs" ->
-            Just ghs
-        "gnf" ->
-            Just gnf
-        "gtq" ->
-            Just gtq
-        "hkd" ->
-            Just hkd
-        "hnl" ->
-            Just hnl
-        "hrk" ->
-            Just hrk
-        "huf" ->
-            Just huf
-        "idr" ->
-            Just idr
-        "ils" ->
-            Just ils
-        "inr" ->
-            Just inr
-        "iqd" ->
-            Just iqd
-        "irr" ->
-            Just irr
-        "isk" ->
-            Just isk
-        "jmd" ->
-            Just jmd
-        "jod" ->
-            Just jod
-        "jpy" ->
-            Just jpy
-        "kes" ->
-            Just kes
-        "khr" ->
-            Just khr
-        "kmf" ->
-            Just kmf
-        "krw" ->
-            Just krw
-        "kwd" ->
-            Just kwd
-        "kzt" ->
-            Just kzt
-        "lak" ->
-            Just lak
-        "lbp" ->
-            Just lbp
-        "lkr" ->
-            Just lkr
-        "ltl" ->
-            Just ltl
-        "lvl" ->
-            Just lvl
-        "lyd" ->
-            Just lyd
-        "mad" ->
-            Just mad
-        "mdl" ->
-            Just mdl
-        "mga" ->
-            Just mga
-        "mkd" ->
-            Just mkd
-        "mmk" ->
-            Just mmk
-        "mop" ->
-            Just mop
-        "mur" ->
-            Just mur
-        "mxn" ->
-            Just mxn
-        "myr" ->
-            Just myr
-        "mzn" ->
-            Just mzn
-        "nad" ->
-            Just nad
-        "ngn" ->
-            Just ngn
-        "nio" ->
-            Just nio
-        "nok" ->
-            Just nok
-        "npr" ->
-            Just npr
-        "nzd" ->
-            Just nzd
-        "omr" ->
-            Just omr
-        "pab" ->
-            Just pab
-        "pen" ->
-            Just pen
-        "php" ->
-            Just php
-        "pkr" ->
-            Just pkr
-        "pln" ->
-            Just pln
-        "pyg" ->
-            Just pyg
-        "qar" ->
-            Just qar
-        "ron" ->
-            Just ron
-        "rsd" ->
-            Just rsd
-        "rub" ->
-            Just rub
-        "rwf" ->
-            Just rwf
-        "sar" ->
-            Just sar
-        "sdg" ->
-            Just sdg
-        "sek" ->
-            Just sek
-        "sgd" ->
-            Just sgd
-        "sos" ->
-            Just sos
-        "syp" ->
-            Just syp
-        "thb" ->
-            Just thb
-        "tnd" ->
-            Just tnd
-        "top" ->
-            Just top
-        "try" ->
-            Just try
-        "ttd" ->
-            Just ttd
-        "twd" ->
-            Just twd
-        "tzs" ->
-            Just tzs
-        "uah" ->
-            Just uah
-        "ugx" ->
-            Just ugx
-        "uyu" ->
-            Just uyu
-        "uzs" ->
-            Just uzs
-        "vef" ->
-            Just vef
-        "vnd" ->
-            Just vnd
-        "xaf" ->
-            Just xaf
-        "xof" ->
-            Just xof
-        "yer" ->
-            Just yer
-        "zar" ->
-            Just zar
-        "zmk" ->
-            Just zmk
-
-        _ ->
-            Nothing
-
-
-{-| US Dollar -}
-
-usd : Currency
-usd =
-    { symbol = "$"
-    , name = "US Dollar"
-    , namePlural = "US dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "USD"
-    }
-
-{-| Canadian Dollar -}
-
-cad : Currency
-cad =
-    { symbol = "CA$"
-    , name = "Canadian Dollar"
-    , namePlural = "Canadian dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "CAD"
-    }
-
-{-| Euro -}
-
-eur : Currency
-eur =
-    { symbol = "€"
-    , name = "Euro"
-    , namePlural = "euros"
-    , symbolNative = "€"
-    , decimalDigits = 2
-    , code = "EUR"
-    }
-
-{-| Bitcoin -}
-
-btc : Currency
-btc =
-    { symbol = "BTC"
-    , name = "Bitcoin"
-    , namePlural = "Bitcoins"
-    , symbolNative = "฿"
-    , decimalDigits = 8
-    , code = "BTC"
-    }
-
-{-| United Arab Emirates Dirham -}
-
-aed : Currency
-aed =
-    { symbol = "AED"
-    , name = "United Arab Emirates Dirham"
-    , namePlural = "UAE dirhams"
-    , symbolNative = "د.إ.‏"
-    , decimalDigits = 2
-    , code = "AED"
-    }
-
-{-| Afghan Afghani -}
-
-afn : Currency
-afn =
-    { symbol = "Af"
-    , name = "Afghan Afghani"
-    , namePlural = "Afghan Afghanis"
-    , symbolNative = "؋"
-    , decimalDigits = 2
-    , code = "AFN"
-    }
-
-{-| Albanian Lek -}
-
-all : Currency
-all =
-    { symbol = "ALL"
-    , name = "Albanian Lek"
-    , namePlural = "Albanian lekë"
-    , symbolNative = "Lek"
-    , decimalDigits = 2
-    , code = "ALL"
-    }
-
-{-| Armenian Dram -}
-
-amd : Currency
-amd =
-    { symbol = "AMD"
-    , name = "Armenian Dram"
-    , namePlural = "Armenian drams"
-    , symbolNative = "դր."
-    , decimalDigits = 2
-    , code = "AMD"
-    }
-
-{-| Argentine Peso -}
-
-ars : Currency
-ars =
-    { symbol = "AR$"
-    , name = "Argentine Peso"
-    , namePlural = "Argentine pesos"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "ARS"
-    }
-
-{-| Australian Dollar -}
-
-aud : Currency
-aud =
-    { symbol = "AU$"
-    , name = "Australian Dollar"
-    , namePlural = "Australian dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "AUD"
-    }
-
-{-| Azerbaijani Manat -}
-
-azn : Currency
-azn =
-    { symbol = "man."
-    , name = "Azerbaijani Manat"
-    , namePlural = "Azerbaijani manats"
-    , symbolNative = "ман."
-    , decimalDigits = 2
-    , code = "AZN"
-    }
-
-{-| Bosnia-Herzegovina Convertible Mark -}
-
-bam : Currency
-bam =
-    { symbol = "KM"
-    , name = "Bosnia-Herzegovina Convertible Mark"
-    , namePlural = "Bosnia-Herzegovina convertible marks"
-    , symbolNative = "KM"
-    , decimalDigits = 2
-    , code = "BAM"
-    }
-
-{-| Bangladeshi Taka -}
-
-bdt : Currency
-bdt =
-    { symbol = "Tk"
-    , name = "Bangladeshi Taka"
-    , namePlural = "Bangladeshi takas"
-    , symbolNative = "৳"
-    , decimalDigits = 2
-    , code = "BDT"
-    }
-
-{-| Bulgarian Lev -}
-
-bgn : Currency
-bgn =
-    { symbol = "BGN"
-    , name = "Bulgarian Lev"
-    , namePlural = "Bulgarian leva"
-    , symbolNative = "лв."
-    , decimalDigits = 2
-    , code = "BGN"
-    }
-
-{-| Bahraini Dinar -}
-
-bhd : Currency
-bhd =
-    { symbol = "BD"
-    , name = "Bahraini Dinar"
-    , namePlural = "Bahraini dinars"
-    , symbolNative = "د.ب.‏"
-    , decimalDigits = 3
-    , code = "BHD"
-    }
-
-{-| Burundian Franc -}
-
-bif : Currency
-bif =
-    { symbol = "FBu"
-    , name = "Burundian Franc"
-    , namePlural = "Burundian francs"
-    , symbolNative = "FBu"
-    , decimalDigits = 0
-    , code = "BIF"
-    }
-
-{-| Brunei Dollar -}
-
-bnd : Currency
-bnd =
-    { symbol = "BN$"
-    , name = "Brunei Dollar"
-    , namePlural = "Brunei dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "BND"
-    }
-
-{-| Bolivian Boliviano -}
-
-bob : Currency
-bob =
-    { symbol = "Bs"
-    , name = "Bolivian Boliviano"
-    , namePlural = "Bolivian bolivianos"
-    , symbolNative = "Bs"
-    , decimalDigits = 2
-    , code = "BOB"
-    }
-
-{-| Brazilian Real -}
-
-brl : Currency
-brl =
-    { symbol = "R$"
-    , name = "Brazilian Real"
-    , namePlural = "Brazilian reals"
-    , symbolNative = "R$"
-    , decimalDigits = 2
-    , code = "BRL"
-    }
-
-{-| Botswanan Pula -}
-
-bwp : Currency
-bwp =
-    { symbol = "BWP"
-    , name = "Botswanan Pula"
-    , namePlural = "Botswanan pulas"
-    , symbolNative = "P"
-    , decimalDigits = 2
-    , code = "BWP"
-    }
-
-{-| Belarusian Ruble -}
-
-byr : Currency
-byr =
-    { symbol = "BYR"
-    , name = "Belarusian Ruble"
-    , namePlural = "Belarusian rubles"
-    , symbolNative = "BYR"
-    , decimalDigits = 0
-    , code = "BYR"
-    }
-
-{-| Belize Dollar -}
-
-bzd : Currency
-bzd =
-    { symbol = "BZ$"
-    , name = "Belize Dollar"
-    , namePlural = "Belize dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "BZD"
-    }
-
-{-| Congolese Franc -}
-
-cdf : Currency
-cdf =
-    { symbol = "CDF"
-    , name = "Congolese Franc"
-    , namePlural = "Congolese francs"
-    , symbolNative = "FrCD"
-    , decimalDigits = 2
-    , code = "CDF"
-    }
-
-{-| Swiss Franc -}
-
-chf : Currency
-chf =
-    { symbol = "CHF"
-    , name = "Swiss Franc"
-    , namePlural = "Swiss francs"
-    , symbolNative = "CHF"
-    , decimalDigits = 2
-    , code = "CHF"
-    }
-
-{-| Chilean Peso -}
-
-clp : Currency
-clp =
-    { symbol = "CL$"
-    , name = "Chilean Peso"
-    , namePlural = "Chilean pesos"
-    , symbolNative = "$"
-    , decimalDigits = 0
-    , code = "CLP"
-    }
-
-{-| Chinese Yuan -}
-
-cny : Currency
-cny =
-    { symbol = "CN¥"
-    , name = "Chinese Yuan"
-    , namePlural = "Chinese yuan"
-    , symbolNative = "CN¥"
-    , decimalDigits = 2
-    , code = "CNY"
-    }
-
-{-| Colombian Peso -}
-
-cop : Currency
-cop =
-    { symbol = "CO$"
-    , name = "Colombian Peso"
-    , namePlural = "Colombian pesos"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "COP"
-    }
-
-{-| Costa Rican Colón -}
-
-crc : Currency
-crc =
-    { symbol = "₡"
-    , name = "Costa Rican Colón"
-    , namePlural = "Costa Rican colóns"
-    , symbolNative = "₡"
-    , decimalDigits = 2
-    , code = "CRC"
-    }
-
-{-| Cape Verdean Escudo -}
-
-cve : Currency
-cve =
-    { symbol = "CV$"
-    , name = "Cape Verdean Escudo"
-    , namePlural = "Cape Verdean escudos"
-    , symbolNative = "CV$"
-    , decimalDigits = 2
-    , code = "CVE"
-    }
-
-{-| Czech Republic Koruna -}
-
-czk : Currency
-czk =
-    { symbol = "Kč"
-    , name = "Czech Republic Koruna"
-    , namePlural = "Czech Republic korunas"
-    , symbolNative = "Kč"
-    , decimalDigits = 2
-    , code = "CZK"
-    }
-
-{-| Djiboutian Franc -}
-
-djf : Currency
-djf =
-    { symbol = "Fdj"
-    , name = "Djiboutian Franc"
-    , namePlural = "Djiboutian francs"
-    , symbolNative = "Fdj"
-    , decimalDigits = 0
-    , code = "DJF"
-    }
-
-{-| Danish Krone -}
-
-dkk : Currency
-dkk =
-    { symbol = "Dkr"
-    , name = "Danish Krone"
-    , namePlural = "Danish kroner"
-    , symbolNative = "kr"
-    , decimalDigits = 2
-    , code = "DKK"
-    }
-
-{-| Dominican Peso -}
-
-dop : Currency
-dop =
-    { symbol = "RD$"
-    , name = "Dominican Peso"
-    , namePlural = "Dominican pesos"
-    , symbolNative = "RD$"
-    , decimalDigits = 2
-    , code = "DOP"
-    }
-
-{-| Algerian Dinar -}
-
-dzd : Currency
-dzd =
-    { symbol = "DA"
-    , name = "Algerian Dinar"
-    , namePlural = "Algerian dinars"
-    , symbolNative = "د.ج.‏"
-    , decimalDigits = 2
-    , code = "DZD"
-    }
-
-{-| Estonian Kroon -}
-
-eek : Currency
-eek =
-    { symbol = "Ekr"
-    , name = "Estonian Kroon"
-    , namePlural = "Estonian kroons"
-    , symbolNative = "kr"
-    , decimalDigits = 2
-    , code = "EEK"
-    }
-
-{-| Egyptian Pound -}
-
-egp : Currency
-egp =
-    { symbol = "EGP"
-    , name = "Egyptian Pound"
-    , namePlural = "Egyptian pounds"
-    , symbolNative = "ج.م.‏"
-    , decimalDigits = 2
-    , code = "EGP"
-    }
-
-{-| Eritrean Nakfa -}
-
-ern : Currency
-ern =
-    { symbol = "Nfk"
-    , name = "Eritrean Nakfa"
-    , namePlural = "Eritrean nakfas"
-    , symbolNative = "Nfk"
-    , decimalDigits = 2
-    , code = "ERN"
-    }
-
-{-| Ethiopian Birr -}
-
-etb : Currency
-etb =
-    { symbol = "Br"
-    , name = "Ethiopian Birr"
-    , namePlural = "Ethiopian birrs"
-    , symbolNative = "Br"
-    , decimalDigits = 2
-    , code = "ETB"
-    }
-
-{-| British Pound Sterling -}
-
-gbp : Currency
-gbp =
-    { symbol = "£"
-    , name = "British Pound Sterling"
-    , namePlural = "British pounds sterling"
-    , symbolNative = "£"
-    , decimalDigits = 2
-    , code = "GBP"
-    }
-
-{-| Georgian Lari -}
-
-gel : Currency
-gel =
-    { symbol = "GEL"
-    , name = "Georgian Lari"
-    , namePlural = "Georgian laris"
-    , symbolNative = "GEL"
-    , decimalDigits = 2
-    , code = "GEL"
-    }
-
-{-| Ghanaian Cedi -}
-
-ghs : Currency
-ghs =
-    { symbol = "GH₵"
-    , name = "Ghanaian Cedi"
-    , namePlural = "Ghanaian cedis"
-    , symbolNative = "GH₵"
-    , decimalDigits = 2
-    , code = "GHS"
-    }
-
-{-| Guinean Franc -}
-
-gnf : Currency
-gnf =
-    { symbol = "FG"
-    , name = "Guinean Franc"
-    , namePlural = "Guinean francs"
-    , symbolNative = "FG"
-    , decimalDigits = 0
-    , code = "GNF"
-    }
-
-{-| Guatemalan Quetzal -}
-
-gtq : Currency
-gtq =
-    { symbol = "GTQ"
-    , name = "Guatemalan Quetzal"
-    , namePlural = "Guatemalan quetzals"
-    , symbolNative = "Q"
-    , decimalDigits = 2
-    , code = "GTQ"
-    }
-
-{-| Hong Kong Dollar -}
-
-hkd : Currency
-hkd =
-    { symbol = "HK$"
-    , name = "Hong Kong Dollar"
-    , namePlural = "Hong Kong dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "HKD"
-    }
-
-{-| Honduran Lempira -}
-
-hnl : Currency
-hnl =
-    { symbol = "HNL"
-    , name = "Honduran Lempira"
-    , namePlural = "Honduran lempiras"
-    , symbolNative = "L"
-    , decimalDigits = 2
-    , code = "HNL"
-    }
-
-{-| Croatian Kuna -}
-
-hrk : Currency
-hrk =
-    { symbol = "kn"
-    , name = "Croatian Kuna"
-    , namePlural = "Croatian kunas"
-    , symbolNative = "kn"
-    , decimalDigits = 2
-    , code = "HRK"
-    }
-
-{-| Hungarian Forint -}
-
-huf : Currency
-huf =
-    { symbol = "Ft"
-    , name = "Hungarian Forint"
-    , namePlural = "Hungarian forints"
-    , symbolNative = "Ft"
-    , decimalDigits = 2
-    , code = "HUF"
-    }
-
-{-| Indonesian Rupiah -}
-
-idr : Currency
-idr =
-    { symbol = "Rp"
-    , name = "Indonesian Rupiah"
-    , namePlural = "Indonesian rupiahs"
-    , symbolNative = "Rp"
-    , decimalDigits = 2
-    , code = "IDR"
-    }
-
-{-| Israeli New Sheqel -}
-
-ils : Currency
-ils =
-    { symbol = "₪"
-    , name = "Israeli New Sheqel"
-    , namePlural = "Israeli new sheqels"
-    , symbolNative = "₪"
-    , decimalDigits = 2
-    , code = "ILS"
-    }
-
-{-| Indian Rupee -}
-
-inr : Currency
-inr =
-    { symbol = "₹"
-    , name = "Indian Rupee"
-    , namePlural = "Indian rupees"
-    , symbolNative = "₹"
-    , decimalDigits = 2
-    , code = "INR"
-    }
-
-{-| Iraqi Dinar -}
-
-iqd : Currency
-iqd =
-    { symbol = "IQD"
-    , name = "Iraqi Dinar"
-    , namePlural = "Iraqi dinars"
-    , symbolNative = "د.ع.‏"
-    , decimalDigits = 3
-    , code = "IQD"
-    }
-
-{-| Iranian Rial -}
-
-irr : Currency
-irr =
-    { symbol = "IRR"
-    , name = "Iranian Rial"
-    , namePlural = "Iranian rials"
-    , symbolNative = "﷼"
-    , decimalDigits = 2
-    , code = "IRR"
-    }
-
-{-| Icelandic Króna -}
-
-isk : Currency
-isk =
-    { symbol = "Ikr"
-    , name = "Icelandic Króna"
-    , namePlural = "Icelandic krónur"
-    , symbolNative = "kr"
-    , decimalDigits = 0
-    , code = "ISK"
-    }
-
-{-| Jamaican Dollar -}
-
-jmd : Currency
-jmd =
-    { symbol = "J$"
-    , name = "Jamaican Dollar"
-    , namePlural = "Jamaican dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "JMD"
-    }
-
-{-| Jordanian Dinar -}
-
-jod : Currency
-jod =
-    { symbol = "JD"
-    , name = "Jordanian Dinar"
-    , namePlural = "Jordanian dinars"
-    , symbolNative = "د.أ.‏"
-    , decimalDigits = 3
-    , code = "JOD"
-    }
-
-{-| Japanese Yen -}
-
-jpy : Currency
-jpy =
-    { symbol = "¥"
-    , name = "Japanese Yen"
-    , namePlural = "Japanese yen"
-    , symbolNative = "￥"
-    , decimalDigits = 0
-    , code = "JPY"
-    }
-
-{-| Kenyan Shilling -}
-
-kes : Currency
-kes =
-    { symbol = "Ksh"
-    , name = "Kenyan Shilling"
-    , namePlural = "Kenyan shillings"
-    , symbolNative = "Ksh"
-    , decimalDigits = 2
-    , code = "KES"
-    }
-
-{-| Cambodian Riel -}
-
-khr : Currency
-khr =
-    { symbol = "KHR"
-    , name = "Cambodian Riel"
-    , namePlural = "Cambodian riels"
-    , symbolNative = "៛"
-    , decimalDigits = 2
-    , code = "KHR"
-    }
-
-{-| Comorian Franc -}
-
-kmf : Currency
-kmf =
-    { symbol = "CF"
-    , name = "Comorian Franc"
-    , namePlural = "Comorian francs"
-    , symbolNative = "FC"
-    , decimalDigits = 0
-    , code = "KMF"
-    }
-
-{-| South Korean Won -}
-
-krw : Currency
-krw =
-    { symbol = "₩"
-    , name = "South Korean Won"
-    , namePlural = "South Korean won"
-    , symbolNative = "₩"
-    , decimalDigits = 0
-    , code = "KRW"
-    }
-
-{-| Kuwaiti Dinar -}
-
-kwd : Currency
-kwd =
-    { symbol = "KD"
-    , name = "Kuwaiti Dinar"
-    , namePlural = "Kuwaiti dinars"
-    , symbolNative = "د.ك.‏"
-    , decimalDigits = 3
-    , code = "KWD"
-    }
-
-{-| Kazakhstani Tenge -}
-
-kzt : Currency
-kzt =
-    { symbol = "KZT"
-    , name = "Kazakhstani Tenge"
-    , namePlural = "Kazakhstani tenges"
-    , symbolNative = "тңг."
-    , decimalDigits = 2
-    , code = "KZT"
-    }
-
-{-| Lao kip -}
-
-lak : Currency
-lak =
-    { symbol = "₭"
-    , name = "Lao kip"
-    , namePlural = "Lao kips"
-    , symbolNative = "ກີບ"
-    , decimalDigits = 2
-    , code = "LAK"
-    }
-
-{-| Lebanese Pound -}
-
-lbp : Currency
-lbp =
-    { symbol = "LB£"
-    , name = "Lebanese Pound"
-    , namePlural = "Lebanese pounds"
-    , symbolNative = "ل.ل.‏"
-    , decimalDigits = 2
-    , code = "LBP"
-    }
-
-{-| Sri Lankan Rupee -}
-
-lkr : Currency
-lkr =
-    { symbol = "SLRs"
-    , name = "Sri Lankan Rupee"
-    , namePlural = "Sri Lankan rupees"
-    , symbolNative = "SL Re"
-    , decimalDigits = 2
-    , code = "LKR"
-    }
-
-{-| Lithuanian Litas -}
-
-ltl : Currency
-ltl =
-    { symbol = "Lt"
-    , name = "Lithuanian Litas"
-    , namePlural = "Lithuanian litai"
-    , symbolNative = "Lt"
-    , decimalDigits = 2
-    , code = "LTL"
-    }
-
-{-| Latvian Lats -}
-
-lvl : Currency
-lvl =
-    { symbol = "Ls"
-    , name = "Latvian Lats"
-    , namePlural = "Latvian lati"
-    , symbolNative = "Ls"
-    , decimalDigits = 2
-    , code = "LVL"
-    }
-
-{-| Libyan Dinar -}
-
-lyd : Currency
-lyd =
-    { symbol = "LD"
-    , name = "Libyan Dinar"
-    , namePlural = "Libyan dinars"
-    , symbolNative = "د.ل.‏"
-    , decimalDigits = 3
-    , code = "LYD"
-    }
-
-{-| Moroccan Dirham -}
-
-mad : Currency
-mad =
-    { symbol = "MAD"
-    , name = "Moroccan Dirham"
-    , namePlural = "Moroccan dirhams"
-    , symbolNative = "د.م.‏"
-    , decimalDigits = 2
-    , code = "MAD"
-    }
-
-{-| Moldovan Leu -}
-
-mdl : Currency
-mdl =
-    { symbol = "MDL"
-    , name = "Moldovan Leu"
-    , namePlural = "Moldovan lei"
-    , symbolNative = "MDL"
-    , decimalDigits = 2
-    , code = "MDL"
-    }
-
-{-| Malagasy Ariary -}
-
-mga : Currency
-mga =
-    { symbol = "MGA"
-    , name = "Malagasy Ariary"
-    , namePlural = "Malagasy Ariaries"
-    , symbolNative = "MGA"
-    , decimalDigits = 2
-    , code = "MGA"
-    }
-
-{-| Macedonian Denar -}
-
-mkd : Currency
-mkd =
-    { symbol = "MKD"
-    , name = "Macedonian Denar"
-    , namePlural = "Macedonian denari"
-    , symbolNative = "MKD"
-    , decimalDigits = 2
-    , code = "MKD"
-    }
-
-{-| Myanma Kyat -}
-
-mmk : Currency
-mmk =
-    { symbol = "MMK"
-    , name = "Myanma Kyat"
-    , namePlural = "Myanma kyats"
-    , symbolNative = "K"
-    , decimalDigits = 2
-    , code = "MMK"
-    }
-
-{-| Macanese Pataca -}
-
-mop : Currency
-mop =
-    { symbol = "MOP$"
-    , name = "Macanese Pataca"
-    , namePlural = "Macanese patacas"
-    , symbolNative = "MOP$"
-    , decimalDigits = 2
-    , code = "MOP"
-    }
-
-{-| Mauritian Rupee -}
-
-mur : Currency
-mur =
-    { symbol = "MURs"
-    , name = "Mauritian Rupee"
-    , namePlural = "Mauritian rupees"
-    , symbolNative = "MURs"
-    , decimalDigits = 2
-    , code = "MUR"
-    }
-
-{-| Mexican Peso -}
-
-mxn : Currency
-mxn =
-    { symbol = "MX$"
-    , name = "Mexican Peso"
-    , namePlural = "Mexican pesos"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "MXN"
-    }
-
-{-| Malaysian Ringgit -}
-
-myr : Currency
-myr =
-    { symbol = "RM"
-    , name = "Malaysian Ringgit"
-    , namePlural = "Malaysian ringgits"
-    , symbolNative = "RM"
-    , decimalDigits = 2
-    , code = "MYR"
-    }
-
-{-| Mozambican Metical -}
-
-mzn : Currency
-mzn =
-    { symbol = "MTn"
-    , name = "Mozambican Metical"
-    , namePlural = "Mozambican meticals"
-    , symbolNative = "MTn"
-    , decimalDigits = 2
-    , code = "MZN"
-    }
-
-{-| Namibian Dollar -}
-
-nad : Currency
-nad =
-    { symbol = "N$"
-    , name = "Namibian Dollar"
-    , namePlural = "Namibian dollars"
-    , symbolNative = "N$"
-    , decimalDigits = 2
-    , code = "NAD"
-    }
-
-{-| Nigerian Naira -}
-
-ngn : Currency
-ngn =
-    { symbol = "₦"
-    , name = "Nigerian Naira"
-    , namePlural = "Nigerian nairas"
-    , symbolNative = "₦"
-    , decimalDigits = 2
-    , code = "NGN"
-    }
-
-{-| Nicaraguan Córdoba -}
-
-nio : Currency
-nio =
-    { symbol = "C$"
-    , name = "Nicaraguan Córdoba"
-    , namePlural = "Nicaraguan córdobas"
-    , symbolNative = "C$"
-    , decimalDigits = 2
-    , code = "NIO"
-    }
-
-{-| Norwegian Krone -}
-
-nok : Currency
-nok =
-    { symbol = "Nkr"
-    , name = "Norwegian Krone"
-    , namePlural = "Norwegian kroner"
-    , symbolNative = "kr"
-    , decimalDigits = 2
-    , code = "NOK"
-    }
-
-{-| Nepalese Rupee -}
-
-npr : Currency
-npr =
-    { symbol = "NPRs"
-    , name = "Nepalese Rupee"
-    , namePlural = "Nepalese rupees"
-    , symbolNative = "नेरू"
-    , decimalDigits = 2
-    , code = "NPR"
-    }
-
-{-| New Zealand Dollar -}
-
-nzd : Currency
-nzd =
-    { symbol = "NZ$"
-    , name = "New Zealand Dollar"
-    , namePlural = "New Zealand dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "NZD"
-    }
-
-{-| Omani Rial -}
-
-omr : Currency
-omr =
-    { symbol = "OMR"
-    , name = "Omani Rial"
-    , namePlural = "Omani rials"
-    , symbolNative = "ر.ع.‏"
-    , decimalDigits = 3
-    , code = "OMR"
-    }
-
-{-| Panamanian Balboa -}
-
-pab : Currency
-pab =
-    { symbol = "B/."
-    , name = "Panamanian Balboa"
-    , namePlural = "Panamanian balboas"
-    , symbolNative = "B/."
-    , decimalDigits = 2
-    , code = "PAB"
-    }
-
-{-| Peruvian Nuevo Sol -}
-
-pen : Currency
-pen =
-    { symbol = "S/."
-    , name = "Peruvian Nuevo Sol"
-    , namePlural = "Peruvian nuevos soles"
-    , symbolNative = "S/."
-    , decimalDigits = 2
-    , code = "PEN"
-    }
-
-{-| Philippine Peso -}
-
-php : Currency
-php =
-    { symbol = "₱"
-    , name = "Philippine Peso"
-    , namePlural = "Philippine pesos"
-    , symbolNative = "₱"
-    , decimalDigits = 2
-    , code = "PHP"
-    }
-
-{-| Pakistani Rupee -}
-
-pkr : Currency
-pkr =
-    { symbol = "PKRs"
-    , name = "Pakistani Rupee"
-    , namePlural = "Pakistani rupees"
-    , symbolNative = "₨"
-    , decimalDigits = 2
-    , code = "PKR"
-    }
-
-{-| Polish Zloty -}
-
-pln : Currency
-pln =
-    { symbol = "zł"
-    , name = "Polish Zloty"
-    , namePlural = "Polish zlotys"
-    , symbolNative = "zł"
-    , decimalDigits = 2
-    , code = "PLN"
-    }
-
-{-| Paraguayan Guarani -}
-
-pyg : Currency
-pyg =
-    { symbol = "₲"
-    , name = "Paraguayan Guarani"
-    , namePlural = "Paraguayan guaranis"
-    , symbolNative = "₲"
-    , decimalDigits = 0
-    , code = "PYG"
-    }
-
-{-| Qatari Rial -}
-
-qar : Currency
-qar =
-    { symbol = "QR"
-    , name = "Qatari Rial"
-    , namePlural = "Qatari rials"
-    , symbolNative = "ر.ق.‏"
-    , decimalDigits = 2
-    , code = "QAR"
-    }
-
-{-| Romanian Leu -}
-
-ron : Currency
-ron =
-    { symbol = "RON"
-    , name = "Romanian Leu"
-    , namePlural = "Romanian lei"
-    , symbolNative = "RON"
-    , decimalDigits = 2
-    , code = "RON"
-    }
-
-{-| Serbian Dinar -}
-
-rsd : Currency
-rsd =
-    { symbol = "din."
-    , name = "Serbian Dinar"
-    , namePlural = "Serbian dinars"
-    , symbolNative = "дин."
-    , decimalDigits = 2
-    , code = "RSD"
-    }
-
-{-| Russian Ruble -}
-
-rub : Currency
-rub =
-    { symbol = "RUB"
-    , name = "Russian Ruble"
-    , namePlural = "Russian rubles"
-    , symbolNative = "₽"
-    , decimalDigits = 2
-    , code = "RUB"
-    }
-
-{-| Rwandan Franc -}
-
-rwf : Currency
-rwf =
-    { symbol = "RWF"
-    , name = "Rwandan Franc"
-    , namePlural = "Rwandan francs"
-    , symbolNative = "FR"
-    , decimalDigits = 0
-    , code = "RWF"
-    }
-
-{-| Saudi Riyal -}
-
-sar : Currency
-sar =
-    { symbol = "SR"
-    , name = "Saudi Riyal"
-    , namePlural = "Saudi riyals"
-    , symbolNative = "ر.س.‏"
-    , decimalDigits = 2
-    , code = "SAR"
-    }
-
-{-| Sudanese Pound -}
-
-sdg : Currency
-sdg =
-    { symbol = "SDG"
-    , name = "Sudanese Pound"
-    , namePlural = "Sudanese pounds"
-    , symbolNative = "SDG"
-    , decimalDigits = 2
-    , code = "SDG"
-    }
-
-{-| Swedish Krona -}
-
-sek : Currency
-sek =
-    { symbol = "Skr"
-    , name = "Swedish Krona"
-    , namePlural = "Swedish kronor"
-    , symbolNative = "kr"
-    , decimalDigits = 2
-    , code = "SEK"
-    }
-
-{-| Singapore Dollar -}
-
-sgd : Currency
-sgd =
-    { symbol = "S$"
-    , name = "Singapore Dollar"
-    , namePlural = "Singapore dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "SGD"
-    }
-
-{-| Somali Shilling -}
-
-sos : Currency
-sos =
-    { symbol = "Ssh"
-    , name = "Somali Shilling"
-    , namePlural = "Somali shillings"
-    , symbolNative = "Ssh"
-    , decimalDigits = 2
-    , code = "SOS"
-    }
-
-{-| Syrian Pound -}
-
-syp : Currency
-syp =
-    { symbol = "SY£"
-    , name = "Syrian Pound"
-    , namePlural = "Syrian pounds"
-    , symbolNative = "ل.س.‏"
-    , decimalDigits = 2
-    , code = "SYP"
-    }
-
-{-| Thai Baht -}
-
-thb : Currency
-thb =
-    { symbol = "฿"
-    , name = "Thai Baht"
-    , namePlural = "Thai baht"
-    , symbolNative = "฿"
-    , decimalDigits = 2
-    , code = "THB"
-    }
-
-{-| Tunisian Dinar -}
-
-tnd : Currency
-tnd =
-    { symbol = "DT"
-    , name = "Tunisian Dinar"
-    , namePlural = "Tunisian dinars"
-    , symbolNative = "د.ت.‏"
-    , decimalDigits = 3
-    , code = "TND"
-    }
-
-{-| Tongan Paʻanga -}
-
-top : Currency
-top =
-    { symbol = "T$"
-    , name = "Tongan Paʻanga"
-    , namePlural = "Tongan paʻanga"
-    , symbolNative = "T$"
-    , decimalDigits = 2
-    , code = "TOP"
-    }
-
-{-| Turkish Lira -}
-
-try : Currency
-try =
-    { symbol = "TL"
-    , name = "Turkish Lira"
-    , namePlural = "Turkish Lira"
-    , symbolNative = "TL"
-    , decimalDigits = 2
-    , code = "TRY"
-    }
-
-{-| Trinidad and Tobago Dollar -}
-
-ttd : Currency
-ttd =
-    { symbol = "TT$"
-    , name = "Trinidad and Tobago Dollar"
-    , namePlural = "Trinidad and Tobago dollars"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "TTD"
-    }
-
-{-| New Taiwan Dollar -}
-
-twd : Currency
-twd =
-    { symbol = "NT$"
-    , name = "New Taiwan Dollar"
-    , namePlural = "New Taiwan dollars"
-    , symbolNative = "NT$"
-    , decimalDigits = 2
-    , code = "TWD"
-    }
-
-{-| Tanzanian Shilling -}
-
-tzs : Currency
-tzs =
-    { symbol = "TSh"
-    , name = "Tanzanian Shilling"
-    , namePlural = "Tanzanian shillings"
-    , symbolNative = "TSh"
-    , decimalDigits = 2
-    , code = "TZS"
-    }
-
-{-| Ukrainian Hryvnia -}
-
-uah : Currency
-uah =
-    { symbol = "₴"
-    , name = "Ukrainian Hryvnia"
-    , namePlural = "Ukrainian hryvnias"
-    , symbolNative = "₴"
-    , decimalDigits = 2
-    , code = "UAH"
-    }
-
-{-| Ugandan Shilling -}
-
-ugx : Currency
-ugx =
-    { symbol = "USh"
-    , name = "Ugandan Shilling"
-    , namePlural = "Ugandan shillings"
-    , symbolNative = "USh"
-    , decimalDigits = 0
-    , code = "UGX"
-    }
-
-{-| Uruguayan Peso -}
-
-uyu : Currency
-uyu =
-    { symbol = "$U"
-    , name = "Uruguayan Peso"
-    , namePlural = "Uruguayan pesos"
-    , symbolNative = "$"
-    , decimalDigits = 2
-    , code = "UYU"
-    }
-
-{-| Uzbekistan Som -}
-
-uzs : Currency
-uzs =
-    { symbol = "UZS"
-    , name = "Uzbekistan Som"
-    , namePlural = "Uzbekistan som"
-    , symbolNative = "UZS"
-    , decimalDigits = 2
-    , code = "UZS"
-    }
-
-{-| Venezuelan Bolívar -}
-
-vef : Currency
-vef =
-    { symbol = "Bs.F."
-    , name = "Venezuelan Bolívar"
-    , namePlural = "Venezuelan bolívars"
-    , symbolNative = "Bs.F."
-    , decimalDigits = 2
-    , code = "VEF"
-    }
-
-{-| Vietnamese Dong -}
-
-vnd : Currency
-vnd =
-    { symbol = "₫"
-    , name = "Vietnamese Dong"
-    , namePlural = "Vietnamese dong"
-    , symbolNative = "₫"
-    , decimalDigits = 0
-    , code = "VND"
-    }
-
-{-| CFA Franc BEAC -}
-
-xaf : Currency
-xaf =
-    { symbol = "FCFA"
-    , name = "CFA Franc BEAC"
-    , namePlural = "CFA francs BEAC"
-    , symbolNative = "FCFA"
-    , decimalDigits = 0
-    , code = "XAF"
-    }
-
-{-| CFA Franc BCEAO -}
-
-xof : Currency
-xof =
-    { symbol = "CFA"
-    , name = "CFA Franc BCEAO"
-    , namePlural = "CFA francs BCEAO"
-    , symbolNative = "CFA"
-    , decimalDigits = 0
-    , code = "XOF"
-    }
-
-{-| Yemeni Rial -}
-
-yer : Currency
-yer =
-    { symbol = "YR"
-    , name = "Yemeni Rial"
-    , namePlural = "Yemeni rials"
-    , symbolNative = "ر.ي.‏"
-    , decimalDigits = 2
-    , code = "YER"
-    }
-
-{-| South African Rand -}
-
-zar : Currency
-zar =
-    { symbol = "R"
-    , name = "South African Rand"
-    , namePlural = "South African rand"
-    , symbolNative = "R"
-    , decimalDigits = 2
-    , code = "ZAR"
-    }
-
-{-| Zambian Kwacha -}
-
-zmk : Currency
-zmk =
-    { symbol = "ZK"
-    , name = "Zambian Kwacha"
-    , namePlural = "Zambian kwachas"
-    , symbolNative = "ZK"
-    , decimalDigits = 0
-    , code = "ZMK"
-    }
+
+{-| A type representing the US Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type USD
+    = USD__UNIT
+
+
+{-| A type representing the Canadian Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CAD
+    = CAD__UNIT
+
+
+{-| A type representing the Euro
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type EUR
+    = EUR__UNIT
+
+
+{-| A type representing the Bitcoin
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BTC
+    = BTC__UNIT
+
+
+{-| A type representing the United Arab Emirates Dirham
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type AED
+    = AED__UNIT
+
+
+{-| A type representing the Afghan Afghani
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type AFN
+    = AFN__UNIT
+
+
+{-| A type representing the Albanian Lek
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ALL
+    = ALL__UNIT
+
+
+{-| A type representing the Armenian Dram
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type AMD
+    = AMD__UNIT
+
+
+{-| A type representing the Argentine Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ARS
+    = ARS__UNIT
+
+
+{-| A type representing the Australian Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type AUD
+    = AUD__UNIT
+
+
+{-| A type representing the Azerbaijani Manat
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type AZN
+    = AZN__UNIT
+
+
+{-| A type representing the Bosnia-Herzegovina Convertible Mark
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BAM
+    = BAM__UNIT
+
+
+{-| A type representing the Bangladeshi Taka
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BDT
+    = BDT__UNIT
+
+
+{-| A type representing the Bulgarian Lev
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BGN
+    = BGN__UNIT
+
+
+{-| A type representing the Bahraini Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BHD
+    = BHD__UNIT
+
+
+{-| A type representing the Burundian Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BIF
+    = BIF__UNIT
+
+
+{-| A type representing the Brunei Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BND
+    = BND__UNIT
+
+
+{-| A type representing the Bolivian Boliviano
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BOB
+    = BOB__UNIT
+
+
+{-| A type representing the Brazilian Real
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BRL
+    = BRL__UNIT
+
+
+{-| A type representing the Botswanan Pula
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BWP
+    = BWP__UNIT
+
+
+{-| A type representing the Belarusian Ruble
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BYR
+    = BYR__UNIT
+
+
+{-| A type representing the Belize Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type BZD
+    = BZD__UNIT
+
+
+{-| A type representing the Congolese Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CDF
+    = CDF__UNIT
+
+
+{-| A type representing the Swiss Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CHF
+    = CHF__UNIT
+
+
+{-| A type representing the Chilean Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CLP
+    = CLP__UNIT
+
+
+{-| A type representing the Chinese Yuan
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CNY
+    = CNY__UNIT
+
+
+{-| A type representing the Colombian Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type COP
+    = COP__UNIT
+
+
+{-| A type representing the Costa Rican Colón
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CRC
+    = CRC__UNIT
+
+
+{-| A type representing the Cape Verdean Escudo
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CVE
+    = CVE__UNIT
+
+
+{-| A type representing the Czech Republic Koruna
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type CZK
+    = CZK__UNIT
+
+
+{-| A type representing the Djiboutian Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type DJF
+    = DJF__UNIT
+
+
+{-| A type representing the Danish Krone
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type DKK
+    = DKK__UNIT
+
+
+{-| A type representing the Dominican Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type DOP
+    = DOP__UNIT
+
+
+{-| A type representing the Algerian Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type DZD
+    = DZD__UNIT
+
+
+{-| A type representing the Estonian Kroon
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type EEK
+    = EEK__UNIT
+
+
+{-| A type representing the Egyptian Pound
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type EGP
+    = EGP__UNIT
+
+
+{-| A type representing the Eritrean Nakfa
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ERN
+    = ERN__UNIT
+
+
+{-| A type representing the Ethiopian Birr
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ETB
+    = ETB__UNIT
+
+
+{-| A type representing the British Pound Sterling
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type GBP
+    = GBP__UNIT
+
+
+{-| A type representing the Georgian Lari
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type GEL
+    = GEL__UNIT
+
+
+{-| A type representing the Ghanaian Cedi
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type GHS
+    = GHS__UNIT
+
+
+{-| A type representing the Guinean Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type GNF
+    = GNF__UNIT
+
+
+{-| A type representing the Guatemalan Quetzal
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type GTQ
+    = GTQ__UNIT
+
+
+{-| A type representing the Hong Kong Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type HKD
+    = HKD__UNIT
+
+
+{-| A type representing the Honduran Lempira
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type HNL
+    = HNL__UNIT
+
+
+{-| A type representing the Croatian Kuna
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type HRK
+    = HRK__UNIT
+
+
+{-| A type representing the Hungarian Forint
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type HUF
+    = HUF__UNIT
+
+
+{-| A type representing the Indonesian Rupiah
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type IDR
+    = IDR__UNIT
+
+
+{-| A type representing the Israeli New Sheqel
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ILS
+    = ILS__UNIT
+
+
+{-| A type representing the Indian Rupee
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type INR
+    = INR__UNIT
+
+
+{-| A type representing the Iraqi Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type IQD
+    = IQD__UNIT
+
+
+{-| A type representing the Iranian Rial
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type IRR
+    = IRR__UNIT
+
+
+{-| A type representing the Icelandic Króna
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ISK
+    = ISK__UNIT
+
+
+{-| A type representing the Jamaican Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type JMD
+    = JMD__UNIT
+
+
+{-| A type representing the Jordanian Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type JOD
+    = JOD__UNIT
+
+
+{-| A type representing the Japanese Yen
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type JPY
+    = JPY__UNIT
+
+
+{-| A type representing the Kenyan Shilling
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KES
+    = KES__UNIT
+
+
+{-| A type representing the Cambodian Riel
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KHR
+    = KHR__UNIT
+
+
+{-| A type representing the Comorian Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KMF
+    = KMF__UNIT
+
+
+{-| A type representing the South Korean Won
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KRW
+    = KRW__UNIT
+
+
+{-| A type representing the Kuwaiti Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KWD
+    = KWD__UNIT
+
+
+{-| A type representing the Kazakhstani Tenge
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type KZT
+    = KZT__UNIT
+
+
+{-| A type representing the Lao kip
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LAK
+    = LAK__UNIT
+
+
+{-| A type representing the Lebanese Pound
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LBP
+    = LBP__UNIT
+
+
+{-| A type representing the Sri Lankan Rupee
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LKR
+    = LKR__UNIT
+
+
+{-| A type representing the Lithuanian Litas
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LTL
+    = LTL__UNIT
+
+
+{-| A type representing the Latvian Lats
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LVL
+    = LVL__UNIT
+
+
+{-| A type representing the Libyan Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type LYD
+    = LYD__UNIT
+
+
+{-| A type representing the Moroccan Dirham
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MAD
+    = MAD__UNIT
+
+
+{-| A type representing the Moldovan Leu
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MDL
+    = MDL__UNIT
+
+
+{-| A type representing the Malagasy Ariary
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MGA
+    = MGA__UNIT
+
+
+{-| A type representing the Macedonian Denar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MKD
+    = MKD__UNIT
+
+
+{-| A type representing the Myanma Kyat
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MMK
+    = MMK__UNIT
+
+
+{-| A type representing the Macanese Pataca
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MOP
+    = MOP__UNIT
+
+
+{-| A type representing the Mauritian Rupee
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MUR
+    = MUR__UNIT
+
+
+{-| A type representing the Mexican Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MXN
+    = MXN__UNIT
+
+
+{-| A type representing the Malaysian Ringgit
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MYR
+    = MYR__UNIT
+
+
+{-| A type representing the Mozambican Metical
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type MZN
+    = MZN__UNIT
+
+
+{-| A type representing the Namibian Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NAD
+    = NAD__UNIT
+
+
+{-| A type representing the Nigerian Naira
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NGN
+    = NGN__UNIT
+
+
+{-| A type representing the Nicaraguan Córdoba
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NIO
+    = NIO__UNIT
+
+
+{-| A type representing the Norwegian Krone
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NOK
+    = NOK__UNIT
+
+
+{-| A type representing the Nepalese Rupee
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NPR
+    = NPR__UNIT
+
+
+{-| A type representing the New Zealand Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type NZD
+    = NZD__UNIT
+
+
+{-| A type representing the Omani Rial
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type OMR
+    = OMR__UNIT
+
+
+{-| A type representing the Panamanian Balboa
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PAB
+    = PAB__UNIT
+
+
+{-| A type representing the Peruvian Nuevo Sol
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PEN
+    = PEN__UNIT
+
+
+{-| A type representing the Philippine Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PHP
+    = PHP__UNIT
+
+
+{-| A type representing the Pakistani Rupee
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PKR
+    = PKR__UNIT
+
+
+{-| A type representing the Polish Zloty
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PLN
+    = PLN__UNIT
+
+
+{-| A type representing the Paraguayan Guarani
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type PYG
+    = PYG__UNIT
+
+
+{-| A type representing the Qatari Rial
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type QAR
+    = QAR__UNIT
+
+
+{-| A type representing the Romanian Leu
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type RON
+    = RON__UNIT
+
+
+{-| A type representing the Serbian Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type RSD
+    = RSD__UNIT
+
+
+{-| A type representing the Russian Ruble
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type RUB
+    = RUB__UNIT
+
+
+{-| A type representing the Rwandan Franc
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type RWF
+    = RWF__UNIT
+
+
+{-| A type representing the Saudi Riyal
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SAR
+    = SAR__UNIT
+
+
+{-| A type representing the Sudanese Pound
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SDG
+    = SDG__UNIT
+
+
+{-| A type representing the Swedish Krona
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SEK
+    = SEK__UNIT
+
+
+{-| A type representing the Singapore Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SGD
+    = SGD__UNIT
+
+
+{-| A type representing the Somali Shilling
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SOS
+    = SOS__UNIT
+
+
+{-| A type representing the Syrian Pound
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type SYP
+    = SYP__UNIT
+
+
+{-| A type representing the Thai Baht
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type THB
+    = THB__UNIT
+
+
+{-| A type representing the Tunisian Dinar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TND
+    = TND__UNIT
+
+
+{-| A type representing the Tongan Paʻanga
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TOP
+    = TOP__UNIT
+
+
+{-| A type representing the Turkish Lira
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TRY
+    = TRY__UNIT
+
+
+{-| A type representing the Trinidad and Tobago Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TTD
+    = TTD__UNIT
+
+
+{-| A type representing the New Taiwan Dollar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TWD
+    = TWD__UNIT
+
+
+{-| A type representing the Tanzanian Shilling
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type TZS
+    = TZS__UNIT
+
+
+{-| A type representing the Ukrainian Hryvnia
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type UAH
+    = UAH__UNIT
+
+
+{-| A type representing the Ugandan Shilling
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type UGX
+    = UGX__UNIT
+
+
+{-| A type representing the Uruguayan Peso
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type UYU
+    = UYU__UNIT
+
+
+{-| A type representing the Uzbekistan Som
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type UZS
+    = UZS__UNIT
+
+
+{-| A type representing the Venezuelan Bolívar
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type VEF
+    = VEF__UNIT
+
+
+{-| A type representing the Vietnamese Dong
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type VND
+    = VND__UNIT
+
+
+{-| A type representing the CFA Franc BEAC
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type XAF
+    = XAF__UNIT
+
+
+{-| A type representing the CFA Franc BCEAO
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type XOF
+    = XOF__UNIT
+
+
+{-| A type representing the Yemeni Rial
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type YER
+    = YER__UNIT
+
+
+{-| A type representing the South African Rand
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ZAR
+    = ZAR__UNIT
+
+
+{-| A type representing the Zambian Kwacha
+
+Useful for phantom type currency functions. Checkout (this blog post)[https://thoughtbot.com/blog/modeling-currency-in-elm-using-phantom-types] to understand what that all means.
+
+-}
+type ZMK
+    = ZMK__UNIT
