@@ -1,3 +1,8 @@
+4.1.0
+
+- CNY has an updated Native Symbol
+- Added `search` and `searchCustom` to api
+
 3.0.0
 - Completely refactored it. Now the module doesnt revolve around records of each currency. Rather, it revolves around a custom type of all currencies, and lots of functions of style `toX : Currency -> X`.
 

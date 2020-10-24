@@ -227,7 +227,7 @@
     "CNY": {
         "symbol": "CN¥",
         "name": "Chinese Yuan",
-        "symbol_native": "CN¥",
+        "symbolNative": "元",
         "decimal_digits": 2,
         "rounding": 0,
         "code": "CNY",

@@ -13,6 +13,8 @@ const topPart = `module Money exposing
     , toName
     , toDecimalDigits
     , toString
+    , search
+    , searchCustom
     )
 
 
@@ -27,9 +29,13 @@ const topPart = `module Money exposing
 
 @docs all, toString, fromString
 
-# Propertues
+# Properties
 
 @docs toSymbol, toName, toNativeSymbol, toDecimalDigits
+
+# Search
+
+@docs search, searchCustom
 
 -}
 `;
@@ -176,6 +182,36 @@ const fromString =
     , `            Nothing`
     ].join("\n")
 
+
+const search = `
+
+{-| Search all currencies by case-insensitive string matching on the name, symbol, and code.
+-}
+search : String -> List Currency
+search searchString =
+    searchCustom searchString all
+
+{-| Search through a list of currencies by case-insensitive string matching on the name, symbol, and code.
+-}
+searchCustom : String -> List Currency -> List Currency
+searchCustom searchString =
+    let
+        matchesCurrency : Currency -> Bool
+        matchesCurrency currency =
+            String.contains
+                    (String.toLower searchString)
+                    (String.join " " [ String.toLower <| (toName { plural = False } currency)
+                    , String.toLower <| (toName { plural = True } currency)
+                    , String.toLower <| toString currency
+                    , String.toLower <| toSymbol currency
+                    ]
+                    )
+    in
+    List.filter matchesCurrency
+
+
+`;
+
 const output = [
     topPart,
     codes,
@@ -186,6 +222,7 @@ const output = [
     toString,
     fromString,
     allCodes,
+    search
 ].join("\n\n");
 
 var outputFile = "./src/Money.elm";
