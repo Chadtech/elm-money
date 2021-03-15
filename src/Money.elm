@@ -53,7 +53,7 @@ type Currency
     | BOB
     | BRL
     | BWP
-    | BYR
+    | BYN
     | BZD
     | CDF
     | CHF
@@ -227,8 +227,8 @@ toSymbol currency =
         BWP ->
             "BWP"
 
-        BYR ->
-            "BYR"
+        BYN ->
+            "Br"
 
         BZD ->
             "BZ$"
@@ -609,8 +609,8 @@ toNativeSymbol currency =
         BWP ->
             "P"
 
-        BYR ->
-            "BYR"
+        BYN ->
+            "BYN"
 
         BZD ->
             "$"
@@ -1060,7 +1060,7 @@ toName { plural } currency =
             else
                 "Botswanan Pula"
 
-        BYR ->
+        BYN ->
             if plural then
                 "Belarusian rubles"
 
@@ -1832,7 +1832,7 @@ toDecimalDigits currency =
         BWP ->
             2
 
-        BYR ->
+        BYN ->
             0
 
         BZD ->
@@ -2201,8 +2201,8 @@ toString currency =
         BWP ->
             "BWP"
 
-        BYR ->
-            "BYR"
+        BYN ->
+            "BYN"
 
         BZD ->
             "BZD"
@@ -2571,8 +2571,8 @@ fromString str =
         "BWP" ->
             Just BWP
 
-        "BYR" ->
-            Just BYR
+        "BYN" ->
+            Just BYN
 
         "BZD" ->
             Just BZD
@@ -2908,7 +2908,7 @@ all =
     , BOB
     , BRL
     , BWP
-    , BYR
+    , BYN
     , BZD
     , CDF
     , CHF
