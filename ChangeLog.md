@@ -1,3 +1,6 @@
+5.0.0
+- Belarusian Ruble changed from BYR to BYN
+
 4.1.0
 
 - CNY has an updated Native Symbol
