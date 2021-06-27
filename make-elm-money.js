@@ -1,8 +1,15 @@
 const fs = require("fs");
-
 const cp = require("child_process");
+
 const file = fs.readFileSync("./money.json", "utf-8");
-const money = Object.values(JSON.parse(file));
+
+var money = JSON.parse(file);
+
+money = Object.keys(money).map(code => {
+    currency = money[code];
+    currency.code = code;
+    return currency;
+});
 
 const topPart = `module Money exposing
     ( Currency(..)

@@ -153,6 +153,47 @@ type Currency
     | YER
     | ZAR
     | ZMK
+    | AOA
+    | XCD
+    | AWG
+    | BSD
+    | BBD
+    | BMD
+    | BTN
+    | KYD
+    | CUP
+    | ANG
+    | SZL
+    | FKP
+    | FJD
+    | XPF
+    | GMD
+    | GIP
+    | GYD
+    | HTG
+    | KPW
+    | KGS
+    | LSL
+    | LRD
+    | MWK
+    | MVR
+    | MRU
+    | MNT
+    | PGK
+    | SHP
+    | WST
+    | STN
+    | SCR
+    | SLL
+    | SBD
+    | SSP
+    | SRD
+    | TJS
+    | TMT
+    | VUV
+    | VES
+    | ZMW
+    | ZWL
 
 
 {-| Get the symbol of a currency from its code
@@ -526,6 +567,129 @@ toSymbol currency =
 
         ZMK ->
             "ZK"
+
+        AOA ->
+            "Kz"
+
+        XCD ->
+            "EC$"
+
+        AWG ->
+            "Afl"
+
+        BSD ->
+            "B$"
+
+        BBD ->
+            "BBD$"
+
+        BMD ->
+            "BD$"
+
+        BTN ->
+            "Nu"
+
+        KYD ->
+            "CI$"
+
+        CUP ->
+            "$MN"
+
+        ANG ->
+            "NAƒ"
+
+        SZL ->
+            "E"
+
+        FKP ->
+            "FK£"
+
+        FJD ->
+            "FJ$"
+
+        XPF ->
+            "F"
+
+        GMD ->
+            "D"
+
+        GIP ->
+            "£"
+
+        GYD ->
+            "G$"
+
+        HTG ->
+            "G"
+
+        KPW ->
+            "₩"
+
+        KGS ->
+            "С̲"
+
+        LSL ->
+            "M"
+
+        LRD ->
+            "L$"
+
+        MWK ->
+            "MK"
+
+        MVR ->
+            "Rf"
+
+        MRU ->
+            "UM"
+
+        MNT ->
+            "₮"
+
+        PGK ->
+            "K"
+
+        SHP ->
+            "£"
+
+        WST ->
+            "SAT"
+
+        STN ->
+            "Db"
+
+        SCR ->
+            "SR"
+
+        SLL ->
+            "Le"
+
+        SBD ->
+            "SI$"
+
+        SSP ->
+            "SS£"
+
+        SRD ->
+            "SR$"
+
+        TJS ->
+            "SM"
+
+        TMT ->
+            "m"
+
+        VUV ->
+            "VT"
+
+        VES ->
+            "Bs.S"
+
+        ZMW ->
+            "ZK"
+
+        ZWL ->
+            "Z$"
 
 
 {-| Get the native symbol of a currency from its code.
@@ -908,6 +1072,129 @@ toNativeSymbol currency =
 
         ZMK ->
             "ZK"
+
+        AOA ->
+            "Kz"
+
+        XCD ->
+            "$"
+
+        AWG ->
+            "ƒ"
+
+        BSD ->
+            "$"
+
+        BBD ->
+            "$"
+
+        BMD ->
+            "$"
+
+        BTN ->
+            "Nu"
+
+        KYD ->
+            "$"
+
+        CUP ->
+            "₱"
+
+        ANG ->
+            "ƒ"
+
+        SZL ->
+            "E"
+
+        FKP ->
+            "£"
+
+        FJD ->
+            "$"
+
+        XPF ->
+            "F"
+
+        GMD ->
+            "D"
+
+        GIP ->
+            "£"
+
+        GYD ->
+            "$"
+
+        HTG ->
+            "G"
+
+        KPW ->
+            "₩"
+
+        KGS ->
+            "С̲"
+
+        LSL ->
+            "M"
+
+        LRD ->
+            "$"
+
+        MWK ->
+            "K"
+
+        MVR ->
+            "ރ"
+
+        MRU ->
+            "UM"
+
+        MNT ->
+            "₮"
+
+        PGK ->
+            "K"
+
+        SHP ->
+            "£"
+
+        WST ->
+            "$"
+
+        STN ->
+            "Db"
+
+        SCR ->
+            "SRe"
+
+        SLL ->
+            "Le"
+
+        SBD ->
+            "$"
+
+        SSP ->
+            "£"
+
+        SRD ->
+            "$"
+
+        TJS ->
+            "SM"
+
+        TMT ->
+            "m"
+
+        VUV ->
+            "VT"
+
+        VES ->
+            "Bs"
+
+        ZMW ->
+            "K"
+
+        ZWL ->
+            "$"
 
 
 {-| Get the name of a currency from its code
@@ -1760,6 +2047,293 @@ toName { plural } currency =
             else
                 "Zambian Kwacha"
 
+        AOA ->
+            if plural then
+                "Angolan kwanzas"
+
+            else
+                "Angolan Kwanza"
+
+        XCD ->
+            if plural then
+                "East Caribbean dollars"
+
+            else
+                "East Caribbean Dollar"
+
+        AWG ->
+            if plural then
+                "Aruban florin"
+
+            else
+                "Aruban Florin"
+
+        BSD ->
+            if plural then
+                "Bahamian dollars"
+
+            else
+                "Bahamian Dollar"
+
+        BBD ->
+            if plural then
+                "Barbados dollars"
+
+            else
+                "Barbados Dollar"
+
+        BMD ->
+            if plural then
+                "Bermudian dollars"
+
+            else
+                "Bermudian Dollar"
+
+        BTN ->
+            if plural then
+                "Bhutanese ngultrums"
+
+            else
+                "Bhutanese Ngultrum"
+
+        KYD ->
+            if plural then
+                "Cayman Islands dollars"
+
+            else
+                "Cayman Islands Dollar"
+
+        CUP ->
+            if plural then
+                "Cuban pesos"
+
+            else
+                "Cuban Peso"
+
+        ANG ->
+            if plural then
+                "Netherlands Antillean guilders"
+
+            else
+                "Netherlands Antillean Guilder"
+
+        SZL ->
+            if plural then
+                "Swazi emalangeni"
+
+            else
+                "Swazi Lilangeni"
+
+        FKP ->
+            if plural then
+                "Falkland Islands pounds"
+
+            else
+                "Falkland Islands Pound"
+
+        FJD ->
+            if plural then
+                "Fijian dollars"
+
+            else
+                "Fijian Dollar"
+
+        XPF ->
+            if plural then
+                "CFP francs"
+
+            else
+                "CFP Franc"
+
+        GMD ->
+            if plural then
+                "Gambian dalasi"
+
+            else
+                "Gambian Dalasi"
+
+        GIP ->
+            if plural then
+                "Gibraltar pounds"
+
+            else
+                "Gibraltar Pound"
+
+        GYD ->
+            if plural then
+                "Guyanese dollars"
+
+            else
+                "Guyanese Dollar"
+
+        HTG ->
+            if plural then
+                "Haitian gourdes"
+
+            else
+                "Haitian Gourde"
+
+        KPW ->
+            if plural then
+                "North Korean won"
+
+            else
+                "North Korean Won"
+
+        KGS ->
+            if plural then
+                "Kyrgyzstani som"
+
+            else
+                "Kyrgyzstani Som"
+
+        LSL ->
+            if plural then
+                "Lesotho maloti"
+
+            else
+                "Lesotho Loti"
+
+        LRD ->
+            if plural then
+                "Liberian dollars"
+
+            else
+                "Liberian Dollar"
+
+        MWK ->
+            if plural then
+                "Malawian kwacha"
+
+            else
+                "Malawian Kwacha"
+
+        MVR ->
+            if plural then
+                "Maldivian Rufiyaas"
+
+            else
+                "Maldivian Rufiyaa"
+
+        MRU ->
+            if plural then
+                "Mauritanian ouguiya"
+
+            else
+                "Mauritanian Ouguiya"
+
+        MNT ->
+            if plural then
+                "Mongolian tugrik"
+
+            else
+                "Mongolian Tugrik"
+
+        PGK ->
+            if plural then
+                "Papua New Guinean kina"
+
+            else
+                "Papua New Guinean Kina"
+
+        SHP ->
+            if plural then
+                "Saint Helena pounds"
+
+            else
+                "Saint Helena Pound"
+
+        WST ->
+            if plural then
+                "Samoan tālās"
+
+            else
+                "Samoan tālā"
+
+        STN ->
+            if plural then
+                "São Tomé and Príncipe dobras"
+
+            else
+                "São Tomé and Príncipe Dobra"
+
+        SCR ->
+            if plural then
+                "Seychelles rupees"
+
+            else
+                "Seychelles Rupee"
+
+        SLL ->
+            if plural then
+                "Sierra Leonean leoneans"
+
+            else
+                "Sierra Leonean Leone"
+
+        SBD ->
+            if plural then
+                "Soloman Islands dollars"
+
+            else
+                "Soloman Islands Dollar"
+
+        SSP ->
+            if plural then
+                "South Sudanese pounds"
+
+            else
+                "South Sudanese Pound"
+
+        SRD ->
+            if plural then
+                "Surinam dollars"
+
+            else
+                "Surinam Dollar"
+
+        TJS ->
+            if plural then
+                "Tajikistani somonis"
+
+            else
+                "Tajikistani Somoni"
+
+        TMT ->
+            if plural then
+                "Turkmenistani manat"
+
+            else
+                "Turkmenistani Manat"
+
+        VUV ->
+            if plural then
+                "Vanuatu vatu"
+
+            else
+                "Vanuatu Vatu"
+
+        VES ->
+            if plural then
+                "Venezuelan bolívares"
+
+            else
+                "Venezuelan Bolívar"
+
+        ZMW ->
+            if plural then
+                "Zambian kwacha"
+
+            else
+                "Zambian Kwacha"
+
+        ZWL ->
+            if plural then
+                "Zimbabwe dollars"
+
+            else
+                "Zimbabwe Dollar"
+
 
 {-| Get the number of decimal digits in a currency. of a currency from its code
 
@@ -2132,6 +2706,129 @@ toDecimalDigits currency =
         ZMK ->
             0
 
+        AOA ->
+            2
+
+        XCD ->
+            2
+
+        AWG ->
+            2
+
+        BSD ->
+            2
+
+        BBD ->
+            2
+
+        BMD ->
+            2
+
+        BTN ->
+            2
+
+        KYD ->
+            2
+
+        CUP ->
+            2
+
+        ANG ->
+            2
+
+        SZL ->
+            2
+
+        FKP ->
+            2
+
+        FJD ->
+            2
+
+        XPF ->
+            0
+
+        GMD ->
+            2
+
+        GIP ->
+            2
+
+        GYD ->
+            2
+
+        HTG ->
+            2
+
+        KPW ->
+            2
+
+        KGS ->
+            2
+
+        LSL ->
+            2
+
+        LRD ->
+            2
+
+        MWK ->
+            2
+
+        MVR ->
+            2
+
+        MRU ->
+            2
+
+        MNT ->
+            2
+
+        PGK ->
+            2
+
+        SHP ->
+            2
+
+        WST ->
+            2
+
+        STN ->
+            2
+
+        SCR ->
+            2
+
+        SLL ->
+            2
+
+        SBD ->
+            2
+
+        SSP ->
+            2
+
+        SRD ->
+            2
+
+        TJS ->
+            2
+
+        TMT ->
+            2
+
+        VUV ->
+            0
+
+        VES ->
+            2
+
+        ZMW ->
+            2
+
+        ZWL ->
+            2
+
 
 {-| Get the currency's code as a `String`
 
@@ -2500,6 +3197,129 @@ toString currency =
 
         ZMK ->
             "ZMK"
+
+        AOA ->
+            "AOA"
+
+        XCD ->
+            "XCD"
+
+        AWG ->
+            "AWG"
+
+        BSD ->
+            "BSD"
+
+        BBD ->
+            "BBD"
+
+        BMD ->
+            "BMD"
+
+        BTN ->
+            "BTN"
+
+        KYD ->
+            "KYD"
+
+        CUP ->
+            "CUP"
+
+        ANG ->
+            "ANG"
+
+        SZL ->
+            "SZL"
+
+        FKP ->
+            "FKP"
+
+        FJD ->
+            "FJD"
+
+        XPF ->
+            "XPF"
+
+        GMD ->
+            "GMD"
+
+        GIP ->
+            "GIP"
+
+        GYD ->
+            "GYD"
+
+        HTG ->
+            "HTG"
+
+        KPW ->
+            "KPW"
+
+        KGS ->
+            "KGS"
+
+        LSL ->
+            "LSL"
+
+        LRD ->
+            "LRD"
+
+        MWK ->
+            "MWK"
+
+        MVR ->
+            "MVR"
+
+        MRU ->
+            "MRU"
+
+        MNT ->
+            "MNT"
+
+        PGK ->
+            "PGK"
+
+        SHP ->
+            "SHP"
+
+        WST ->
+            "WST"
+
+        STN ->
+            "STN"
+
+        SCR ->
+            "SCR"
+
+        SLL ->
+            "SLL"
+
+        SBD ->
+            "SBD"
+
+        SSP ->
+            "SSP"
+
+        SRD ->
+            "SRD"
+
+        TJS ->
+            "TJS"
+
+        TMT ->
+            "TMT"
+
+        VUV ->
+            "VUV"
+
+        VES ->
+            "VES"
+
+        ZMW ->
+            "ZMW"
+
+        ZWL ->
+            "ZWL"
 
 
 {-| Attempt to derive a `Currency` from a `String`. This function presumes the `String` is a currency code like `"USD"`.
@@ -2871,6 +3691,129 @@ fromString str =
         "ZMK" ->
             Just ZMK
 
+        "AOA" ->
+            Just AOA
+
+        "XCD" ->
+            Just XCD
+
+        "AWG" ->
+            Just AWG
+
+        "BSD" ->
+            Just BSD
+
+        "BBD" ->
+            Just BBD
+
+        "BMD" ->
+            Just BMD
+
+        "BTN" ->
+            Just BTN
+
+        "KYD" ->
+            Just KYD
+
+        "CUP" ->
+            Just CUP
+
+        "ANG" ->
+            Just ANG
+
+        "SZL" ->
+            Just SZL
+
+        "FKP" ->
+            Just FKP
+
+        "FJD" ->
+            Just FJD
+
+        "XPF" ->
+            Just XPF
+
+        "GMD" ->
+            Just GMD
+
+        "GIP" ->
+            Just GIP
+
+        "GYD" ->
+            Just GYD
+
+        "HTG" ->
+            Just HTG
+
+        "KPW" ->
+            Just KPW
+
+        "KGS" ->
+            Just KGS
+
+        "LSL" ->
+            Just LSL
+
+        "LRD" ->
+            Just LRD
+
+        "MWK" ->
+            Just MWK
+
+        "MVR" ->
+            Just MVR
+
+        "MRU" ->
+            Just MRU
+
+        "MNT" ->
+            Just MNT
+
+        "PGK" ->
+            Just PGK
+
+        "SHP" ->
+            Just SHP
+
+        "WST" ->
+            Just WST
+
+        "STN" ->
+            Just STN
+
+        "SCR" ->
+            Just SCR
+
+        "SLL" ->
+            Just SLL
+
+        "SBD" ->
+            Just SBD
+
+        "SSP" ->
+            Just SSP
+
+        "SRD" ->
+            Just SRD
+
+        "TJS" ->
+            Just TJS
+
+        "TMT" ->
+            Just TMT
+
+        "VUV" ->
+            Just VUV
+
+        "VES" ->
+            Just VES
+
+        "ZMW" ->
+            Just ZMW
+
+        "ZWL" ->
+            Just ZWL
+
         _ ->
             Nothing
 
@@ -3008,6 +3951,47 @@ all =
     , YER
     , ZAR
     , ZMK
+    , AOA
+    , XCD
+    , AWG
+    , BSD
+    , BBD
+    , BMD
+    , BTN
+    , KYD
+    , CUP
+    , ANG
+    , SZL
+    , FKP
+    , FJD
+    , XPF
+    , GMD
+    , GIP
+    , GYD
+    , HTG
+    , KPW
+    , KGS
+    , LSL
+    , LRD
+    , MWK
+    , MVR
+    , MRU
+    , MNT
+    , PGK
+    , SHP
+    , WST
+    , STN
+    , SCR
+    , SLL
+    , SBD
+    , SSP
+    , SRD
+    , TJS
+    , TMT
+    , VUV
+    , VES
+    , ZMW
+    , ZWL
     ]
 
 
