@@ -1,3 +1,6 @@
+6.0.0
+- Many new currencies added, coming from currencies found in ISO4217 that were not a part of this package.
+
 5.0.0
 - Belarusian Ruble changed from BYR to BYN
 
