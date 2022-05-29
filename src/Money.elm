@@ -146,7 +146,7 @@ type Currency
     | UGX
     | UYU
     | UZS
-    | VEF
+    | VED
     | VND
     | XAF
     | XOF
@@ -184,7 +184,7 @@ type Currency
     | WST
     | STN
     | SCR
-    | SLL
+    | SLE
     | SBD
     | SSP
     | SRD
@@ -547,7 +547,7 @@ toSymbol currency =
         UZS ->
             "UZS"
 
-        VEF ->
+        VED ->
             "Bs.F."
 
         VND ->
@@ -661,7 +661,7 @@ toSymbol currency =
         SCR ->
             "SR"
 
-        SLL ->
+        SLE ->
             "Le"
 
         SBD ->
@@ -1052,7 +1052,7 @@ toNativeSymbol currency =
         UZS ->
             "UZS"
 
-        VEF ->
+        VED ->
             "Bs.F."
 
         VND ->
@@ -1166,7 +1166,7 @@ toNativeSymbol currency =
         SCR ->
             "SRe"
 
-        SLL ->
+        SLE ->
             "Le"
 
         SBD ->
@@ -1998,7 +1998,7 @@ toName { plural } currency =
             else
                 "Uzbekistan Som"
 
-        VEF ->
+        VED ->
             if plural then
                 "Venezuelan bolívars"
 
@@ -2264,7 +2264,7 @@ toName { plural } currency =
             else
                 "Seychelles Rupee"
 
-        SLL ->
+        SLE ->
             if plural then
                 "Sierra Leonean leoneans"
 
@@ -2685,7 +2685,7 @@ toDecimalDigits currency =
         UZS ->
             2
 
-        VEF ->
+        VED ->
             2
 
         VND ->
@@ -2799,7 +2799,7 @@ toDecimalDigits currency =
         SCR ->
             2
 
-        SLL ->
+        SLE ->
             2
 
         SBD ->
@@ -3177,8 +3177,8 @@ toString currency =
         UZS ->
             "UZS"
 
-        VEF ->
-            "VEF"
+        VED ->
+            "VED"
 
         VND ->
             "VND"
@@ -3291,8 +3291,8 @@ toString currency =
         SCR ->
             "SCR"
 
-        SLL ->
-            "SLL"
+        SLE ->
+            "SLE"
 
         SBD ->
             "SBD"
@@ -3670,8 +3670,8 @@ fromString str =
         "UZS" ->
             Just UZS
 
-        "VEF" ->
-            Just VEF
+        "VED" ->
+            Just VED
 
         "VND" ->
             Just VND
@@ -3784,8 +3784,8 @@ fromString str =
         "SCR" ->
             Just SCR
 
-        "SLL" ->
-            Just SLL
+        "SLE" ->
+            Just SLE
 
         "SBD" ->
             Just SBD
@@ -3944,7 +3944,7 @@ all =
     , UGX
     , UYU
     , UZS
-    , VEF
+    , VED
     , VND
     , XAF
     , XOF
@@ -3982,7 +3982,7 @@ all =
     , WST
     , STN
     , SCR
-    , SLL
+    , SLE
     , SBD
     , SSP
     , SRD

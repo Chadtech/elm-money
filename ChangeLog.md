@@ -1,3 +1,7 @@
+7.0.0
+- Venezeulan Bolivar rednominated, so its currency code changed from `VEF` to `VED`
+- Sierra Leone Leone rednominated, so its currency code changed from `SLL` to `SLE`
+
 6.0.0
 - Many new currencies added, coming from currencies found in ISO4217 that were not a part of this package.
 

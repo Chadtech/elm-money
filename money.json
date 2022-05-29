@@ -790,7 +790,7 @@
         "decimal_digits": 2,
         "name_plural": "Uzbekistan som"
     },
-    "VEF": {
+    "VED": {
         "symbol": "Bs.F.",
         "name": "Venezuelan Bolívar",
         "symbol_native": "Bs.F.",
@@ -1056,7 +1056,7 @@
         "decimal_digits": 2,
         "name_plural": "Seychelles rupees"
     },
-    "SLL": {
+    "SLE": {
         "symbol": "Le",
         "name": "Sierra Leonean Leone",
         "symbol_native": "Le",
